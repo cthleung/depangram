@@ -1,0 +1,30 @@
+# keys and machine settings
+.env
+.env.*
+!.env.example
+*.key
+settings.local.json
+
+# editor and assistant folders
+.specstory/
+.claude/
+.vscode/
+.idea/
+
+# runs, models and caches
+runs/
+models/
+*.gguf
+*.safetensors
+*.bin
+*.sqlite
+*.sqlite-journal
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# job data stays local (the demo job is added on purpose when it exists)
+jobs/*
+!jobs/README.md
