@@ -9,6 +9,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from engine.job import Bank
 from engine.regrow import (MAX_RATIO, RegrowPass, adapter_prompt, fewshot_prompt, gate, keep_words, new_names,
@@ -1592,3 +1593,73 @@ class Absorbed(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:          # pass: the span is gone and nothing holds the pick's text
             got = bare(d, {"vetoes": [], "repairs": [], "for_you": []}, [sc], lay=other).scores[0]
             self.assertEqual((got["stale"], got.get("absorbed")), (["s5w0 p1"], None))
+
+
+# ---------------------------------------------------------------------- the report folder and the read-only read
+FIXTURE = Path(__file__).resolve().parent / "fixtures" / "balcony"
+
+
+class ReportFolder(unittest.TestCase):
+    """A fresh clone has no analytics/: the pass makes it before it writes its report, after the money is spent."""
+
+    def test_report_file_makes_its_folder(self):
+        from engine import util
+        with tempfile.TemporaryDirectory() as d:
+            where = Path(d) / "a" / "b"
+            got = util.report_file("r.md", where)
+            self.assertTrue(where.is_dir())
+            self.assertEqual(got, where / "r.md")
+            with mock.patch.object(util, "REPORTS_DIR", Path(d) / "default"):
+                self.assertEqual(util.report_file("x.md"), Path(d) / "default" / "x.md")
+                self.assertTrue((Path(d) / "default").is_dir())
+
+    def test_the_pass_writes_its_report_into_a_folder_that_isn_t_there(self):
+        import io
+        import shutil
+        from engine import regrow, util
+        from engine.settings import CONFIG_EXAMPLE, Settings, load_config
+        with tempfile.TemporaryDirectory() as d:
+            job_dir = Path(d) / "balcony"
+            shutil.copytree(FIXTURE, job_dir)
+            reports = Path(d) / "fresh clone" / "analytics"
+            settings = Settings(env={"RUNS_DIR": str(Path(d) / "runs"), "PANGRAM_API_KEY": ""},
+                                config=load_config(CONFIG_EXAMPLE))
+            out = io.TextIOWrapper(io.BytesIO(), encoding="utf-8")
+            # --final with an empty bank serves nothing, so nothing is scored and nothing is called
+            from engine import db
+            memory = db.connect(":memory:")            # the ledger in memory, so the folder can go afterwards
+            with mock.patch.object(util, "REPORTS_DIR", reports), mock.patch.object(regrow, "Settings", lambda: settings), \
+                    mock.patch.object(db, "connect", lambda path: memory), mock.patch("sys.stdout", out):
+                rc = regrow.main(["--job-dir", str(job_dir), "--final", "--max-usd", "0"])
+            self.assertEqual(rc, 0)
+            self.assertEqual(len(list(reports.glob("regrow * (final).md"))), 1)
+
+
+class ReadOnlyPassRead(unittest.TestCase):
+    def setUp(self):
+        import shutil
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.dir = Path(self.tmp.name) / "balcony"
+        shutil.copytree(FIXTURE, self.dir)
+        # one draw from before the pass banked its span's sha: only the sidecar can place it
+        draw = {"kind": "draw", "label": "s1w0 p2", "arm": "notes", "k": 0, "text": "A draw."}
+        (self.dir / "regrow bank.jsonl").write_text(json.dumps(draw) + "\n", encoding="utf-8")
+
+    def read(self, **kw):
+        from engine.job import Job
+        from engine.regrow import ORIGS_FILE, pass_paragraphs
+        job = Job(root=self.dir)
+        got = pass_paragraphs(job, Bank(job.bank_path), **kw)
+        return got, (self.dir / ORIGS_FILE).exists()
+
+    def test_readonly_writes_no_sidecar_and_counts_what_it_left_out(self):
+        got, written = self.read(readonly=True)
+        self.assertFalse(written)                                                   # flag: nothing written
+        self.assertEqual(got["left_out"], 1)
+        self.assertEqual(got["sections"], {})
+
+    def test_the_default_read_writes_the_sidecar_as_before(self):
+        got, written = self.read()
+        self.assertTrue(written)                                                    # pass: the old behavior
+        self.assertNotIn("left_out", got)

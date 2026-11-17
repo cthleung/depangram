@@ -98,8 +98,8 @@ class App:
         return scrub(text, self.secrets(), [(self.repo, "<repo>"), (Path.home(), "~")])
 
     def fresh_config(self):
-        """The config as it is on disk now (a night's copy is made from it, so an edit since the server started
-        counts, as it does for a pass, whose child reads the config itself). The tests pass config_fn."""
+        """The config as it is on disk now, as the night's child will read it, for the note on the night's clock
+        guards. The tests pass config_fn."""
         if self.config_fn is not None:
             return self.config_fn()
         from engine.settings import load_config
@@ -133,8 +133,9 @@ class App:
         return d
 
     def load_job(self, folder):
+        """The job, with the process's rules left alone: what reads it goes inside `with job.rules_in_use():`."""
         from engine.job import Job
-        return Job(root=folder)
+        return Job(root=folder, bind_rules=False)
 
     def job_args(self, folder):
         """How a child finds the job: --job NAME for a folder in jobs/, else --job-dir FOLDER."""
@@ -217,20 +218,28 @@ class App:
 
     # ------------------------------------------------------------------ list_jobs and review_queue
     def pass_state(self, job):
-        """Whether the pass's bank can be read without a write: None when it can, else why not."""
+        """None when the pass has a bank to read, else why there's nothing to read."""
         if not (job.dir / "regrow bank.jsonl").exists():
             return "no paragraph pass has run on this job yet"
-        if not (job.dir / "regrow origs.json").exists():
-            return ("the pass's bank has no regrow origs.json beside it, and reading it would write one; the next"
-                    " pass writes it")
         return None
 
     def passed(self, job, sections):
+        """engine/regrow.py's pass_paragraphs, read only (nothing written, not even the sidecar) and under the job's
+        own rules."""
         from engine.job import Bank
         fn = self.pass_paragraphs_fn
         if fn is None:
             from engine.regrow import pass_paragraphs as fn
-        return fn(job, Bank(job.bank_path), sections)
+        with job.rules_in_use():
+            return fn(job, Bank(job.bank_path), sections, readonly=True)
+
+    @staticmethod
+    def left_out_note(got):
+        n = got.get("left_out") or 0
+        if not n:
+            return None
+        return (f"the pass's bank has no regrow origs.json yet, so {n} older entr{'y' if n == 1 else 'ies'} with no"
+                " span sha of their own were left out; the next pass writes the file")
 
     def doc_name(self, path):
         if path is None:
@@ -256,13 +265,16 @@ class App:
                 if why:
                     row.update(scores=None, scores_note=why)
                 else:
-                    got = self.passed(job, secs)["sections"]
+                    full = self.passed(job, secs)
+                    got = full["sections"]
                     row["scores"] = {str(n): {"ai_share": s["ai"], "scoring": s["label"], "scored": s["scored"]}
                                      for n, s in sorted(got.items())}
+                    notes = [self.left_out_note(full)]
                     missing = [n for n in secs if n not in got]
                     if missing:
-                        row["scores_note"] = ("no clean scoring yet for section(s) "
-                                              + ", ".join(map(str, missing)))
+                        notes.append("no clean scoring yet for section(s) " + ", ".join(map(str, missing)))
+                    if any(notes):
+                        row["scores_note"] = "; ".join(x for x in notes if x)
             except Exception as e:  # noqa: BLE001
                 row["error"] = self.plain(f"{type(e).__name__}: {e}")
             out.append(row)
@@ -301,6 +313,8 @@ class App:
         out.update(for_you=for_you, repaired=repaired, moot=list(got.get("moot") or []),
                    unmatched=list(got.get("unmatched") or []),
                    unmatched_review=[list(x) for x in got.get("unmatched_review") or []])
+        if self.left_out_note(got):
+            out["note"] = self.left_out_note(got)
         return out
 
     # ------------------------------------------------------------------ start_run
@@ -330,9 +344,15 @@ class App:
                 continue
         return None
 
-    def start_run(self, job, max_pangram_usd=None, kind="pass", sections=None, rounds=1, max_claude_usd=None):
+    def start_run(self, job, max_pangram_usd=None, kind="pass", sections=None, rounds=1, max_claude_usd=None,
+                  pass_minutes=None):
         if kind not in ("pass", "night"):
             raise Refused(f"kind is \"pass\" or \"night\", not {kind!r}")
+        if pass_minutes is not None:
+            if kind != "night":
+                raise Refused("pass_minutes is for a night; a pass runs until it's done or stopped")
+            if isinstance(pass_minutes, bool) or not isinstance(pass_minutes, int) or pass_minutes < 1:
+                raise Refused("pass_minutes is a whole number of minutes, 1 or more")
         if max_pangram_usd is None:
             raise Refused("give max_pangram_usd, the most this run may spend on Pangram; there's no default")
         if not finite(max_pangram_usd) or float(max_pangram_usd) <= 0:
@@ -366,16 +386,14 @@ class App:
             if why:
                 raise Refused(f"the GPU is taken: {self.plain(why)}")
             return self.launch(folder, j, kind, sections, rounds, float(max_pangram_usd),
-                               None if max_claude_usd is None else float(max_claude_usd))
+                               None if max_claude_usd is None else float(max_claude_usd), pass_minutes)
 
-    def launch(self, folder, j, kind, sections, rounds, max_pangram_usd, max_claude_usd):
+    def launch(self, folder, j, kind, sections, rounds, max_pangram_usd, max_claude_usd, pass_minutes=None):
         store = self.store()
         run_id = rs.new_id(kind, self.now())
         d = store.make(run_id)
         env = dict(os.environ, PYTHONIOENCODING="utf-8")
         notes = []
-        # regrow (the pass, and a night's pass and finals) writes its report into analytics/ without making it
-        (self.repo / "analytics").mkdir(exist_ok=True)
         if kind == "pass":
             module = "engine.regrow"
             # regrow's --rounds counts the arm-set round too, so 1 new scoring round is --rounds 2, as the night does
@@ -387,23 +405,26 @@ class App:
                 args += ["--max-claude-usd", f"{max_claude_usd:.2f}"]
         else:
             module = "engine.night"
-            args = self.job_args(folder)
-            cfg = rs.night_config(self.fresh_config(), max_pangram_usd=max_pangram_usd,
-                                  max_claude_usd=max_claude_usd, rounds=rounds, sections=sections)
-            (d / "config.toml").write_text(rs.toml_dump(cfg), encoding="utf-8")
-            env["DEPANGRAM_CONFIG"] = str(d / "config.toml")
-            clock = self.night_clock_note(cfg)
-            if clock:
-                notes.append(clock)
-            notes.append(f"the night's pass and finals stay under ${max_pangram_usd:.2f} of Pangram together; the"
-                         " repair step at the submission spends on its own, under [repair]'s ceilings held to the"
-                         " same numbers, so the night as a whole can spend up to about twice the figure given")
+            args = [*self.job_args(folder), "--max-pangram-usd", f"{max_pangram_usd:.2f}", "--rounds", str(rounds)]
+            if sections:
+                args += ["--section", ",".join(map(str, sections))]
+            if max_claude_usd is not None:
+                args += ["--max-claude-usd", f"{max_claude_usd:.2f}"]
+            if pass_minutes is not None:
+                args += ["--pass-minutes", str(pass_minutes)]
+            else:
+                clock = self.night_clock_note(self.fresh_config())
+                if clock:
+                    notes.append(clock + "; give pass_minutes to run the pass at any time of day")
+            notes.append(f"one Pangram ceiling of ${max_pangram_usd:.2f} covers the whole night: the pass, the finals,"
+                         " and the repair step at the submission, which gets what's left")
             notes.append("the night ends with the morning submission: the repair step, the write-back, a commit"
                          " on the work branch, a publish when [git] publish is on, and a digest through the notifier")
         cmd = rs.child_cmd(d / "exit", module, args, self.python)
         started = self.now()
         rec = {"id": run_id, "kind": kind, "job": j.name, "job_folder": self.plain(folder), "module": module,
                "args": [self.plain(a) for a in args], "sections": sections, "rounds": rounds,
+               "pass_minutes": pass_minutes,
                "max_pangram_usd": max_pangram_usd, "max_claude_usd": max_claude_usd, "pid": None,
                "began": None, "started": started, "ended": None, "state": "running", "exit_code": None,
                "notes": notes}

@@ -84,7 +84,7 @@ class NightBase(unittest.TestCase):
         self.events, self.posts, self.killed, self.out = [], [], [], []
 
     def night(self, hhmm="02:00", branch="work", busy=None, week=0.40, dry=False, children=None,
-              early=None, port=False, spawn_error=False, stop_at=None):
+              early=None, port=False, spawn_error=False, stop_at=None, overrides=None, pass_minutes=None):
         self.clock = Clock(hhmm)
         self.ledger = Ledger(self.clock, week=week)
         self.children = list(children if children is not None else [dict(pangram=2.25, claude=0.40),
@@ -122,7 +122,8 @@ class NightBase(unittest.TestCase):
                            ledger=lambda: self.ledger, busy_fn=lambda: busy, branch_fn=lambda: branch,
                            spawn_fn=spawn, kill_fn=kill, port_fn=lambda: port, main_first=main_first, submit=submit,
                            notify=lambda s, text: self.posts.append(text) or True, stop_file=self.stop,
-                           log_path=self.d / "night.log", out=self.out.append)
+                           log_path=self.d / "night.log", out=self.out.append, overrides=overrides,
+                           pass_minutes=pass_minutes)
 
     def spawns(self):
         return [e[1] for e in self.events if e[0] == "spawn"]
@@ -439,6 +440,74 @@ class KillTree(unittest.TestCase):
         proc.wait(10)
         proc.stdout.close()
         self.assertFalse(psutil.pid_exists(grandchild))
+
+
+class NightFlags(NightBase):
+    """python -m engine.night's flags: the ceilings, the sections and the rounds over [night], a pass deadline counted
+    from the start, and one Pangram ceiling for the whole night once it's given."""
+
+    def test_the_flags_lay_over_the_night_s_config(self):
+        self.night(overrides={"max_pangram_usd": 5.0, "max_claude_usd": 1.0, "sections": [3], "rounds": 2}).run()
+        first = self.spawns()[0]
+        self.assertEqual(self.flag(first, "--max-usd"), "5.00")
+        self.assertEqual(self.flag(first, "--max-claude-usd"), "1.00")
+        self.assertEqual(self.flag(first, "--section"), "3")
+        self.assertEqual(self.flag(first, "--rounds"), "3")                    # two new rounds, plus the arm sets
+        self.assertEqual(self.flag(self.spawns()[1], "--max-usd"), "2.75")     # the finals: what the pass left
+
+    def test_a_given_ceiling_covers_the_repair_step_too(self):
+        self.night(overrides={"max_pangram_usd": 5.0}).run()
+        repair = self.submitted["settings"].config["repair"]
+        self.assertEqual(repair["max_pangram_usd"], 2.45)                    # 5.00 less the pass's 2.25 and 0.30
+        self.assertIn("- The repair step's Pangram: $2.45, what's left of the night's $5.00", self.lines())
+
+    def test_the_repair_keeps_its_own_ceiling_when_that_s_less(self):
+        self.night(overrides={"max_pangram_usd": 9.0}).run()
+        self.assertEqual(self.submitted["settings"].config["repair"]["max_pangram_usd"], 3.0)
+
+    def test_no_flag_leaves_the_scheduled_night_as_it_was(self):
+        n = self.night(overrides={"max_pangram_usd": None, "rounds": None})
+        n.run()
+        self.assertIs(self.submitted["settings"], n.settings)                  # the repair keeps [repair]'s own
+        self.assertNotIn("repair step's Pangram", self.lines())
+        self.assertEqual(self.flag(self.spawns()[0], "--max-usd"), "3.50")
+
+    def test_pass_minutes_runs_the_pass_in_the_day_and_ends_it_on_time(self):
+        self.night(hhmm="14:00", pass_minutes=30, children=[dict(polls=None), dict()]).run()
+        self.assertEqual([e[0] for e in self.events], ["main first", "spawn", "kill", "spawn", "submit"])
+        self.assertIn(("kill", "14:30"), self.events)                          # flag: 30 minutes after the start
+        self.assertIn("--pass-minutes 30 (14:30)", self.lines())
+        self.events.clear()
+        self.night(hhmm="14:00").run()                                         # pass: no flag, the late start holds
+        self.assertEqual([e[0] for e in self.events], ["main first", "submit"])
+
+    def test_the_command_line_hands_the_flags_to_the_night(self):
+        from unittest import mock
+        got = {}
+
+        class FakeNight:
+            def __init__(self, job, settings, **kw):
+                got.update(kw)
+
+            def run(self):
+                return {"halted": None}
+        with mock.patch.object(night, "Night", FakeNight), \
+                mock.patch("engine.main_copy.load_job", lambda *a: types.SimpleNamespace(name="j")), \
+                mock.patch("engine.settings.Settings", lambda: types.SimpleNamespace(config={})):
+            rc = night.main(["--dry", "--pass-minutes", "30", "--max-pangram-usd", "1", "--section", "2,3",
+                             "--rounds", "2", "--max-claude-usd", "0.5"])
+        self.assertEqual(rc, 0)
+        self.assertEqual(got["pass_minutes"], 30)
+        self.assertEqual(got["overrides"], {"max_pangram_usd": 1.0, "max_claude_usd": 0.5, "sections": [2, 3],
+                                            "rounds": 2})
+
+    def test_the_command_line_refuses_a_bad_ceiling(self):
+        import contextlib
+        import io
+        for argv in (["--max-pangram-usd", "0"], ["--max-pangram-usd", "nan"], ["--pass-minutes", "0"],
+                     ["--rounds", "0"], ["--section", "two"]):
+            with self.assertRaises(SystemExit, msg=argv), contextlib.redirect_stderr(io.StringIO()):
+                night.main(argv)
 
 
 if __name__ == "__main__":

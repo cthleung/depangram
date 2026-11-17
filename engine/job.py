@@ -320,7 +320,11 @@ class Job:
     """One job folder. `name` is a folder in jobs/ (job_name() resolves None from config.toml); `root` is a job folder
     anywhere, for a copy or a test. jobs/README.md documents every job.toml field read here."""
 
-    def __init__(self, name=None, root=None):
+    def __init__(self, name=None, root=None, bind_rules=True):
+        """`bind_rules` (the default, for the command line's one job a process): the job's rules are the ones in use
+        for the whole process once it loads, its own file or, with none, the base rules, so a job loaded after
+        another never reads the first one's file. False leaves the rules in use alone; read the job's own with
+        `with job.rules_in_use():` (a long-lived process reading several jobs does this)."""
         self.dir = Path(root) if root else JOBS / job_name(name)
         toml = self.dir / "job.toml"
         if not toml.exists():
@@ -344,15 +348,16 @@ class Job:
         # the voice samples: the job's own file (relative to the job folder) or SAMPLES_FILE; voice_samples picks
         # some of them by number, and with none listed every sample counts
         self.samples_file = self.path(j["samples"]) if j.get("samples") else None
-        # the job's own house rules file (relative to the job folder): loaded over the defaults when the job loads,
-        # so every check reads it (engine/checks.py use_rules). Without one the rules in use stay as they are.
+        # the job's own house rules file (relative to the job folder), loaded over the defaults and carried on the job
+        # as self.rules (an engine/checks.py Rules, or None for the base rules); bind_rules puts them in use
         self.rules_file = self.path(j["rules"]) if j.get("rules") else None
+        self.rules = None
         if self.rules_file:
             if not self.rules_file.exists():
                 raise JobError(f"{toml}: rules names {self.rules_file}, which isn't there")
             from . import checks
             try:
-                checks.use_rules(self.rules_file)
+                self.rules = checks.load_rules(self.rules_file)
             except ValueError as e:
                 raise JobError(f"{toml}: the rules file doesn't load: {e}") from None
         picked = j.get("voice_samples")
@@ -385,6 +390,15 @@ class Job:
         self.branch = str(j.get("branch") or "").strip() or None
         self._night_sections = j.get("night_sections")
         self._windows = None
+        if bind_rules:                    # last, so a job that fails to load never changes the rules in use
+            from . import checks
+            checks.use_job_rules(self.rules)
+
+    def rules_in_use(self):
+        """A `with` block that reads this job's rules (its own file, or the base rules) in the current thread only,
+        and puts back whatever was in use when it ends (engine/checks.py scoped)."""
+        from . import checks
+        return checks.scoped(self.rules)
 
     def path(self, name):
         """A path named in job.toml: relative to the job folder unless it's absolute."""

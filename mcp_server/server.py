@@ -50,17 +50,17 @@ def build(app=None):
     @server.tool()
     def start_run(job: str, max_pangram_usd: float, kind: Literal["pass", "night"] = "pass",
                   sections: list[int] | None = None, rounds: int = 1,
-                  max_claude_usd: float | None = None) -> dict[str, Any]:
+                  max_claude_usd: float | None = None, pass_minutes: int | None = None) -> dict[str, Any]:
         """Start a paragraph pass (python -m engine.regrow, purpose loop) or a night (python -m engine.night) on a job
         in the background, and return its run id at once. job is a folder name in jobs/ or a job folder inside the
-        repo. max_pangram_usd is required: the most the run may spend on Pangram. max_claude_usd caps the fact check
-        (left out: the config's own). rounds counts new scoring rounds. A night's pass and finals share
-        max_pangram_usd, and its repair step spends on its own under the same numbers, so a night can spend up to
-        about twice the figure. A night honors its own [night] clock: started at or after latest_start or pass_until
-        it skips the pass and runs the morning submission only. The submission commits, publishes when [git] publish
-        is on, and posts a digest through the notifier. Refused while another run holds the GPU, or while the STOP
-        file is there."""
-        return guard(app.start_run, job, max_pangram_usd, kind, sections, rounds, max_claude_usd)
+        repo. max_pangram_usd is required: the most the run may spend on Pangram; for a night it covers the pass, the
+        finals and the repair step together. max_claude_usd caps the fact check (left out: the config's own). rounds
+        counts new scoring rounds. pass_minutes (a night only) ends the night's pass that many minutes after the start
+        and lets it run at any time of day; without it the night keeps its [night] clock, and started at or after
+        latest_start or pass_until it skips the pass and runs the morning submission only. The submission commits,
+        publishes when [git] publish is on, and posts a digest through the notifier. Refused while another run holds
+        the GPU, or while the STOP file is there."""
+        return guard(app.start_run, job, max_pangram_usd, kind, sections, rounds, max_claude_usd, pass_minutes)
 
     @server.tool()
     def run_status(run_id: str) -> dict[str, Any]:

@@ -3,14 +3,12 @@
     run.json     what was started, its pid and the time the process began, and how it ended
     out.log      the run's own output (the wrapper's, the module's and anything it prints)
     exit         the exit code, written by mcp_server/child.py when the module ends
-    config.toml  for a night, the config it runs under (DEPANGRAM_CONFIG), with the caller's ceilings in [night]
 
 One file a run, written whole with os.replace, so two threads or two servers never tear a record, and a server that
 restarts reads every run back from here. A pid only counts as the run while the process with that pid also began
 when the record says, so a reused pid never passes for a run.
 """
 import json
-import math
 import os
 import re
 import secrets
@@ -114,63 +112,3 @@ def spawn(cmd, out, env, cwd):
 def child_cmd(exit_file, module, args, python=None):
     """The command line of a run: the wrapper, then the module and its arguments."""
     return [python or sys.executable, "-m", "mcp_server.child", str(exit_file), "-m", module, *args]
-
-
-# ---------------------------------------------------------------------- a config file for the night
-BARE_KEY = re.compile(r"^[A-Za-z0-9_-]+$")
-
-
-def _key(k):
-    return k if BARE_KEY.match(k) else json.dumps(k)
-
-
-def _value(v):
-    if isinstance(v, bool):
-        return "true" if v else "false"
-    if isinstance(v, int):
-        return str(v)
-    if isinstance(v, float):
-        if not math.isfinite(v):
-            raise ValueError(f"a config value isn't a finite number: {v!r}")
-        return repr(v)
-    if isinstance(v, str):
-        return json.dumps(v)
-    if isinstance(v, (list, tuple)):
-        return "[" + ", ".join(_value(x) for x in v) + "]"
-    if isinstance(v, dict):
-        return "{" + ", ".join(f"{_key(str(k))} = {_value(x)}" for k, x in v.items()) + "}"
-    raise ValueError(f"a config value of type {type(v).__name__} can't be written as TOML")
-
-
-def toml_dump(data):
-    """A config dict as TOML: plain keys first, then one [table] for each dict at the top, with any dict deeper down
-    written inline. Enough for config.toml, which holds no arrays of tables and no dates."""
-    lines = [f"{_key(k)} = {_value(v)}" for k, v in data.items() if not isinstance(v, dict)]
-    for name, table in data.items():
-        if not isinstance(table, dict):
-            continue
-        if lines:
-            lines.append("")
-        lines.append(f"[{_key(name)}]")
-        lines += [f"{_key(k)} = {_value(v)}" for k, v in table.items()]
-    return "\n".join(lines) + "\n"
-
-
-def night_config(config, *, max_pangram_usd, max_claude_usd=None, rounds=None, sections=None):
-    """A copy of `config` for one night: [night] max_pangram_usd, and max_claude_usd, rounds and sections when given.
-    The repair step at the submission keeps its own [repair] ceilings, each held to no more than the caller's (it
-    spends on its own, past the night's pass and finals)."""
-    cfg = {k: (dict(v) if isinstance(v, dict) else v) for k, v in config.items()}
-    nt = cfg.setdefault("night", {})
-    nt["max_pangram_usd"] = float(max_pangram_usd)
-    if max_claude_usd is not None:
-        nt["max_claude_usd"] = float(max_claude_usd)
-    if rounds is not None:
-        nt["rounds"] = int(rounds)
-    if sections is not None:
-        nt["sections"] = [int(x) for x in sections]
-    rp = cfg.setdefault("repair", {})
-    rp["max_pangram_usd"] = min(float(rp.get("max_pangram_usd", max_pangram_usd)), float(max_pangram_usd))
-    if max_claude_usd is not None:
-        rp["max_claude_usd"] = min(float(rp.get("max_claude_usd", max_claude_usd)), float(max_claude_usd))
-    return cfg

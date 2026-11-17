@@ -5,6 +5,14 @@ line and a systemd timer for Linux.
 
     python -m engine.night          # do it
     python -m engine.night --dry    # say what it would do: nothing spent, written, committed or posted
+    python -m engine.night --pass-minutes 90 --max-pangram-usd 2   # by hand, any time of day
+
+The flags override [night] for one run: --max-pangram-usd, --max-claude-usd, --section (comma-separated) and --rounds.
+--pass-minutes N gives the pass a deadline N minutes after the night starts, in place of [night] pass_until, and
+turns the late-start guard off, so a night started by hand in the day runs its pass. With --max-pangram-usd the one
+Pangram ceiling covers the whole night: the repair step at the submission gets what's left of it after the pass and
+the finals (or [repair] max_pangram_usd, when that's less). With no flag the night runs exactly as the scheduler
+starts it.
 
 In order, each step logged with its time to RUNS_DIR/<job>/night.log and to stdout. A step's failure is caught,
 goes in the digest and never stops the steps after it, unless a guard says so:
@@ -42,6 +50,7 @@ on Linux and macOS the child starts in its own process group, which gets SIGTERM
 alive after the wait.
 """
 import argparse
+import copy
 import datetime as dt
 import os
 import signal
@@ -210,10 +219,18 @@ class Ledger:
 class Night:
     def __init__(self, job, settings, dry=False, *, repo=None, now=None, sleep=None, ledger=None, busy_fn=None,
                  branch_fn=None, spawn_fn=None, kill_fn=None, port_fn=None, main_first=None, submit=None,
-                 notify=None, stop_file=None, log_path=None, out=print):
+                 notify=None, stop_file=None, log_path=None, out=print, overrides=None, pass_minutes=None):
+        """`overrides` ({"max_pangram_usd", "max_claude_usd", "sections", "rounds"}, the command line's flags; a None
+        value is no override) lay over [night]. A Pangram ceiling given there covers the repair step too.
+        `pass_minutes` gives the pass a deadline counted from the start, in place of [night] pass_until, and turns
+        the late-start guard off."""
         from . import morning
         self.job, self.settings, self.dry, self.repo = job, settings, dry, repo
         self.cfg = config(settings)
+        given = {k: v for k, v in (overrides or {}).items() if v is not None}
+        self.cfg.update(given)
+        self.whole_ceiling = "max_pangram_usd" in given      # one Pangram ceiling for the night, the repair included
+        self.pass_minutes = int(pass_minutes) if pass_minutes is not None else None
         self.now = now or dt.datetime.now
         self.sleep = sleep or time.sleep
         self.ledger_fn = ledger or (lambda: Ledger(settings))
@@ -301,7 +318,7 @@ class Night:
         self.lines.append(f"- Started {self.start:%Y-%m-%d %H:%M} on {here}" + (", a dry run." if self.dry else "."))
 
         skip = None
-        if self.start >= at(self.start, cfg["latest_start"]):
+        if self.pass_minutes is None and self.start >= at(self.start, cfg["latest_start"]):
             skip = f"a late start ({self.start:%H:%M}, at or after [night] latest_start {cfg['latest_start']})"
         if not skip:
             try:
@@ -397,12 +414,12 @@ class Night:
             self.problem(f"the night's Pangram spend couldn't be read ({type(e).__name__})")
             self.lines.append("- The paragraph pass: skipped, the night's Pangram spend couldn't be read.")
             return
-        until = at(self.start, cfg["pass_until"])
+        until, deadline = self.pass_deadline()
         if left <= 0:
             self.lines.append(f"- The paragraph pass: skipped, nothing left of the night's {money(cfg['max_pangram_usd'])}.")
             return
         if self.now() >= until:
-            self.lines.append(f"- The paragraph pass: skipped, it's past [night] pass_until {cfg['pass_until']}.")
+            self.lines.append(f"- The paragraph pass: skipped, it's past {deadline}.")
             return
         argv = [*self.job_args(), "--section", ",".join(map(str, self.sections())), "--purpose", "loop",
                 # regrow's --rounds counts the arm-set round too (RegrowPass.run's later rounds are range(base + 1,
@@ -413,10 +430,40 @@ class Night:
         self.steps["pass"] = res
         head = (f"- The paragraph pass (sections {secs}, {cfg['rounds']} round{'' if cfg['rounds'] == 1 else 's'},"
                 f" Pangram ceiling {money(left)}, Claude {money(float(cfg['max_claude_usd']))})")
-        self.lines.append(head + ": " + self.outcome_text(res, f"at [night] pass_until {cfg['pass_until']}"))
-        self.short.append({"dry": "pass would run", "finished": "pass ran", "killed": f"pass ended at {cfg['pass_until']}"}
+        self.lines.append(head + ": " + self.outcome_text(res, f"at {deadline}"))
+        self.short.append({"dry": "pass would run", "finished": "pass ran", "killed": f"pass ended at {until:%H:%M}"}
                           .get(res["outcome"], "pass failed") + (f", Pangram {money(res['pangram'])}"
                                                                  if res.get("pangram") else ""))
+
+    def pass_deadline(self):
+        """(when the pass is ended if it's still going, how the digest names it): --pass-minutes after the start, else
+        [night] pass_until on the start's day."""
+        if self.pass_minutes is not None:
+            until = self.start + dt.timedelta(minutes=self.pass_minutes)
+            return until, f"--pass-minutes {self.pass_minutes} ({until:%H:%M})"
+        return at(self.start, self.cfg["pass_until"]), f"[night] pass_until {self.cfg['pass_until']}"
+
+    def submit_settings(self):
+        """The settings the submission runs under. With the night's Pangram ceiling given on the command line, the
+        repair step's [repair] max_pangram_usd becomes what's left of it after the pass and the finals (or stays as
+        it is, when that's less), so one ceiling covers the night; otherwise the night's own settings."""
+        if not self.whole_ceiling:
+            return self.settings
+        ceiling = float(self.cfg["max_pangram_usd"])
+        try:
+            left = self.left() if self.ledger is not None else 0.0
+        except Exception as e:  # noqa: BLE001
+            self.problem(f"the night's Pangram spend couldn't be read before the repair step ({type(e).__name__}),"
+                         " so the repair step gets nothing on Pangram")
+            left = 0.0
+        from .repair import config as repair_config
+        rep = dict(repair_config(self.settings))
+        rep["max_pangram_usd"] = round(min(float(rep["max_pangram_usd"]), left), 2)
+        self.lines.append(f"- The repair step's Pangram: {money(rep['max_pangram_usd'])}, what's left of the night's"
+                          f" {money(ceiling)} after the pass and the finals.")
+        s = copy.copy(self.settings)
+        s.config = dict(self.settings.config, repair=rep)
+        return s
 
     def finals(self, secs):
         try:
@@ -554,7 +601,8 @@ class Night:
         self.say("the submission")
         try:
             now = self.now()
-            r = self.submit(self.job, settings=self.settings, dry=self.dry, early=early,
+            sub_settings = self.submit_settings()
+            r = self.submit(self.job, settings=sub_settings, dry=self.dry, early=early,
                             night=self.night_info(repair_off), repair_mode="off" if repair_off else None, log=self.say,
                             today=now.date().isoformat(), stamp=f"{now:%Y-%m-%d %H:%M}")
             self.result["submission"] = r
@@ -609,7 +657,30 @@ def main(argv=None):
     ap.add_argument("--job", help="the job (a folder in jobs/); default [job] default in config.toml")
     ap.add_argument("--job-dir", help="a job folder anywhere, instead of --job")
     ap.add_argument("--dry", action="store_true", help="say what it would do: nothing spent, written, committed or posted")
+    ap.add_argument("--max-pangram-usd", type=float,
+                    help="the night's one Pangram ceiling, the repair step included (default: [night] max_pangram_usd"
+                         " for the pass and the finals, and [repair]'s own for the repair step)")
+    ap.add_argument("--max-claude-usd", type=float, help="the pass's fact check on Claude (default: [night])")
+    ap.add_argument("--section", help="the sections, comma-separated (default: [night] sections, else the job's)")
+    ap.add_argument("--rounds", type=int, help="the pass's new scoring rounds (default: [night] rounds)")
+    ap.add_argument("--pass-minutes", type=int,
+                    help="end the pass this many minutes after the start, in place of [night] pass_until; the"
+                         " late-start guard is off, so a night started by hand in the day runs its pass")
     a = ap.parse_args(argv)
+    if a.max_pangram_usd is not None and not (a.max_pangram_usd > 0 and a.max_pangram_usd < float("inf")):
+        ap.error("--max-pangram-usd is a number of dollars over zero")
+    if a.max_claude_usd is not None and not (a.max_claude_usd >= 0 and a.max_claude_usd < float("inf")):
+        ap.error("--max-claude-usd is a number of dollars, zero or more")
+    if a.rounds is not None and a.rounds < 1:
+        ap.error("--rounds is 1 or more")
+    if a.pass_minutes is not None and a.pass_minutes < 1:
+        ap.error("--pass-minutes is 1 or more")
+    sections = None
+    if a.section:
+        try:
+            sections = [int(x) for x in a.section.split(",") if x.strip()]
+        except ValueError:
+            ap.error("--section takes section ids, comma-separated: 2,3")
     from .job import JobError
     from .main_copy import load_job
     from .settings import Settings
@@ -619,7 +690,9 @@ def main(argv=None):
     except JobError as e:
         print(f"the night can't start: {e}")
         return 1
-    n = Night(job, settings, dry=a.dry)
+    n = Night(job, settings, dry=a.dry, pass_minutes=a.pass_minutes,
+              overrides={"max_pangram_usd": a.max_pangram_usd, "max_claude_usd": a.max_claude_usd,
+                         "sections": sections, "rounds": a.rounds})
     n.job_dir = a.job_dir
     res = n.run()
     return 0 if a.dry and not res.get("halted") else exit_code(res)

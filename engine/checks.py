@@ -18,10 +18,13 @@ Everything here is plain code: no model, no Pangram, no prompt.
 
 The wording choices (the banned words, dashes, the spelling locale, the swear list and its budget, the filler tags,
 the connective openers and the forum furniture) come from the house rules file: rules.toml at the repo root, or the
-file RULES_FILE names, read by engine/tics/house_rules.py. The module constants below (SWEARS, FILLER_TAGS,
-CONNECTIVE_CAP and the rest) hold the rules in use, and use_rules(path) swaps in a job's own file.
+file RULES_FILE names, read by engine/tics/house_rules.py. checks.SWEARS, checks.FILLER_TAGS, checks.CONNECTIVE_CAP
+and the rest read the rules in use: the base (use_rules), a loaded job's own file over it, or a scope's
+(scoped(rules), for one block of code in one thread).
 """
+import contextvars
 import re
+from contextlib import contextmanager
 
 from engine.tics import house_rules as _house_rules_file
 
@@ -344,57 +347,94 @@ def carries_fact(run_text, names_in_run=()):
 
 
 # ---------------------------------------------------------------------- the house rules in use
-# Every constant here is set from the rules file by _bind_rules, at import and again on use_rules. The functions read
-# them when they run, so a job's own rules file reaches every caller that goes through a function. Code that copied
-# a constant at import (from .checks import FILLER_TAGS) keeps the value it copied; read checks.FILLER_TAGS, or call
-# house_rules(), to follow a job's file.
-HOUSE_RULES = None          # the rules dict in use (shaped like engine/tics/house_rules.py DEFAULTS)
-RULES_PATH = None           # the file it came from, or None for the built-in defaults
-SWEARS = STRONG_SWEARS = None
-SWEAR_MULTIPLIER = 1.5
-FILLER_TAGS = ()
-FILLER_CAP = 1
-SPELLING = "american"
-CONNECTIVE_OPENERS = ()
-CONNECTIVE_RE = None
-CONNECTIVE_CAP = 1
-REDDIT_TELL = None
-_HOUSE = None
+# The rules in use are a Rules object (below), read each time a function runs. A process has a base, which use_rules
+# sets (the default file, or a test's), and a job's own rules over it: a Job loaded with its rules file sets them,
+# and a Job loaded without one clears them, so one job's file never carries over to the next job loaded. That is the
+# command line's way, one job a process. scoped(rules) puts a job's rules in use for one block of code in the
+# current thread only (a contextvars.ContextVar), so a long-lived process (the MCP server) reads each job with its
+# own rules and leaves nothing behind when the block ends. checks.SWEARS, checks.FILLER_TAGS and the other names in
+# RULE_NAMES read the rules in use at the moment they're read; code that copied one at import (from .checks import
+# FILLER_TAGS) keeps the value it copied.
+RULE_NAMES = ("HOUSE_RULES", "RULES_PATH", "SWEARS", "STRONG_SWEARS", "SWEAR_MULTIPLIER", "FILLER_TAGS", "FILLER_CAP",
+              "SPELLING", "CONNECTIVE_OPENERS", "CONNECTIVE_RE", "CONNECTIVE_CAP", "REDDIT_TELL")
 
 
-def _bind_rules(rules, path=None):
-    """Set the module constants from a rules dict."""
-    global HOUSE_RULES, RULES_PATH, SWEARS, STRONG_SWEARS, SWEAR_MULTIPLIER, FILLER_TAGS, FILLER_CAP, SPELLING
-    global CONNECTIVE_OPENERS, CONNECTIVE_RE, CONNECTIVE_CAP, REDDIT_TELL, _HOUSE
-    HOUSE_RULES, RULES_PATH = rules, path
-    sw = rules["swears"]
-    SWEARS = _house_rules_file.word_regex(sw["words"], sw["except"])
-    STRONG_SWEARS = _house_rules_file.word_regex(sw["strong"], sw["except"])
-    SWEAR_MULTIPLIER = float(sw["multiplier"])
-    FILLER_TAGS = tuple(rules["filler"]["words"])
-    FILLER_CAP = int(rules["filler"]["cap"])
-    SPELLING = rules["locale"]["spelling"]
-    CONNECTIVE_OPENERS = tuple(rules["connectives"]["openers"])
-    CONNECTIVE_RE = re.compile(r"(?:^|(?<=[.!?][\"')]\s)|(?<=[.!?]\s))(?:"
-                               + "|".join(re.escape(o) for o in CONNECTIVE_OPENERS) + r")(?![\w])", re.I | re.M) \
-        if CONNECTIVE_OPENERS else re.compile(r"(?!)")
-    CONNECTIVE_CAP = int(rules["connectives"]["cap"])
-    pats = rules["furniture"]["patterns"]
-    REDDIT_TELL = re.compile("|".join(pats), re.M) if pats else re.compile(r"(?!)")
-    _HOUSE = None
+class Rules:
+    """One rules dict (shaped like engine/tics/house_rules.py DEFAULTS) and what the checks need from it, compiled
+    once. RULES_PATH is the file it came from, or None for the built-in defaults."""
+
+    def __init__(self, rules, path=None):
+        self.HOUSE_RULES, self.RULES_PATH = rules, path
+        sw = rules["swears"]
+        self.SWEARS = _house_rules_file.word_regex(sw["words"], sw["except"])
+        self.STRONG_SWEARS = _house_rules_file.word_regex(sw["strong"], sw["except"])
+        self.SWEAR_MULTIPLIER = float(sw["multiplier"])
+        self.FILLER_TAGS = tuple(rules["filler"]["words"])
+        self.FILLER_CAP = int(rules["filler"]["cap"])
+        self.SPELLING = rules["locale"]["spelling"]
+        self.CONNECTIVE_OPENERS = tuple(rules["connectives"]["openers"])
+        self.CONNECTIVE_RE = re.compile(r"(?:^|(?<=[.!?][\"')]\s)|(?<=[.!?]\s))(?:"
+                                        + "|".join(re.escape(o) for o in self.CONNECTIVE_OPENERS) + r")(?![\w])",
+                                        re.I | re.M) if self.CONNECTIVE_OPENERS else re.compile(r"(?!)")
+        self.CONNECTIVE_CAP = int(rules["connectives"]["cap"])
+        pats = rules["furniture"]["patterns"]
+        self.REDDIT_TELL = re.compile("|".join(pats), re.M) if pats else re.compile(r"(?!)")
+        self.house = None            # house_patterns' compiled regexes, made on first use
+
+
+_base = None                         # use_rules: the default file, or the one a test or a caller set
+_job = None                          # a loaded job's own rules over the base (Job with bind_rules), or None
+_scoped = contextvars.ContextVar("depangram_rules", default=None)
+
+
+def _r():
+    """The rules in use: a scope's, else a loaded job's, else the base."""
+    return _scoped.get() or _job or _base
+
+
+def __getattr__(name):
+    """checks.SWEARS and the other RULE_NAMES, read from the rules in use."""
+    if name in RULE_NAMES:
+        return getattr(_r(), name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
+def load_rules(path=None):
+    """A rules file (a job's own, say) over the defaults, as a Rules object, without putting it in use. With no path,
+    the default file (RULES_FILE, else rules.toml at the repo root). A file that doesn't validate raises ValueError."""
+    path = path or _house_rules_file.default_path()
+    return Rules(_house_rules_file.load_rules(path), path)
 
 
 def use_rules(path=None):
-    """Load a rules file (a job's own, say) over the defaults and make it the one in use. With no path, the default
-    file (RULES_FILE, else rules.toml at the repo root). Returns the rules dict."""
-    path = path or _house_rules_file.default_path()
-    _bind_rules(_house_rules_file.load_rules(path), path)
-    return HOUSE_RULES
+    """Load a rules file over the defaults and make it the base in use for the whole process, clearing any job's
+    rules over it. With no path, the default file. Returns the rules dict."""
+    global _base, _job
+    _base, _job = load_rules(path), None
+    return _base.HOUSE_RULES
+
+
+def use_job_rules(rules):
+    """A job's rules (a Rules, or None for none) over the base for the whole process: what a Job loaded with
+    bind_rules sets, so the command line, one job a process, reads that job's file everywhere."""
+    global _job
+    _job = rules
+
+
+@contextmanager
+def scoped(rules):
+    """`rules` (a Rules, or None for the base alone) in use for the block, in the current thread only. Whatever was
+    in use before comes back when the block ends, however it ends. Yields the Rules in use."""
+    token = _scoped.set(rules if rules is not None else _base)
+    try:
+        yield _r()
+    finally:
+        _scoped.reset(token)
 
 
 def house_rules():
     """The rules dict in use."""
-    return HOUSE_RULES
+    return _r().HOUSE_RULES
 
 
 OLD_BUDGET_KEYS = ("swear_multiplier", "filler_cap", "filler_words")
@@ -405,7 +445,8 @@ def budgets(config=None, warn=None):
     and words). An older config.toml that still sets them under [loop] wins, with a one-line warning through `warn`
     (default: standard error), so an old setup keeps its numbers until they move to the rules file."""
     loop = (config or {}).get("loop", {}) or {}
-    mult, cap, words = SWEAR_MULTIPLIER, FILLER_CAP, FILLER_TAGS
+    r = _r()
+    mult, cap, words = r.SWEAR_MULTIPLIER, r.FILLER_CAP, r.FILLER_TAGS
     old = [k for k in OLD_BUDGET_KEYS if k in loop]
     if old:
         import sys
@@ -428,7 +469,7 @@ use_rules()
 
 def swear_counts(text):
     """(words, swears, strong swears) in a text."""
-    return len(text.split()), len(SWEARS.findall(text)), len(STRONG_SWEARS.findall(text))
+    return len(text.split()), len(_r().SWEARS.findall(text)), len(_r().STRONG_SWEARS.findall(text))
 
 
 def author_swear_rates(lines, samples=()):
@@ -458,7 +499,7 @@ def section_swear_problem(candidate, orig_text, rest, rates, multiplier=None):
     nor a creep that's already in can make a run unreplaceable. `multiplier` defaults to the rules file's."""
     if not rates or not rest:
         return None
-    multiplier = SWEAR_MULTIPLIER if multiplier is None else multiplier
+    multiplier = _r().SWEAR_MULTIPLIER if multiplier is None else multiplier
     cw, cs, cst = swear_counts(candidate)
     _, os_, ost = swear_counts(orig_text)
     words = rest[0] + cw
@@ -478,7 +519,7 @@ def section_swear_problem(candidate, orig_text, rest, rates, multiplier=None):
 
 def filler_count(text, words=None):
     """How many filler tags a text carries, outside quotation marks. `words` defaults to FILLER_TAGS."""
-    words = FILLER_TAGS if words is None else words
+    words = _r().FILLER_TAGS if words is None else words
     bare = strip_quotes(text)
     return sum(len(re.findall(r"\b" + re.escape(w) + r"\b", bare, re.I)) for w in words)
 
@@ -494,8 +535,8 @@ def section_filler_problem(candidate, orig_text, rest, cap=None, words=None):
     posted, with the candidate in, would then hold more than `cap`. `rest` is section_counts of the section with
     this run left out; an older three-item rest (no filler count) passes everything. `cap` and `words` default to
     the rules file's (FILLER_CAP, FILLER_TAGS)."""
-    cap = FILLER_CAP if cap is None else cap
-    words = FILLER_TAGS if words is None else words
+    cap = _r().FILLER_CAP if cap is None else cap
+    words = _r().FILLER_TAGS if words is None else words
     if not rest or len(rest) < 4 or not words:
         return None
     cf, of = filler_count(candidate, words), filler_count(orig_text, words)
@@ -536,7 +577,7 @@ GB_US = [(re.compile(p, re.I), r) for p, r in _GB_US]
 
 def gb_spellings(text):
     """The en-GB spellings in a text, as written ([] when the rules leave spelling alone)."""
-    if SPELLING != "american":
+    if _r().SPELLING != "american":
         return []
     return [m.group(0) for rx, _ in GB_US for m in rx.finditer(text)]
 
@@ -544,7 +585,7 @@ def gb_spellings(text):
 def to_us(text):
     """The text with every en-GB spelling on the list turned American, keeping a capital first letter (the text as
     it is when the rules leave spelling alone)."""
-    if SPELLING != "american":
+    if _r().SPELLING != "american":
         return text
     for rx, rep in GB_US:
         def one(m, rep=rep):
@@ -558,17 +599,17 @@ def house_patterns():
     """The house rules' regexes, in the order house_words reports them: em and en dashes, the banned words (the
     hard and the check list as one regex), a "--". The dash ones only when the rules ban dashes. The scanner
     (engine/tics/tic_patterns.py) reads the same banned words from the same file, so there's one list."""
-    global _HOUSE
-    if _HOUSE is None:
-        h = HOUSE_RULES["house"]
+    r = _r()
+    if r.house is None:
+        h = r.HOUSE_RULES["house"]
         out = [re.compile("[\u2014\u2013]")] if h["dashes"] else []
         pat = _house_rules_file.word_pattern(list(h["banned_words"]) + list(h["banned_words_check"]))
         if pat:
             out.append(re.compile(pat, re.I))
         if h["dashes"]:
             out.append(re.compile(r"--"))
-        _HOUSE = out
-    return _HOUSE
+        r.house = out
+    return r.house
 
 
 _house_rules = house_patterns          # the old name, for older callers
@@ -576,7 +617,7 @@ _house_rules = house_patterns          # the old name, for older callers
 
 def banned_words():
     """The banned words as words: the hard and the check list with their wildcards off, for a prompt to name."""
-    h = HOUSE_RULES["house"]
+    h = _r().HOUSE_RULES["house"]
     return _house_rules_file.stems(list(h["banned_words"]) + list(h["banned_words_check"]))
 
 
@@ -707,14 +748,14 @@ EG_RE = re.compile(r"(?<=\w[,;:(]\s)e\.g\.|(?<=\w\s)e\.g\.", re.I)
 def connectives_in(text):
     """The connective openers a text carries: the listed phrases opening a sentence, and "e.g." mid-sentence."""
     bare = strip_quotes(text)
-    return [m.group(0) for m in CONNECTIVE_RE.finditer(bare)] + [m.group(0) for m in EG_RE.finditer(bare)]
+    return [m.group(0) for m in _r().CONNECTIVE_RE.finditer(bare)] + [m.group(0) for m in EG_RE.finditer(bare)]
 
 
 def connective_problem(candidate, before="", after="", cap=None):
     """A reject reason when the paragraph with the candidate in ("before" and "after" are the rest of it) would hold
     more than `cap` connective openers and the candidate brought at least one of them. A paragraph already over the
     cap from earlier run-days doesn't freeze a candidate that adds none. `cap` defaults to CONNECTIVE_CAP."""
-    cap = CONNECTIVE_CAP if cap is None else cap
+    cap = _r().CONNECTIVE_CAP if cap is None else cap
     mine = connectives_in(candidate)
     if not mine:
         return None
@@ -725,7 +766,7 @@ def connective_problem(candidate, before="", after="", cap=None):
 def reddit_tell(text):
     """The first piece of forum furniture in a text (by default a zero-width entity, an "Edit:" paragraph, TL;DR,
     r/sub, OP, a vote; the rules file's [furniture] patterns), or None."""
-    m = REDDIT_TELL.search(text)
+    m = _r().REDDIT_TELL.search(text)
     return m.group(0) if m else None
 
 

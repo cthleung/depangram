@@ -725,5 +725,31 @@ class Finding12NoWebhookInPrints(unittest.TestCase):
         self.assertNotIn("SECRETTOKEN", redact(f"error at {url} with sk-ant-oat01-abc"))
 
 
+class RedactKnowsPangramsKey(unittest.TestCase):
+    """Pangram's key travels in the x-api-key header and sits in .env as PANGRAM_API_KEY; redact finds it there in
+    every form it's printed in. The key here is a fake."""
+    KEY = "pgk_fake_0123456789abcdef"
+
+    def test_the_header_and_the_setting_lose_their_value(self):
+        from engine.util import redact
+        for text in (f"headers={{'x-api-key': '{self.KEY}', 'Content-Type': 'application/json'}}",
+                     f'{{"x-api-key": "{self.KEY}"}}',
+                     f"x-api-key: {self.KEY}",
+                     f"X-API-KEY={self.KEY}",
+                     f"PANGRAM_API_KEY={self.KEY}",
+                     f"env: PANGRAM_API_KEY = '{self.KEY}', next"):
+            got = redact(text)
+            self.assertNotIn(self.KEY, got, text)
+            self.assertIn("[redacted]", got)
+
+    def test_the_rest_of_the_line_stays_readable(self):
+        from engine.util import redact
+        got = redact(f"headers={{'x-api-key': '{self.KEY}', 'Content-Type': 'application/json'}}")
+        self.assertEqual(got, "headers={'x-api-key': '[redacted]', 'Content-Type': 'application/json'}")
+        self.assertEqual(redact("create task failed: 401 missing x-api-key header"),
+                         "create task failed: 401 missing x-api-key header")              # no value, nothing hidden
+        self.assertEqual(redact("task 7f3e failed"), "task 7f3e failed")
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -62,8 +62,8 @@ from .checks import (connective_problem, house_words, invented_sighting,
                      split_sentences, splice_citations, splice_quotes, strip_footnote_marks, to_us)
 from . import review as rv
 from .job import NOTES_VERSION, Bank, Job, flat, sha, style_of
-from .settings import SANDBOX, Settings
-from .util import describe
+from .settings import Settings
+from .util import describe, report_file
 from .wrapup import as_posted, flagged_segments, layout, norm, restore_examples
 
 ARMS = ("notes", "fewshot", "olmo", "base2")   # olmo (2026-11-14 evening): Olmo 3.1 32B Instruct-SFT, chat template
@@ -396,6 +396,8 @@ class RegrowPass:
     fixes: dict = {}
     stuck_entries: dict = {}      # label -> the reviewer's stuck entry for the unit (pins nothing, changes no pick)
     stuck_parts: tuple = ()       # labels whose stuck entry speaks for a part of its original (review.is_part)
+    readonly = False              # True: load_origs never writes the sidecar (pass_paragraphs(readonly=True))
+    no_sidecar = 0                # with readonly and no sidecar: the bank's entries with no orig sha, left out
     stuck_unmatched: tuple = ()   # labels of the stuck entries that speak for no unit at all
     review_unmatched: tuple = ()  # (kind, label) of the vetoes, repairs and hand fixes whose original no unit holds
     lost_pins: dict = {}          # old span sha -> the text a repair or hand fix pinned there before you rewrote it
@@ -563,6 +565,14 @@ class RegrowPass:
         path = self.job.dir / ORIGS_FILE
         if path.exists():
             self.sidecar = json.loads(path.read_text(encoding="utf-8"))
+            return
+        if self.readonly:
+            # nothing written: with no sidecar, an entry with no orig sha of its own can't be placed, so it's left out
+            # (fits() finds no sha for it) and counted, and only the entries that carry their own sha are read
+            self.sidecar = {}
+            self.no_sidecar = sum(1 for e in self.rbank.entries
+                                  if e.get("kind") in ("draw", "score") and e.get("orig_sha") is None
+                                  and not e.get("origs"))
             return
         self.sidecar = dict(self.all_origs)
         path.write_text(json.dumps(self.sidecar, indent=1, sort_keys=True), encoding="utf-8")
@@ -1561,7 +1571,7 @@ class RegrowPass:
         return path
 
 
-def pass_paragraphs(job, bank, sections=None, vm=None):
+def pass_paragraphs(job, bank, sections=None, vm=None, readonly=False):
     """What the pass's best scoring of each section puts in the document, read from its bank and never written to it
     (the write-back, engine/writeback.py). Returns {"paragraphs": {"s6w2 p5": {"text", "section", "round", "ai",
     "flagged", "for_you", "repaired", "picked", "stuck"}}, "sections": {6: {"ai", "label", "text", "scored"}},
@@ -1583,13 +1593,20 @@ def pass_paragraphs(job, bank, sections=None, vm=None):
     "unmatched" by its label, for the morning digest, and so is a veto, repair or hand fix whose original no unit
     holds now, under "unmatched_review". A row with a
     hand fix carries no `stuck` (the hand fix wins, whole in bold). The first call writes the sidecar
-    `regrow origs.json` when it's missing; the bank is never written."""
+    `regrow origs.json` when it's missing; the bank is never written.
+
+    `readonly` (for a reader such as the MCP server's list_jobs): nothing is written at all. With no sidecar, the
+    bank's entries that carry no orig sha of their own are left out, and their count is under "left_out" (0
+    otherwise; the key is only there on a read-only read); the rest reads as it would."""
     sections = list(sections) if sections is not None else list(job.sections)
     rp = RegrowPass(job=job, bank=bank, settings=None, conn=None, log=lambda *_: None)
+    rp.readonly = bool(readonly)
     rp.load_units(sections, vm)
     rp.load_bank()
     out = {"paragraphs": {}, "sections": {}, "moot": [], "unmatched": list(rp.stuck_unmatched),
            "unmatched_review": [list(x) for x in rp.review_unmatched]}
+    if readonly:
+        out["left_out"] = rp.no_sidecar
     for n in sorted(sections):
         sp = rp.section_pick(n)
         if sp is None:
@@ -2034,7 +2051,7 @@ def main(argv=None):
     when = time.strftime("%Y-%m-%d %H%M")
     tag = (" (census)" if a.census else " (final)" if a.final else " (arm test)" if a.arm_test
            else " (test scoring)" if test_section is not None else "")
-    out = SANDBOX / "analytics" / f"regrow {when}{tag}.md"
+    out = report_file(f"regrow {when}{tag}.md")      # makes analytics/ first, as a fresh clone has none
     out.write_text(report_md(rp, sections, tallies, when, a.census, final=a.final, arm_test=a.arm_test,
                              test_scoring=test_section is not None), encoding="utf-8")
     if not a.census and not a.arm_test and test_section is None:   # a test changes no best: the picks file stays

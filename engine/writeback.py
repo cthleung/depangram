@@ -519,7 +519,7 @@ def run(job, write=True, stamp=None, real=None, sections=None, settings=None, pa
     lay = layout(job, bank)
     if passed is None:
         from .regrow import pass_paragraphs
-        passed = pass_paragraphs(job, bank, sections)
+        passed = pass_paragraphs(job, bank, sections, readonly=not write)   # a dry run writes nothing, sidecar included
     paras = paragraphs(job, bank, lay, passed["paragraphs"], sections)
     if after_sync or not job.working.exists() or job.working.read_text(encoding="utf-8") == job.placeholder_base()[0]:
         for p in paras:

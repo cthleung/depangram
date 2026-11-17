@@ -356,5 +356,80 @@ class OtherFiles(unittest.TestCase):
             self.assertIn("notes.txt", idioms.corpus_stamp(d))
 
 
+class RulesScopedToAJob(unittest.TestCase):
+    """A job's rules file reaches its own reads only: a job loaded after another reads its own (or the base), a
+    scope puts a job's rules in use for one block in one thread, and nothing is left behind."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.addCleanup(checks.use_rules)
+        root = Path(self.tmp.name)
+        self.a, self.b = root / "a", root / "b"
+        for d in (self.a, self.b):
+            d.mkdir()
+        (self.a / "job.toml").write_text('[job]\nname = "a"\nrules = "rules.toml"\n', encoding="utf-8")
+        (self.a / "rules.toml").write_text('[filler]\nwords = ["frankly"]\n', encoding="utf-8")
+        (self.b / "job.toml").write_text('[job]\nname = "b"\n', encoding="utf-8")
+        checks.use_rules()
+        self.base = checks.FILLER_TAGS
+
+    def test_a_job_loaded_after_another_never_reads_the_first_one_s_file(self):
+        from engine.job import Job
+        a = Job(root=self.a)
+        self.assertEqual(checks.FILLER_TAGS, ("frankly",))                     # the command line's way: a's
+        b = Job(root=self.b)
+        self.assertEqual(checks.FILLER_TAGS, self.base)                         # flag: b has none, so the base
+        with a.rules_in_use():
+            self.assertEqual(checks.FILLER_TAGS, ("frankly",))
+            self.assertEqual(checks.filler_count("It works, frankly."), 1)
+            with b.rules_in_use():
+                self.assertEqual(checks.FILLER_TAGS, self.base)
+            self.assertEqual(checks.FILLER_TAGS, ("frankly",))
+        self.assertEqual(checks.FILLER_TAGS, self.base)                         # pass: nothing left behind
+
+    def test_a_job_loaded_without_binding_leaves_the_rules_alone(self):
+        from engine.job import Job
+        a = Job(root=self.a, bind_rules=False)
+        self.assertEqual(checks.FILLER_TAGS, self.base)
+        self.assertEqual(a.rules.FILLER_TAGS, ("frankly",))
+        with a.rules_in_use():
+            self.assertEqual(checks.house_rules()["filler"]["words"], ["frankly"])
+        self.assertEqual(checks.FILLER_TAGS, self.base)
+
+    def test_a_scope_in_one_thread_never_reaches_another(self):
+        import threading
+        from engine.job import Job
+        a = Job(root=self.a, bind_rules=False)
+        inside, other = threading.Event(), {}
+        done = threading.Event()
+
+        def hold():
+            with a.rules_in_use():
+                inside.set()
+                done.wait(5)
+        t = threading.Thread(target=hold)
+        t.start()
+        inside.wait(5)
+        other["seen"] = checks.FILLER_TAGS                                      # read while the scope is open
+        done.set()
+        t.join(5)
+        self.assertEqual(other["seen"], self.base)
+
+    def test_a_scope_ends_even_when_its_block_fails(self):
+        from engine.job import Job
+        a = Job(root=self.a, bind_rules=False)
+        with self.assertRaises(RuntimeError):
+            with a.rules_in_use():
+                raise RuntimeError("boom")
+        self.assertEqual(checks.FILLER_TAGS, self.base)
+
+    def test_use_rules_clears_a_job_s_rules(self):
+        from engine.job import Job
+        Job(root=self.a)
+        checks.use_rules()
+        self.assertEqual(checks.FILLER_TAGS, self.base)
+
+
 if __name__ == "__main__":
     unittest.main()

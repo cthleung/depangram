@@ -1104,5 +1104,29 @@ class MainCopy(unittest.TestCase):
         self.assertEqual((self.work / REL).read_text(encoding="utf-8"), "v5, another edit of yours\n")
 
 
+class DryRunWritesNothing(unittest.TestCase):
+    """A dry write-back (write=False) on a job with no regrow origs.json leaves the job folder byte for byte as it
+    was: the pass is read read only, so not even the sidecar is written."""
+
+    def test_a_dry_write_back_leaves_the_job_folder_as_it_was(self):
+        import shutil
+        fixture = Path(__file__).resolve().parent / "fixtures" / "balcony"
+        with tempfile.TemporaryDirectory() as d:
+            job_dir = Path(d) / "balcony"
+            shutil.copytree(fixture, job_dir)
+            draw = {"kind": "draw", "label": "s1w0 p2", "arm": "notes", "k": 0, "text": "A draw."}
+            (job_dir / "regrow bank.jsonl").write_text(json.dumps(draw) + "\n", encoding="utf-8")
+
+            def snapshot():
+                return {p.relative_to(job_dir).as_posix(): p.read_bytes()
+                        for p in sorted(job_dir.rglob("*")) if p.is_file()}
+            before = snapshot()
+            job = Job(root=job_dir)
+            report, _, changed = run(job, write=False, stamp="2026-11-16 02:00", pangram=object())
+            self.assertFalse(report["written"])
+            self.assertFalse((job_dir / "regrow origs.json").exists())             # flag: the sidecar
+            self.assertEqual(snapshot(), before)                                    # pass: every byte as it was
+
+
 if __name__ == "__main__":
     unittest.main()

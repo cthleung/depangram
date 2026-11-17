@@ -46,8 +46,8 @@ from .checks import (QUOTE, connectives_in, house_words, invented_sighting, meas
                      section_counts, section_filler_problem, section_swear_problem, swear_counts, tokens, words_changed)
 from .fixpass import FixPass, _sents, gather
 from .job import NOTES_VERSION, Bank, Job, flat, sha, style_of, window_text_of
-from .settings import SANDBOX, Settings
-from .util import describe
+from .settings import Settings
+from .util import describe, report_file
 from .wrapup import as_posted, layout, norm
 
 RESTORE_VERSION = "restore-v1|"
@@ -968,7 +968,7 @@ def run_for_loop(loop):
             best = rp.bank_entries(lay, rows, results, targets, sections_out, kept, stamp)
             loop.job.assemble(best, keep_others=True)
     when = loop.clock.stamp()
-    out = SANDBOX / "analytics" / f"restore {when.replace(':', '')}.md"
+    out = report_file(f"restore {when.replace(':', '')}.md")
     out.write_text(report_md(when, False, rows, results, targets, sections_out, rp), encoding="utf-8")
     loop.restore_result = {"restored": sum(1 for t in targets.values() if t.get("picked")), "looked_at": len(targets),
                            "sections": {n: s.get("result") for n, s in sections_out.items()}, "report": out.name,
@@ -1048,7 +1048,8 @@ def main(argv=None):
             sections_out[n] = {"result": f"dry run: {len(rep['replaced'])} paragraph(s) would change", "before": None}
     dry = not a.write
     when = time.strftime("%Y-%m-%d") if dry else time.strftime("%Y-%m-%d %H%M")
-    out = Path(a.report) if a.report else SANDBOX / "analytics" / f"restore {when}{' (dry run)' if dry else ''}.md"
+    out = (report_file(Path(a.report).name, Path(a.report).parent) if a.report
+           else report_file(f"restore {when}{' (dry run)' if dry else ''}.md"))
     out.write_text(report_md(when, dry, rows, results, targets, sections_out, rp, claude_spend_since(conn, day_start)),
                    encoding="utf-8")
     n_done = sum(1 for t in targets.values() if t.get("picked"))

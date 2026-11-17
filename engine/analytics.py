@@ -840,6 +840,7 @@ def render(h):
 def write(out_dir=None, settings=None, bank_path=None, digests_dir=None, job=None):
     settings = settings or Settings()
     out_dir = Path(out_dir or SANDBOX / "analytics")
+    out_dir.mkdir(parents=True, exist_ok=True)       # a fresh clone has no analytics/
     conn = open_ro(settings.db_path)
     if job is None:
         from engine.job import Job

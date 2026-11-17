@@ -12,12 +12,10 @@ import importlib.util
 import io
 import json
 import logging
-import math
 import os
 import shutil
 import tempfile
 import time
-import tomllib
 import unittest
 from pathlib import Path
 
@@ -169,8 +167,10 @@ class ScoreText(Base):
 
 
 # ---------------------------------------------------------------------- list_jobs and review_queue
-def passed_fake(job, bank, sections):
-    return {"sections": {1: {"ai": 0.12, "label": "s1 round 3", "text": "...", "scored": True}},
+def passed_fake(job, bank, sections, readonly=False):
+    if not readonly:
+        raise AssertionError("the server reads the pass read only")
+    return {"sections": {1: {"ai": 0.12, "label": "s1 round 3", "text": "...", "scored": True}}, "left_out": 0,
             "paragraphs": {
                 "s1w0 p2": {"text": "Para one.", "section": 1, "round": "s1 round 3", "ai": 0.12, "flagged": False,
                             "for_you": None, "repaired": "cut an invented sentence", "picked": True, "stuck": []},
@@ -200,14 +200,45 @@ class Jobs(Base):
         self.assertIn("2, 3", b["scores_note"])
         self.assertIsNone(got["example"]["scores"])                                          # no pass has run
 
-    def test_a_bank_without_its_sidecar_is_left_unread_so_nothing_is_written(self):
+    def test_a_bank_without_its_sidecar_is_read_without_writing_one(self):
         self.give_bank(origs=False)
-        called = []
-        got = self.app(pass_paragraphs_fn=lambda *a: called.append(a)).list_jobs()["jobs"]
+
+        def fake(job, bank, sections, readonly=False):
+            return dict(passed_fake(job, bank, sections, readonly), left_out=3)
+        got = self.app(pass_paragraphs_fn=fake).list_jobs()["jobs"]
         b = next(r for r in got if r["folder"] == "balcony")
-        self.assertIsNone(b["scores"])
-        self.assertEqual(called, [])
+        self.assertEqual(b["scores"]["1"]["ai_share"], 0.12)                      # read, not skipped
+        self.assertIn("3 older entries", b["scores_note"])
         self.assertFalse((self.jobs / "balcony" / "regrow origs.json").exists())
+
+    def test_the_real_pass_read_writes_nothing_in_the_job(self):
+        self.give_bank(origs=False)
+        before = sorted(p.name for p in (self.jobs / "balcony").iterdir())
+        got = {r["folder"]: r for r in self.app().list_jobs()["jobs"]}
+        self.assertNotIn("error", got["balcony"])
+        self.assertEqual(got["balcony"]["scores"], {})
+        self.assertEqual(sorted(p.name for p in (self.jobs / "balcony").iterdir()), before)
+
+    def test_each_job_is_read_under_its_own_rules_and_nothing_is_left_behind(self):
+        from engine import checks
+        mine = self.jobs / "frank"
+        shutil.copytree(FIXTURE, mine)
+        toml = (mine / "job.toml").read_text(encoding="utf-8").replace('name = "balcony"',
+                                                                       'name = "frank"\nrules = "rules.toml"')
+        (mine / "job.toml").write_text(toml, encoding="utf-8")
+        (mine / "rules.toml").write_text('[filler]\nwords = ["frankly"]\n', encoding="utf-8")
+        for d in (mine, self.jobs / "balcony"):
+            (d / "regrow bank.jsonl").write_text("", encoding="utf-8")
+        seen = {}
+
+        def fake(job, bank, sections, readonly=False):
+            seen[job.name] = checks.FILLER_TAGS
+            return passed_fake(job, bank, sections, readonly)
+        base = checks.FILLER_TAGS
+        self.app(pass_paragraphs_fn=fake).list_jobs()
+        self.assertEqual(seen["frank"], ("frankly",))                              # its own file
+        self.assertEqual(seen["balcony"], base)                                     # the next job: the base again
+        self.assertEqual(checks.FILLER_TAGS, base)                                  # and nothing left behind
 
     def test_one_bad_job_doesnt_sink_the_list(self):
         (self.jobs / "broken").mkdir()
@@ -279,7 +310,7 @@ class StartRun(Base):
         self.assertEqual(env["PYTHONIOENCODING"], "utf-8")
         rec = json.loads((self.run_dir(got["run_id"]) / "run.json").read_text(encoding="utf-8"))
         self.assertEqual((rec["pid"], rec["state"], rec["max_pangram_usd"]), (4242, "running", 2.5))
-        self.assertTrue((self.repo / "analytics").is_dir())                        # regrow doesn't make it
+        self.assertFalse((self.repo / "analytics").exists())                       # the engine makes its own folder
 
     def test_no_pangram_ceiling_no_run(self):
         for bad in (None, 0, -1, float("nan"), float("inf"), "lots"):
@@ -321,41 +352,39 @@ class StartRun(Base):
                 self.start(rounds=bad)
         self.assertEqual(self.spawned, [])
 
-    def test_a_night_gets_its_ceilings_through_its_own_config(self):
+    def test_a_night_gets_its_ceilings_as_flags(self):
         got = self.start(kind="night", max_pangram_usd=1.25, max_claude_usd=0.75, sections=[2], rounds=2)
         cmd, env = self.spawned[0]
-        self.assertEqual(cmd[5:], ["engine.night", "--job", "balcony"])
-        path = Path(env["DEPANGRAM_CONFIG"])
-        self.assertEqual(path, self.run_dir(got["run_id"]) / "config.toml")
-        cfg = tomllib.loads(path.read_text(encoding="utf-8"))
-        self.assertEqual(cfg["night"]["max_pangram_usd"], 1.25)
-        self.assertEqual(cfg["night"]["max_claude_usd"], 0.75)
-        self.assertEqual((cfg["night"]["rounds"], cfg["night"]["sections"]), (2, [2]))
-        self.assertEqual(cfg["repair"]["max_pangram_usd"], 1.25)                  # held to the caller's
-        self.assertEqual(cfg["repair"]["max_claude_usd"], 0.75)
-        self.assertEqual(cfg["pangram"], self.config["pangram"])                   # the rest as it was
+        self.assertEqual(cmd[5:8], ["engine.night", "--job", "balcony"])
+        args = cmd[8:]
+        self.assertEqual(args[args.index("--max-pangram-usd") + 1], "1.25")
+        self.assertEqual(args[args.index("--max-claude-usd") + 1], "0.75")
+        self.assertEqual(args[args.index("--rounds") + 1], "2")                    # the night adds the arm-set round
+        self.assertEqual(args[args.index("--section") + 1], "2")
+        self.assertNotIn("--pass-minutes", args)
+        self.assertEqual(env.get("DEPANGRAM_CONFIG"), os.environ.get("DEPANGRAM_CONFIG"))   # no config copy
+        self.assertEqual(os.listdir(self.run_dir(got["run_id"])), ["out.log", "run.json"])
         self.assertFalse(any("skips the paragraph pass" in n for n in got["notes"]))
-        self.assertTrue(any("twice" in n for n in got["notes"]))                   # the repair step spends too
-        self.assertTrue((self.repo / "analytics").is_dir())                        # its pass and finals write there
-
-    def test_a_night_copies_the_config_as_it_is_now(self):
-        app = self.app()
-        self.config = dict(self.config, git=dict(self.config["git"], publish=True))   # edited after the start
-        got = self.start(app, kind="night")
-        cfg = tomllib.loads((self.run_dir(got["run_id"]) / "config.toml").read_text(encoding="utf-8"))
-        self.assertTrue(cfg["git"]["publish"])
+        self.assertTrue(any("covers the whole night" in n for n in got["notes"]))
 
     def test_a_night_started_in_the_afternoon_says_it_runs_the_submission_only(self):
         self.clock[0] = AFTERNOON
         got = self.start(kind="night")
         self.assertTrue(any("skips the paragraph pass" in n for n in got["notes"]))
 
-    def test_the_config_copy_round_trips(self):
-        self.assertEqual(tomllib.loads(rs.toml_dump(self.config)), self.config)
-        odd = {"a": {"b c": "x\"y\\z\n", "d": [1, 2.5, True], "e": {"f": "g"}, "h": "Grüße"}, "top": 1}
-        self.assertEqual(tomllib.loads(rs.toml_dump(odd)), odd)
-        with self.assertRaises(ValueError):
-            rs.toml_dump({"a": {"b": math.nan}})
+    def test_pass_minutes_runs_a_night_s_pass_at_any_time(self):
+        self.clock[0] = AFTERNOON
+        got = self.start(kind="night", pass_minutes=45)
+        args = self.spawned[0][0]
+        self.assertEqual(args[args.index("--pass-minutes") + 1], "45")
+        self.assertFalse(any("skips the paragraph pass" in n for n in got["notes"]))
+
+    def test_pass_minutes_is_for_a_night_and_a_whole_number(self):
+        for kw in ({"kind": "pass", "pass_minutes": 30}, {"kind": "night", "pass_minutes": 0},
+                   {"kind": "night", "pass_minutes": 2.5}, {"kind": "night", "pass_minutes": True}):
+            with self.assertRaises(Refused, msg=repr(kw)):
+                self.start(**kw)
+        self.assertEqual(self.spawned, [])
 
 
 # ---------------------------------------------------------------------- run_status, run_report, restarts

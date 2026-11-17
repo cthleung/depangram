@@ -35,9 +35,9 @@ from . import checks as _checks
 from .checks import (gb_spellings, house_words, invented_sighting, must_keeps, names_missing, names_required,
                      new_items, punctuation_problem, repeat_ok, to_us, words_changed)
 from .job import NOTES_VERSION, Bank, Job, flat, protected_fallback, sha, style_of, window_text_of, word_in
-from .settings import SANDBOX, Settings
+from .settings import Settings
 from .texts import COMMENT_RE, strip_markdown
-from .util import describe
+from .util import describe, report_file
 from .wrapup import (BLOCK_SPLIT, as_posted, is_prose_block, layout, match_paragraph, norm, run_versions,
                      section_spans, write_back)
 
@@ -544,7 +544,7 @@ def main(argv=None):
             sections_out[n] = {"result": f"dry run: {len(rep['replaced'])} paragraph(s) would change",
                                "before": fp.cached_score(as_posted(raw, [n], style=style_of(job))[n])}
     when = time.strftime("%Y-%m-%d %H%M")
-    out = SANDBOX / "analytics" / f"fixpass {when}{' (dry run)' if not a.write else ''}.md"
+    out = report_file(f"fixpass {when}{' (dry run)' if not a.write else ''}.md")
     out.write_text(report_md(when, not a.write, rows, results, sections_out, a.purpose, fp.model, fp.max_words,
                              fp.noise), encoding="utf-8")
     n_acc = sum(len(v["accepted"]) for v in results.values())
