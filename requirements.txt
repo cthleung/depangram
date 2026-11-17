@@ -24,3 +24,6 @@ mcp==2.3.0
 # tests/test_notes_retrain.py imports both, so the full suite needs them.
 # modal==1.6.3
 # PyYAML==6.0.3
+
+# optional, the figures (docs/figures/make_figures.py) and tests/test_figures.py, which skip without it.
+# matplotlib==3.11.2

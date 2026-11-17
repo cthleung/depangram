@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="460.8pt" height="349.2pt" viewBox="0 0 460.8 349.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>depangram docs/figures/make_figures.py</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 349.2 
+L 460.8 349.2 
+L 460.8 0 
+L 0 0 
+z
+" style="fill: #fcfcfb"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 149.76 195.84 
+L 249.84 195.84 
+Q 253.44 195.84 253.44 192.24 
+L 253.44 92.16 
+Q 253.44 88.56 249.84 88.56 
+L 149.76 88.56 
+Q 146.16 88.56 146.16 92.16 
+L 146.16 192.24 
+Q 146.16 195.84 149.76 195.84 
+z
+" clip-path="url(#p307a4bc490)" style="fill: #cde2fb"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 261.36 195.84 
+L 361.44 195.84 
+Q 365.04 195.84 365.04 192.24 
+L 365.04 92.16 
+Q 365.04 88.56 361.44 88.56 
+L 261.36 88.56 
+Q 257.76 88.56 257.76 92.16 
+L 257.76 192.24 
+Q 257.76 195.84 261.36 195.84 
+z
+" clip-path="url(#p307a4bc490)" style="fill: #3987e5"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 149.76 307.44 
+L 249.84 307.44 
+Q 253.44 307.44 253.44 303.84 
+L 253.44 203.76 
+Q 253.44 200.16 249.84 200.16 
+L 149.76 200.16 
+Q 146.16 200.16 146.16 203.76 
+L 146.16 303.84 
+Q 146.16 307.44 149.76 307.44 
+z
+" clip-path="url(#p307a4bc490)" style="fill: #104281"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 261.36 307.44 
+L 361.44 307.44 
+Q 365.04 307.44 365.04 303.84 
+L 365.04 203.76 
+Q 365.04 200.16 361.44 200.16 
+L 261.36 200.16 
+Q 257.76 200.16 257.76 203.76 
+L 257.76 303.84 
+Q 257.76 307.44 261.36 307.44 
+z
+" clip-path="url(#p307a4bc490)" style="fill: #184f95"/>
+   </g>
+   <g id="text_1">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 700 11px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="25.92" transform="rotate(-0 18 25.92)">Skeletons or words? The 2x2 swap</text>
+   </g>
+   <g id="text_2">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="41.76" transform="rotate(-0 18 41.76)">Sentence skeletons and word choice swapped between the author's</text>
+   </g>
+   <g id="text_3">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="54.72" transform="rotate(-0 18 54.72)">writing and the model's.</text>
+   </g>
+   <g id="text_4">
+    <text style="text-anchor: middle; fill: #898781; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="255.6" y="66.96" transform="rotate(-0 255.6 66.96)">words from</text>
+   </g>
+   <g id="text_5">
+    <text style="fill: #898781; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" transform="translate(106.348535 223.707422) rotate(-90)">skeleton from</text>
+   </g>
+   <g id="text_6">
+    <text style="text-anchor: middle; fill: #0b0b0b; font: normal 700 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="199.8" y="80.64" transform="rotate(-0 199.8 80.64)">the author</text>
+   </g>
+   <g id="text_7">
+    <text style="text-anchor: middle; fill: #0b0b0b; font: normal 700 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="311.4" y="80.64" transform="rotate(-0 311.4 80.64)">the model</text>
+   </g>
+   <g id="text_8">
+    <text style="text-anchor: end; fill: #0b0b0b; font: normal 700 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="136.8" y="144.40834" transform="rotate(-0 136.8 144.40834)">the author</text>
+   </g>
+   <g id="text_9">
+    <text style="text-anchor: middle; fill: #0b0b0b; font: normal 700 18px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="199.8" y="131.04" transform="rotate(-0 199.8 131.04)">0.00</text>
+   </g>
+   <g id="text_10">
+    <text style="text-anchor: middle; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="199.8" y="151.2" transform="rotate(-0 199.8 151.2)">n = 4</text>
+   </g>
+   <g id="text_11">
+    <text style="text-anchor: middle; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="199.8" y="164.16" transform="rotate(-0 199.8 164.16)">original</text>
+   </g>
+   <g id="text_12">
+    <text style="text-anchor: middle; fill: #0b0b0b; font: normal 700 18px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="311.4" y="131.04" transform="rotate(-0 311.4 131.04)">0.46</text>
+   </g>
+   <g id="text_13">
+    <text style="text-anchor: middle; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="311.4" y="151.2" transform="rotate(-0 311.4 151.2)">n = 8</text>
+   </g>
+   <g id="text_14">
+    <text style="text-anchor: middle; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="311.4" y="164.16" transform="rotate(-0 311.4 164.16)">swap</text>
+   </g>
+   <g id="text_15">
+    <text style="text-anchor: end; fill: #0b0b0b; font: normal 700 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="136.8" y="256.00834" transform="rotate(-0 136.8 256.00834)">the model</text>
+   </g>
+   <g id="text_16">
+    <text style="text-anchor: middle; fill: #ffffff; font: normal 700 18px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="199.8" y="242.64" transform="rotate(-0 199.8 242.64)">0.91</text>
+   </g>
+   <g id="text_17">
+    <text style="text-anchor: middle; fill: #ffffff; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="199.8" y="262.8" transform="rotate(-0 199.8 262.8)">n = 8</text>
+   </g>
+   <g id="text_18">
+    <text style="text-anchor: middle; fill: #ffffff; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="199.8" y="275.76" transform="rotate(-0 199.8 275.76)">swap</text>
+   </g>
+   <g id="text_19">
+    <text style="text-anchor: middle; fill: #ffffff; font: normal 700 18px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="311.4" y="242.64" transform="rotate(-0 311.4 242.64)">0.81</text>
+   </g>
+   <g id="text_20">
+    <text style="text-anchor: middle; fill: #ffffff; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="311.4" y="262.8" transform="rotate(-0 311.4 262.8)">n = 4</text>
+   </g>
+   <g id="text_21">
+    <text style="text-anchor: middle; fill: #ffffff; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="311.4" y="275.76" transform="rotate(-0 311.4 275.76)">original</text>
+   </g>
+   <g id="text_22">
+    <text style="text-anchor: start; fill: #898781; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="381.6" y="126" transform="rotate(-0 381.6 126)">AI share</text>
+   </g>
+   <g id="text_23">
+    <text style="text-anchor: start; fill: #898781; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="381.6" y="138.24" transform="rotate(-0 381.6 138.24)">0 human, 1 AI</text>
+   </g>
+   <g id="text_24">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="334.8" transform="rotate(-0 18 334.8)">Model skeletons stay flagged whatever words they wear.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p307a4bc490">
+   <rect x="0" y="0" width="460.8" height="349.2"/>
+  </clipPath>
+ </defs>
+</svg>

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="604.8pt" height="284.4pt" viewBox="0 0 604.8 284.4" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>depangram docs/figures/make_figures.py</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 284.4 
+L 604.8 284.4 
+L 604.8 0 
+L 0 0 
+z
+" style="fill: #1a1a19"/>
+  </g>
+  <g id="axes_1">
+   <g id="text_1">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 11px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="25.92" transform="rotate(-0 18 25.92)">The fact check: Sonnet passes or fails each gated draft</text>
+   </g>
+   <g id="text_2">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="41.76" transform="rotate(-0 18 41.76)">On the loose prompt the adapter passed 50% of its checks and the few-shot writer 15%.</text>
+   </g>
+   <g id="text_3">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="54.72" transform="rotate(-0 18 54.72)">The two prompts ran on different pools of drafts, so compare arms, not prompts.</text>
+   </g>
+   <g id="patch_2">
+    <path d="M 224.64 271.44 
+L 229.68 271.44 
+Q 231.12 271.44 231.12 270 
+L 231.12 264.96 
+Q 231.12 263.52 229.68 263.52 
+L 224.64 263.52 
+Q 223.2 263.52 223.2 264.96 
+L 223.2 270 
+Q 223.2 271.44 224.64 271.44 
+z
+" clip-path="url(#p67d2270541)" style="fill: #3987e5"/>
+   </g>
+   <g id="text_4">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="235.44" y="270" transform="rotate(-0 235.44 270)">passed</text>
+   </g>
+   <g id="patch_3">
+    <path d="M 281.664 271.44 
+L 286.704 271.44 
+Q 288.144 271.44 288.144 270 
+L 288.144 264.96 
+Q 288.144 263.52 286.704 263.52 
+L 281.664 263.52 
+Q 280.224 263.52 280.224 264.96 
+L 280.224 270 
+Q 280.224 271.44 281.664 271.44 
+z
+" clip-path="url(#p67d2270541)" style="fill: #898781"/>
+   </g>
+   <g id="text_5">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="292.464" y="270" transform="rotate(-0 292.464 270)">failed</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="matplotlib.axis_1"/>
+   <g id="matplotlib.axis_2"/>
+   <g id="text_6">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="84.728438" transform="rotate(-0 18 84.728438)">paragraph pass, loose prompt</text>
+   </g>
+   <g id="patch_4">
+    <path d="M 223.2 92.25 
+L 371.461883 92.25 
+Q 371.461883 92.25 371.461883 92.25 
+L 371.461883 101.25 
+Q 371.461883 101.25 371.461883 101.25 
+L 223.2 101.25 
+z
+" clip-path="url(#p2688d0b58c)" style="fill: #3987e5"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 372.961883 92.25 
+L 515.4 92.25 
+Q 518.4 92.25 518.4 95.25 
+L 518.4 98.25 
+Q 518.4 101.25 515.4 101.25 
+L 372.961883 101.25 
+z
+" clip-path="url(#p2688d0b58c)" style="fill: #898781"/>
+   </g>
+   <g id="text_7">
+    <text style="text-anchor: end; fill: #f0efec; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="214.344" y="98.828438" transform="rotate(-0 214.344 98.828438)">adapter</text>
+   </g>
+   <g id="text_8">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="527.256" y="98.698535" transform="rotate(-0 527.256 98.698535)">112 of 223 passed</text>
+   </g>
+   <g id="patch_6">
+    <path d="M 223.2 106.35 
+L 266.933333 106.35 
+Q 266.933333 106.35 266.933333 106.35 
+L 266.933333 115.35 
+Q 266.933333 115.35 266.933333 115.35 
+L 223.2 115.35 
+z
+" clip-path="url(#p2688d0b58c)" style="fill: #3987e5"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 268.433333 106.35 
+L 515.4 106.35 
+Q 518.4 106.35 518.4 109.35 
+L 518.4 112.35 
+Q 518.4 115.35 515.4 115.35 
+L 268.433333 115.35 
+z
+" clip-path="url(#p2688d0b58c)" style="fill: #898781"/>
+   </g>
+   <g id="text_9">
+    <text style="text-anchor: end; fill: #f0efec; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="214.344" y="112.928438" transform="rotate(-0 214.344 112.928438)">few-shot</text>
+   </g>
+   <g id="text_10">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="527.256" y="112.798535" transform="rotate(-0 527.256 112.798535)">32 of 216 passed</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 223.2 120.45 
+L 515.4 120.45 
+Q 518.4 120.45 518.4 123.45 
+L 518.4 126.45 
+Q 518.4 129.45 515.4 129.45 
+L 223.2 129.45 
+z
+" clip-path="url(#p2688d0b58c)" style="fill: #898781"/>
+   </g>
+   <g id="text_11">
+    <text style="text-anchor: end; fill: #f0efec; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="214.344" y="127.028438" transform="rotate(-0 214.344 127.028438)">second base</text>
+   </g>
+   <g id="text_12">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="527.256" y="126.898535" transform="rotate(-0 527.256 126.898535)">0 of 12 passed</text>
+   </g>
+   <g id="patch_9">
+    <path d="M 223.2 134.55 
+L 317.690066 134.55 
+Q 317.690066 134.55 317.690066 134.55 
+L 317.690066 143.55 
+Q 317.690066 143.55 317.690066 143.55 
+L 223.2 143.55 
+z
+" clip-path="url(#p2688d0b58c)" style="fill: #3987e5"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 319.190066 134.55 
+L 515.4 134.55 
+Q 518.4 134.55 518.4 137.55 
+L 518.4 140.55 
+Q 518.4 143.55 515.4 143.55 
+L 319.190066 143.55 
+z
+" clip-path="url(#p2688d0b58c)" style="fill: #898781"/>
+   </g>
+   <g id="text_13">
+    <text style="text-anchor: end; fill: #f0efec; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="214.344" y="141.128438" transform="rotate(-0 214.344 141.128438)">all</text>
+   </g>
+   <g id="text_14">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="527.256" y="140.998535" transform="rotate(-0 527.256 140.998535)">145 of 453 passed</text>
+   </g>
+   <g id="text_15">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="162.278438" transform="rotate(-0 18 162.278438)">paragraph pass, strict prompt (run stopped)</text>
+   </g>
+   <g id="patch_11">
+    <path d="M 223.2 169.8 
+L 362.69011 169.8 
+Q 362.69011 169.8 362.69011 169.8 
+L 362.69011 178.8 
+Q 362.69011 178.8 362.69011 178.8 
+L 223.2 178.8 
+z
+" clip-path="url(#p2688d0b58c)" style="fill: #3987e5"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 364.19011 169.8 
+L 515.4 169.8 
+Q 518.4 169.8 518.4 172.8 
+L 518.4 175.8 
+Q 518.4 178.8 515.4 178.8 
+L 364.19011 178.8 
+z
+" clip-path="url(#p2688d0b58c)" style="fill: #898781"/>
+   </g>
+   <g id="text_16">
+    <text style="text-anchor: end; fill: #f0efec; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="214.344" y="176.378438" transform="rotate(-0 214.344 176.378438)">adapter</text>
+   </g>
+   <g id="text_17">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="527.256" y="176.248535" transform="rotate(-0 527.256 176.248535)">43 of 91 passed</text>
+   </g>
+   <g id="patch_13">
+    <path d="M 223.2 183.9 
+L 264.2 183.9 
+Q 264.2 183.9 264.2 183.9 
+L 264.2 192.9 
+Q 264.2 192.9 264.2 192.9 
+L 223.2 192.9 
+z
+" clip-path="url(#p2688d0b58c)" style="fill: #3987e5"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 265.7 183.9 
+L 515.4 183.9 
+Q 518.4 183.9 518.4 186.9 
+L 518.4 189.9 
+Q 518.4 192.9 515.4 192.9 
+L 265.7 192.9 
+z
+" clip-path="url(#p2688d0b58c)" style="fill: #898781"/>
+   </g>
+   <g id="text_18">
+    <text style="text-anchor: end; fill: #f0efec; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="214.344" y="190.478438" transform="rotate(-0 214.344 190.478438)">few-shot</text>
+   </g>
+   <g id="text_19">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="527.256" y="190.348535" transform="rotate(-0 527.256 190.348535)">10 of 72 passed</text>
+   </g>
+   <g id="patch_15">
+    <path d="M 223.2 198 
+L 319.185276 198 
+Q 319.185276 198 319.185276 198 
+L 319.185276 207 
+Q 319.185276 207 319.185276 207 
+L 223.2 207 
+z
+" clip-path="url(#p2688d0b58c)" style="fill: #3987e5"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 320.685276 198 
+L 515.4 198 
+Q 518.4 198 518.4 201 
+L 518.4 204 
+Q 518.4 207 515.4 207 
+L 320.685276 207 
+z
+" clip-path="url(#p2688d0b58c)" style="fill: #898781"/>
+   </g>
+   <g id="text_20">
+    <text style="text-anchor: end; fill: #f0efec; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="214.344" y="204.578438" transform="rotate(-0 214.344 204.578438)">all</text>
+   </g>
+   <g id="text_21">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="527.256" y="204.448535" transform="rotate(-0 527.256 204.448535)">53 of 163 passed</text>
+   </g>
+   <g id="text_22">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="225.728438" transform="rotate(-0 18 225.728438)">window loop</text>
+   </g>
+   <g id="patch_17">
+    <path d="M 223.2 233.25 
+L 444.994652 233.25 
+Q 444.994652 233.25 444.994652 233.25 
+L 444.994652 242.25 
+Q 444.994652 242.25 444.994652 242.25 
+L 223.2 242.25 
+z
+" clip-path="url(#p2688d0b58c)" style="fill: #3987e5"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 446.494652 233.25 
+L 515.4 233.25 
+Q 518.4 233.25 518.4 236.25 
+L 518.4 239.25 
+Q 518.4 242.25 515.4 242.25 
+L 446.494652 242.25 
+z
+" clip-path="url(#p2688d0b58c)" style="fill: #898781"/>
+   </g>
+   <g id="text_23">
+    <text style="text-anchor: end; fill: #f0efec; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="214.344" y="239.828438" transform="rotate(-0 214.344 239.828438)">all</text>
+   </g>
+   <g id="text_24">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="527.256" y="239.698535" transform="rotate(-0 527.256 239.698535)">281 of 374 passed</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p67d2270541">
+   <rect x="0" y="0" width="604.8" height="284.4"/>
+  </clipPath>
+  <clipPath id="p2688d0b58c">
+   <rect x="223.2" y="75.6" width="295.2" height="169.2"/>
+  </clipPath>
+ </defs>
+</svg>

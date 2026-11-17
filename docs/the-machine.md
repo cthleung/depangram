@@ -4,8 +4,6 @@ All of this runs on my gaming PC, an RTX 4080 Super with 16 GB of VRAM that most
 
 So the rule became local first. Every draft, every Open Pangram score and every gate runs on my PC, and the only thing that ever leaves it is training.
 
-<!-- figure: local vs rented -->
-
 ## Models
 
 16 GB is a hard ceiling, and the best writer is the one that fits and stays fast, not the biggest one on the leaderboard.
@@ -14,8 +12,6 @@ So the rule became local first. Every draft, every Open Pangram score and every 
 - **The 32B OLMo models** ran at a 3-bit quant, with llama.cpp splitting the layers that don't fit into system RAM. They were the alternates.
 - **Speed decided as much as quality did.** OLMo-2 32B base scored 0.01 in the first bake-off, which on paper made it the winner, but it ran at 2.9 tokens a second on my card against 29 for Gemma, so it was never going to carry a night of sampling.
 - **The cache got squeezed too.** The key-value cache runs at 8 bits, and the server keeps two parallel slots, each with its own share of the context.
-
-<!-- figure: models on the card -->
 
 ## One server for both writers
 
@@ -41,4 +37,7 @@ Everything the engine starts also runs at below-normal priority, so even before 
 
 The upshot is that I've never had to think about it, which was really the point.
 
-<!-- figure: the gpu guard -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/gpu-guard-dark.svg">
+  <img alt="The GPU guard: what pauses a run, and how it resumes" src="figures/gpu-guard-light.svg">
+</picture>

@@ -1,0 +1,2233 @@
+{
+ "datasets": [
+  {
+   "id": "noise_floor",
+   "title": "Pangram AI share under trivial edits, 3 passages x 4 versions",
+   "unit": "AI share (0 human, 1 AI)",
+   "note": "From the noise-floor run in the run ledger. Identical text was never rescored: the client caches by text hash.",
+   "rows": [
+    {
+     "passage": "passage A",
+     "words": 164,
+     "original": 1.0,
+     "comma moved": 0.79,
+     "contraction swapped": 1.0,
+     "twin word": 1.0,
+     "max swing": 0.21
+    },
+    {
+     "passage": "passage B",
+     "words": 74,
+     "original": 0.0,
+     "comma moved": 0.0,
+     "contraction swapped": 0.0,
+     "twin word": 0.0,
+     "max swing": 0.0
+    },
+    {
+     "passage": "passage C",
+     "words": 129,
+     "original": 1.0,
+     "comma moved": 1.0,
+     "contraction swapped": 1.0,
+     "twin word": 1.0,
+     "max swing": 0.0
+    },
+    {
+     "passage": "summary",
+     "mean of per-passage max swings": 0.07,
+     "edited versions that moved": "1 of 9",
+     "scorings": 12,
+     "usd": 1.0,
+     "keep threshold": 0.05
+    }
+   ]
+  },
+  {
+   "id": "keep_or_drop",
+   "title": "Every model and method tried, with its result and the decision",
+   "unit": "AI share where scored",
+   "note": "From the experiment reports and the decision log. Track dots are Pangram AI share; an arrow runs from the text before to the text after.",
+   "rows": [
+    {
+     "group": "Base models",
+     "what": "Mistral Small 3.1 24B base",
+     "track": {
+      "dots": [
+       0.08
+      ]
+     },
+     "result": "0.08 in the bake-off",
+     "decision": "kept",
+     "reason": "the main writer"
+    },
+    {
+     "group": "Base models",
+     "what": "Mistral Small 24B base 2501",
+     "track": {
+      "dots": [
+       0.16
+      ]
+     },
+     "result": "0.16 in the bake-off",
+     "decision": "kept",
+     "reason": "adapter base; same as 3.1 within the noise"
+    },
+    {
+     "group": "Base models",
+     "what": "OLMo 3 32B base",
+     "track": {
+      "dots": [
+       0.12
+      ]
+     },
+     "result": "0.12 in the bake-off",
+     "decision": "alternate",
+     "reason": "kept in reserve as a writer"
+    },
+    {
+     "group": "Base models",
+     "what": "OLMo-2 32B base, 3-bit",
+     "track": {
+      "dots": [
+       0.13
+      ]
+     },
+     "result": "0.13 in the bake-off",
+     "decision": "alternate",
+     "reason": "kept in reserve as a writer"
+    },
+    {
+     "group": "Base models",
+     "what": "OLMo-2 32B base, 4-bit",
+     "track": {
+      "dots": [
+       0.01
+      ]
+     },
+     "result": "0.01 in the bake-off",
+     "decision": "dropped",
+     "reason": "too slow at 3 tokens a second"
+    },
+    {
+     "group": "Base models",
+     "what": "Gemma 4 26B base",
+     "track": {
+      "dots": [
+       0.32
+      ]
+     },
+     "result": "0.32 in the bake-off",
+     "decision": "dropped",
+     "reason": "writes markup into the prose"
+    },
+    {
+     "group": "Base models",
+     "what": "OLMo 3 7B base",
+     "track": {
+      "dots": [
+       0.39
+      ]
+     },
+     "result": "0.39 in the bake-off",
+     "decision": "dropped",
+     "reason": "out after round 2"
+    },
+    {
+     "group": "Base models",
+     "what": "Qwen3 14B base",
+     "track": {
+      "dots": [
+       0.68
+      ]
+     },
+     "result": "0.68 in the bake-off",
+     "decision": "dropped",
+     "reason": "out after round 1"
+    },
+    {
+     "group": "Instruct models",
+     "what": "Humanizer model (instruct-tuned)",
+     "track": {
+      "dots": [
+       1.0
+      ]
+     },
+     "result": "1.00, with 1.28 hard tics per sample",
+     "decision": "dropped",
+     "reason": "the highest score of any model"
+    },
+    {
+     "group": "Instruct models",
+     "what": "OLMo 3.1 32B Instruct-SFT as a writer",
+     "track": {
+      "dots": [
+       0.5204
+      ]
+     },
+     "result": "11 of 146 draws through the code gate; 0.52, humanizer flag set",
+     "decision": "dropped",
+     "reason": "base models only"
+    },
+    {
+     "group": "Instruct models",
+     "what": "Line editors (exp 10 and 10b)",
+     "track": {},
+     "result": "moves inside the noise, except where Pangram re-cut its segments",
+     "decision": "dropped",
+     "reason": "no editor for the score; used only to restore facts"
+    },
+    {
+     "group": "Adapters and arms",
+     "what": "Voice adapter, notes to text (exp 9)",
+     "track": {
+      "moves": [
+       [
+        0.48,
+        0.0
+       ]
+      ]
+     },
+     "result": "window B 0.48 to 0.00 in two draws, after 24 failed tries",
+     "decision": "kept",
+     "reason": "primary writer arm"
+    },
+    {
+     "group": "Adapters and arms",
+     "what": "Few-shot base writer",
+     "track": {},
+     "result": "window loop: 70 accepted of 695 attempts",
+     "decision": "kept",
+     "reason": "fallback arm beside the adapter"
+    },
+    {
+     "group": "Adapters and arms",
+     "what": "Voice adapter retrain (exp 11)",
+     "track": {
+      "moves": [
+       [
+        0.0,
+        0.67
+       ],
+       [
+        0.0,
+        1.0
+       ]
+      ]
+     },
+     "result": "window B 0.67 and 1.00 against the live adapter's 0.00",
+     "decision": "parked",
+     "reason": "lost the A/B"
+    },
+    {
+     "group": "Adapters and arms",
+     "what": "Paraphrase adapter as a voice pass",
+     "track": {
+      "moves": [
+       [
+        0.0,
+        0.35
+       ],
+       [
+        0.48,
+        0.41
+       ],
+       [
+        0.19,
+        0.0
+       ]
+      ]
+     },
+     "result": "scores moved both ways; Delta flat",
+     "decision": "parked",
+     "reason": "no clear gain"
+    },
+    {
+     "group": "Adapters and arms",
+     "what": "Second base model on stuck spans",
+     "track": {},
+     "result": "12 of 176 draws through the code gate, 0 through the fact check",
+     "decision": "dropped",
+     "reason": "the spans were stuck on content"
+    },
+    {
+     "group": "Methods",
+     "what": "Claude rewrites its own flagged lines (exp 1)",
+     "track": {
+      "moves": [
+       [
+        0.35,
+        0.33
+       ],
+       [
+        0.27,
+        0.17
+       ],
+       [
+        0.15,
+        0.27
+       ]
+      ]
+     },
+     "result": "0.35 to 0.33, 0.27 to 0.17, 0.15 to 0.27",
+     "decision": "dropped",
+     "reason": "Claude never writes the lines"
+    },
+    {
+     "group": "Methods",
+     "what": "Unguided sentence regrowth (exp 3)",
+     "track": {
+      "moves": [
+       [
+        1.0,
+        0.96
+       ]
+      ]
+     },
+     "result": "1.00 to 0.96 at best",
+     "decision": "dropped",
+     "reason": "needs guidance"
+    },
+    {
+     "group": "Methods",
+     "what": "Paragraph regrowth from notes (exp 6)",
+     "track": {
+      "dots": [
+       0.0006
+      ]
+     },
+     "result": "run 13 of 13 reached 0.0006",
+     "decision": "kept",
+     "reason": "the method"
+    },
+    {
+     "group": "Methods",
+     "what": "Base model as its own editor (exp 7)",
+     "track": {
+      "dots": [
+       1.0
+      ]
+     },
+     "result": "the editor arm stayed at 1.00",
+     "decision": "dropped",
+     "reason": "no editor role"
+    },
+    {
+     "group": "Methods",
+     "what": "Steered repair on the base model (exp 8)",
+     "track": {},
+     "result": "8 fact-checked, 0 accepted",
+     "decision": "dropped",
+     "reason": "no repair route on the base model"
+    },
+    {
+     "group": "Methods",
+     "what": "Strict fact gate",
+     "track": {},
+     "result": "110 of 163 failed",
+     "decision": "dropped",
+     "reason": "back to the loose gate; slips go to repair"
+    }
+   ]
+  },
+  {
+   "id": "bakeoff_models",
+   "title": "Bake-off: Pangram against Open Pangram per model, raw continuations",
+   "unit": "AI share; hard tics per sample; tokens per second",
+   "note": "From the bake-off reports, 6 Pangram scorings per model. Rounds 1 to 3 are separate runs.",
+   "rows": [
+    {
+     "round": 1,
+     "model": "Qwen3-14B base",
+     "pangram": 0.68,
+     "open_pangram": 0.26,
+     "hard_tics": 0.09,
+     "tok_s": 46,
+     "decision": "dropped"
+    },
+    {
+     "round": 1,
+     "model": "Gemma 4 26B base",
+     "pangram": 0.32,
+     "open_pangram": 0.21,
+     "hard_tics": 0.0,
+     "tok_s": 29,
+     "decision": "dropped (writes markup)"
+    },
+    {
+     "round": 1,
+     "model": "humanizer model (instruct)",
+     "pangram": 1.0,
+     "open_pangram": 0.89,
+     "hard_tics": 1.28,
+     "tok_s": 26,
+     "decision": "dropped"
+    },
+    {
+     "round": 1,
+     "model": "OLMo-2 32B base 4-bit",
+     "pangram": 0.01,
+     "open_pangram": 0.16,
+     "hard_tics": 0.07,
+     "tok_s": 3,
+     "decision": "dropped (too slow)"
+    },
+    {
+     "round": 2,
+     "model": "OLMo-2 32B base 3-bit",
+     "pangram": 0.13,
+     "open_pangram": 0.21,
+     "hard_tics": 0.02,
+     "tok_s": 38,
+     "decision": "alternate"
+    },
+    {
+     "round": 2,
+     "model": "OLMo 3 32B base 3-bit",
+     "pangram": 0.12,
+     "open_pangram": 0.2,
+     "hard_tics": 0.06,
+     "tok_s": 39,
+     "decision": "alternate; later tried on stuck spans"
+    },
+    {
+     "round": 2,
+     "model": "OLMo 3 7B base",
+     "pangram": 0.39,
+     "open_pangram": 0.25,
+     "hard_tics": 0.17,
+     "tok_s": 71,
+     "decision": "dropped"
+    },
+    {
+     "round": 2,
+     "model": "Mistral Small 3.1 24B base 4-bit",
+     "pangram": 0.08,
+     "open_pangram": 0.17,
+     "hard_tics": 0.05,
+     "tok_s": 46,
+     "decision": "kept: main writer"
+    },
+    {
+     "round": 3,
+     "model": "Mistral Small 24B base 2501",
+     "pangram": 0.16,
+     "open_pangram": 0.19,
+     "hard_tics": 0.02,
+     "tok_s": 47,
+     "decision": "kept: adapter base (same as 3.1 within noise)"
+    }
+   ],
+   "scorings_per_model": 6
+  },
+  {
+   "id": "open_pangram_agreement",
+   "title": "Open Pangram (local) against Pangram on cached texts",
+   "unit": "AUC / Spearman rho / seconds",
+   "note": "From the agreement report. The model-level Spearman is computed over the 9 bake-off model means; it is 0.91 without the humanizer row.",
+   "rows": [
+    {
+     "metric": "segment AUC, all (189 segments: 76 AI, 113 human)",
+     "roberta_large": 0.72,
+     "llama_3.2_3b": 0.73
+    },
+    {
+     "metric": "segment AUC, 20+ words",
+     "roberta_large": 0.74,
+     "llama_3.2_3b": 0.75
+    },
+    {
+     "metric": "mean score on Pangram-AI segments",
+     "roberta_large": 0.46,
+     "llama_3.2_3b": 0.28
+    },
+    {
+     "metric": "mean score on Pangram-human segments",
+     "roberta_large": 0.24,
+     "llama_3.2_3b": 0.18
+    },
+    {
+     "metric": "document Spearman (28 documents)",
+     "roberta_large": 0.48,
+     "llama_3.2_3b": 0.42
+    },
+    {
+     "metric": "seconds to score all",
+     "roberta_large": 5,
+     "llama_3.2_3b": 20
+    },
+    {
+     "metric": "model-level Spearman over 9 bake-off rows (derived)",
+     "roberta_large": 0.94
+    },
+    {
+     "metric": "model-level Spearman without the humanizer row (derived)",
+     "roberta_large": 0.91
+    }
+   ]
+  },
+  {
+   "id": "h2h_outcomes",
+   "title": "Blind A/B head-to-head in the window loop: the pick against the current text",
+   "unit": "calls",
+   "note": "From the window bank, reconciled to the run ledger's head-to-head calls (1,067).",
+   "rows": [
+    {
+     "outcome": "pick won",
+     "rounds": 140,
+     "context rounds": 21,
+     "total": 161
+    },
+    {
+     "outcome": "tie (SAME, counts as a pass)",
+     "rounds": 32,
+     "context rounds": 4,
+     "total": 36
+    },
+    {
+     "outcome": "pick lost, shipped anyway under the last-round settle rule",
+     "rounds": 84,
+     "context rounds": 0,
+     "total": 84
+    },
+    {
+     "outcome": "pick lost, not shipped",
+     "rounds": 614,
+     "context rounds": 79,
+     "total": 693
+    },
+    {
+     "outcome": "outcome not recoverable (pick then failed the fact check)",
+     "rounds": 87,
+     "context rounds": 6,
+     "total": 93
+    },
+    {
+     "outcome": "all",
+     "total": 1067
+    }
+   ]
+  },
+  {
+   "id": "delta_baselines",
+   "title": "Burrows' Delta of the author's own text chunks, two baselines",
+   "unit": "Delta",
+   "note": "From the voice reports. The reference corpus changed between the two, so readings are never compared across baselines.",
+   "rows": [
+    {
+     "baseline": "baseline 1 (exp09, exp10, exp10b)",
+     "median": 0.88,
+     "p90": 1.01
+    },
+    {
+     "baseline": "baseline 2 (exp11, paragraph pass; corpus changed)",
+     "median": 0.96,
+     "p90": 1.05
+    }
+   ]
+  },
+  {
+   "id": "delta_comparisons",
+   "title": "Every recorded Delta reading (lower is closer to the author)",
+   "unit": "Delta",
+   "note": "From the experiment reports and the paragraph-pass report.",
+   "rows": [
+    {
+     "test": "exp09 (baseline 1)",
+     "window": "window A",
+     "loop": 1.0,
+     "adapter_2ep": 0.89,
+     "adapter_3ep": 0.91
+    },
+    {
+     "test": "exp09 (baseline 1)",
+     "window": "window B",
+     "loop": 0.92,
+     "adapter_2ep": 0.82,
+     "adapter_3ep": 0.91
+    },
+    {
+     "test": "exp09 (baseline 1)",
+     "window": "window C",
+     "loop": 1.13,
+     "adapter_2ep": 0.94,
+     "adapter_3ep": 1.01
+    },
+    {
+     "test": "paraphrase adapter voice pass (baseline 1)",
+     "window": "window A",
+     "plain": 1.0,
+     "voice_pass": 1.01
+    },
+    {
+     "test": "paraphrase adapter voice pass (baseline 1)",
+     "window": "window B",
+     "plain": 0.92,
+     "voice_pass": 0.91
+    },
+    {
+     "test": "paraphrase adapter voice pass (baseline 1)",
+     "window": "window C",
+     "plain": 1.13,
+     "voice_pass": 1.08
+    },
+    {
+     "test": "paraphrase adapter voice pass (baseline 1)",
+     "window": "window D",
+     "plain": 0.84,
+     "voice_pass": 0.83
+    },
+    {
+     "test": "exp10 editors (baseline 1)",
+     "window": "window B",
+     "shipped": 0.92,
+     "olmo_sft": 0.91,
+     "mistral_instruct": 0.94,
+     "sonnet": 0.9
+    },
+    {
+     "test": "exp10 editors (baseline 1)",
+     "window": "window E",
+     "shipped": 1.23,
+     "olmo_sft": 1.25,
+     "mistral_instruct": 1.25,
+     "sonnet": 1.25
+    },
+    {
+     "test": "exp10 editors (baseline 1)",
+     "window": "window C",
+     "shipped": 1.13,
+     "olmo_sft": 1.12,
+     "mistral_instruct": 1.13,
+     "sonnet": 1.01
+    },
+    {
+     "test": "exp10b careful editors (baseline 1)",
+     "window": "window B",
+     "shipped": 0.92,
+     "opus": 0.95,
+     "sonnet": 0.94
+    },
+    {
+     "test": "exp10b careful editors (baseline 1)",
+     "window": "window E",
+     "shipped": 1.23,
+     "opus": 1.25,
+     "sonnet": 1.25
+    },
+    {
+     "test": "exp10b careful editors (baseline 1)",
+     "window": "window C",
+     "shipped": 1.13,
+     "opus": 1.02,
+     "sonnet": 1.03
+    },
+    {
+     "test": "exp11 (baseline 2)",
+     "window": "window A",
+     "live_adapter": 1.06,
+     "retrain_tag_1": 1.03,
+     "retrain_tag_2": 1.05
+    },
+    {
+     "test": "exp11 (baseline 2)",
+     "window": "window B",
+     "live_adapter": 0.8,
+     "retrain_tag_1": 0.94,
+     "retrain_tag_2": 0.91
+    },
+    {
+     "test": "exp11 (baseline 2)",
+     "window": "window C",
+     "live_adapter": 1.04,
+     "retrain_tag_1": 1.14,
+     "retrain_tag_2": 1.17
+    },
+    {
+     "test": "paragraph pass (baseline 2)",
+     "window": "section 4",
+     "standing": 0.84,
+     "best": 0.77
+    },
+    {
+     "test": "paragraph pass (baseline 2)",
+     "window": "section 5",
+     "standing": 0.77,
+     "best": 0.71
+    },
+    {
+     "test": "paragraph pass (baseline 2)",
+     "window": "section 6",
+     "standing": 0.81,
+     "best": 0.81
+    }
+   ]
+  },
+  {
+   "id": "paragraph_pass_gate",
+   "title": "Paragraph pass: code-gate outcome per draw, by first rejection reason",
+   "unit": "draws",
+   "note": "From the paragraph-pass bank.",
+   "rows": [
+    {
+     "reason": "passed",
+     "draws": 786
+    },
+    {
+     "reason": "length",
+     "draws": 1632
+    },
+    {
+     "reason": "quote lost",
+     "draws": 302
+    },
+    {
+     "reason": "new name",
+     "draws": 213
+    },
+    {
+     "reason": "keep word lost",
+     "draws": 201
+    },
+    {
+     "reason": "punctuation",
+     "draws": 171
+    },
+    {
+     "reason": "markup",
+     "draws": 148
+    },
+    {
+     "reason": "invented sighting",
+     "draws": 98
+    },
+    {
+     "reason": "number lost",
+     "draws": 91
+    },
+    {
+     "reason": "new number",
+     "draws": 64
+    },
+    {
+     "reason": "copied the original",
+     "draws": 44
+    },
+    {
+     "reason": "dash or house word",
+     "draws": 38
+    },
+    {
+     "reason": "assistant costume",
+     "draws": 36
+    },
+    {
+     "reason": "lowercase register",
+     "draws": 34
+    },
+    {
+     "reason": "hard tic",
+     "draws": 28
+    },
+    {
+     "reason": "name lost",
+     "draws": 21
+    },
+    {
+     "reason": "invented dialogue",
+     "draws": 21
+    },
+    {
+     "reason": "assistant tell",
+     "draws": 14
+    },
+    {
+     "reason": "says it twice",
+     "draws": 8
+    },
+    {
+     "reason": "filler tag",
+     "draws": 2
+    },
+    {
+     "reason": "forum tell",
+     "draws": 1
+    },
+    {
+     "reason": "all draws",
+     "draws": 3953,
+     "rejected": 3167,
+     "rejected_share": 0.801
+    }
+   ]
+  },
+  {
+   "id": "paragraph_pass_gate_by_arm",
+   "title": "Paragraph pass: draws through the code gate, by writer arm",
+   "unit": "draws",
+   "note": "From the paragraph-pass bank.",
+   "rows": [
+    {
+     "arm": "adapter (notes)",
+     "draws": 1861,
+     "passed": 489
+    },
+    {
+     "arm": "few-shot base",
+     "draws": 1770,
+     "passed": 274
+    },
+    {
+     "arm": "instruct model (OLMo 3.1 32B Instruct-SFT)",
+     "draws": 146,
+     "passed": 11,
+     "units_with_a_pass": "7 of 17"
+    },
+    {
+     "arm": "second base (OLMo 3 32B base)",
+     "draws": 176,
+     "passed": 12,
+     "units_with_a_pass": "8 of 14"
+    }
+   ]
+  },
+  {
+   "id": "fact_gate",
+   "title": "Sonnet fact check: pass and fail",
+   "unit": "verdicts",
+   "note": "From the banks and the run ledger. The loose and strict prompts ran on different candidate pools, so this is not a controlled comparison. The loose totals include 2 verdicts with no arm recorded (1 pass, 1 fail).",
+   "rows": [
+    {
+     "gate": "paragraph pass, loose prompt",
+     "arm": "adapter",
+     "pass": 112,
+     "fail": 111
+    },
+    {
+     "gate": "paragraph pass, loose prompt",
+     "arm": "few-shot",
+     "pass": 32,
+     "fail": 184
+    },
+    {
+     "gate": "paragraph pass, loose prompt",
+     "arm": "second base",
+     "pass": 0,
+     "fail": 12
+    },
+    {
+     "gate": "paragraph pass, loose prompt",
+     "arm": "all",
+     "pass": 145,
+     "fail": 308
+    },
+    {
+     "gate": "paragraph pass, strict prompt (pulled)",
+     "arm": "adapter",
+     "pass": 43,
+     "fail": 48
+    },
+    {
+     "gate": "paragraph pass, strict prompt (pulled)",
+     "arm": "few-shot",
+     "pass": 10,
+     "fail": 62
+    },
+    {
+     "gate": "paragraph pass, strict prompt (pulled)",
+     "arm": "all",
+     "pass": 53,
+     "fail": 110
+    },
+    {
+     "gate": "window loop",
+     "arm": "all",
+     "pass": 281,
+     "fail": 93
+    }
+   ]
+  },
+  {
+   "id": "paragraph_pass_stages",
+   "title": "Paragraph pass: counts at each stage",
+   "unit": "draws / verdicts / entries",
+   "note": "From the paragraph-pass bank and the picks file. Each stage is its own count: the strict run was stopped before any scoring, and the pass's own ceiling left some gated draws unchecked.",
+   "rows": [
+    {
+     "stage": "draws",
+     "n": 3953
+    },
+    {
+     "stage": "through the code gate",
+     "n": 786
+    },
+    {
+     "stage": "fact-checked",
+     "n": 616
+    },
+    {
+     "stage": "passed the fact check",
+     "n": 198,
+     "split": "145 loose prompt + 53 strict prompt"
+    },
+    {
+     "stage": "picks file entries",
+     "n": 48
+    }
+   ]
+  },
+  {
+   "id": "humanizer_by_pass",
+   "title": "Pangram scorings with the humanizer flag set, by pass",
+   "unit": "scorings",
+   "note": "From the run ledger. A flagged scoring is never a window's or a section's best.",
+   "rows": [
+    {
+     "purpose": "calibration",
+     "pass": "baseline",
+     "scorings": 24,
+     "humanized": 0
+    },
+    {
+     "purpose": "calibration",
+     "pass": "bake-off round 1",
+     "scorings": 24,
+     "humanized": 2
+    },
+    {
+     "purpose": "calibration",
+     "pass": "exp01 + exp02 + noise floor + connection test",
+     "scorings": 40,
+     "humanized": 0
+    },
+    {
+     "purpose": "experiment",
+     "pass": "bake-off rounds 2-3",
+     "scorings": 30,
+     "humanized": 0
+    },
+    {
+     "purpose": "experiment",
+     "pass": "exp03-exp05",
+     "scorings": 10,
+     "humanized": 0
+    },
+    {
+     "purpose": "experiment",
+     "pass": "exp06",
+     "scorings": 39,
+     "humanized": 11
+    },
+    {
+     "purpose": "experiment",
+     "pass": "exp07",
+     "scorings": 9,
+     "humanized": 5
+    },
+    {
+     "purpose": "experiment",
+     "pass": "exp08",
+     "scorings": 2,
+     "humanized": 1
+    },
+    {
+     "purpose": "experiment",
+     "pass": "exp09-exp11",
+     "scorings": 29,
+     "humanized": 2
+    },
+    {
+     "purpose": "experiment",
+     "pass": "paraphrase adapter",
+     "scorings": 15,
+     "humanized": 1
+    },
+    {
+     "purpose": "experiment",
+     "pass": "diagnostics and by-hand scorings",
+     "scorings": 17,
+     "humanized": 3
+    },
+    {
+     "purpose": "experiment + loop",
+     "pass": "paragraph pass",
+     "scorings": 32,
+     "humanized": 17
+    },
+    {
+     "purpose": "loop",
+     "pass": "window rounds",
+     "scorings": 168,
+     "humanized": 3
+    },
+    {
+     "purpose": "loop",
+     "pass": "whole-text rounds",
+     "scorings": 25,
+     "humanized": 1
+    },
+    {
+     "purpose": "loop",
+     "pass": "whole-document scans",
+     "scorings": 5,
+     "humanized": 0
+    },
+    {
+     "purpose": "loop",
+     "pass": "fix pass",
+     "scorings": 11,
+     "humanized": 1
+    },
+    {
+     "purpose": "all",
+     "scorings": 480,
+     "humanized": 47
+    }
+   ]
+  },
+  {
+   "id": "skeleton_word_swap",
+   "title": "Experiment 2: sentence skeletons against word choice",
+   "unit": "AI share",
+   "note": "From the experiment 2 report.",
+   "rows": [
+    {
+     "condition": "author originals, rescored alone",
+     "skeleton": "author",
+     "words": "author",
+     "n": 4,
+     "skeleton_match": 1.0,
+     "ai_share": 0.0,
+     "surprisal_mean": 3.18
+    },
+    {
+     "condition": "A: author skeletons, model words",
+     "skeleton": "author",
+     "words": "model",
+     "n": 8,
+     "skeleton_match": 0.82,
+     "ai_share": 0.46,
+     "surprisal_mean": 3.63
+    },
+    {
+     "condition": "B: model skeletons, author words",
+     "skeleton": "model",
+     "words": "author",
+     "n": 8,
+     "skeleton_match": 0.89,
+     "ai_share": 0.91,
+     "surprisal_mean": 3.35
+    },
+    {
+     "condition": "model originals, rescored alone",
+     "skeleton": "model",
+     "words": "model",
+     "n": 4,
+     "skeleton_match": 1.0,
+     "ai_share": 0.81,
+     "surprisal_mean": 2.99
+    }
+   ]
+  },
+  {
+   "id": "diag_split",
+   "title": "Diagnostic: one window split by author",
+   "unit": "AI share",
+   "note": "From the diagnostic report.",
+   "rows": [
+    {
+     "passage": "author sentences alone",
+     "sentences": 6,
+     "words": 158,
+     "ai_share": 0.0
+    },
+    {
+     "passage": "model sentences alone",
+     "sentences": 7,
+     "words": 145,
+     "ai_share": 0.35
+    },
+    {
+     "passage": "together (the window)",
+     "sentences": 13,
+     "ai_share": 1.0
+    }
+   ]
+  },
+  {
+   "id": "section_trajectories",
+   "title": "Sections as posted, every scoring in order",
+   "unit": "AI share",
+   "note": "From the run ledger. Points marked humanized had the humanizer flag set. The earlier lows are best-ever scorings of earlier, shorter versions.",
+   "rows": [
+    {
+     "section": "section 1 (1,012-1,047 words)",
+     "series": [
+      [
+       "baseline",
+       0.72
+      ],
+      [
+       "after run-day 1",
+       0.42
+      ],
+      [
+       "11-09 whole pass 2",
+       0.29
+      ],
+      [
+       "11-10",
+       0.3
+      ],
+      [
+       "11-11 15:36",
+       0.1
+      ],
+      [
+       "11-11 17:20",
+       0.07
+      ],
+      [
+       "11-11 22:00",
+       0.016
+      ],
+      [
+       "11-13 02:04",
+       0.065
+      ]
+     ]
+    },
+    {
+     "section": "section 2 (707-743 words)",
+     "series": [
+      [
+       "baseline",
+       0.17
+      ],
+      [
+       "after run-day 1",
+       0.11
+      ],
+      [
+       "11-09",
+       0.1
+      ],
+      [
+       "11-10",
+       0.11
+      ],
+      [
+       "11-11",
+       0.1
+      ],
+      [
+       "fix pass 11-12",
+       0.0
+      ]
+     ]
+    },
+    {
+     "section": "section 3 (582-610 words)",
+     "series": [
+      [
+       "baseline",
+       0.77
+      ],
+      [
+       "after run-day 1",
+       0.59
+      ],
+      [
+       "11-09 pass 1",
+       0.54
+      ],
+      [
+       "11-09 pass 2",
+       0.0006
+      ],
+      [
+       "11-10 as it stood",
+       0.29
+      ],
+      [
+       "11-11",
+       0.0
+      ]
+     ]
+    },
+    {
+     "section": "section 6, first version (495-503 words)",
+     "series": [
+      [
+       "baseline",
+       0.48
+      ],
+      [
+       "11-09",
+       0.2
+      ],
+      [
+       "11-10 pass 2",
+       0.09
+      ],
+      [
+       "11-10 pass 3",
+       0.0
+      ],
+      [
+       "11-11",
+       0.0
+      ]
+     ]
+    },
+    {
+     "section": "section 4 (1,134-1,246 words)",
+     "series": [
+      [
+       "11-13 start",
+       1.0
+      ],
+      [
+       "11-13 end",
+       0.91
+      ],
+      [
+       "11-14 standing",
+       0.91
+      ],
+      [
+       "paragraph pass best clean",
+       0.457
+      ],
+      [
+       "served 11-14",
+       0.54
+      ],
+      [
+       "night 11-16 (humanized)",
+       0.6
+      ]
+     ]
+    },
+    {
+     "section": "section 5 (1,638-1,703 words)",
+     "series": [
+      [
+       "11-13 start",
+       1.0
+      ],
+      [
+       "11-13 end",
+       0.79
+      ],
+      [
+       "11-14 standing",
+       0.75
+      ],
+      [
+       "paragraph pass best clean",
+       0.324
+      ],
+      [
+       "served 11-14",
+       0.35
+      ],
+      [
+       "night 11-16 (humanized)",
+       0.32
+      ]
+     ]
+    },
+    {
+     "section": "section 6, second version (1,482-1,616 words)",
+     "series": [
+      [
+       "11-13 start",
+       0.71
+      ],
+      [
+       "11-14 standing",
+       0.6
+      ],
+      [
+       "paragraph pass best clean",
+       0.329
+      ],
+      [
+       "served 11-14",
+       0.44
+      ],
+      [
+       "night 11-16 (humanized)",
+       0.28
+      ]
+     ]
+    },
+    {
+     "section": "whole document as it stands",
+     "series": [
+      [
+       "11-10 (3,071 words)",
+       0.19
+      ],
+      [
+       "11-11 (3,086)",
+       0.12
+      ],
+      [
+       "11-11 (3,078)",
+       0.14
+      ],
+      [
+       "11-13 (8,102)",
+       0.55
+      ],
+      [
+       "11-14 08:56, before the paragraph pass (8,095)",
+       0.53
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "timeline",
+   "title": "Every experiment and milestone in order",
+   "unit": "date (month-day, 2026)",
+   "note": "From the experiment table in the project notes.",
+   "rows": [
+    {
+     "date": "11-07",
+     "item": "Baseline",
+     "result": "sections 0.72, 0.17, 0.77, 0.48; 13 of 19 samples at 0.00",
+     "decision": "score is the AI share"
+    },
+    {
+     "date": "11-07",
+     "item": "Noise floor",
+     "result": "biggest swings 0.21, 0.00, 0.00",
+     "decision": "keep threshold 0.05"
+    },
+    {
+     "date": "11-07",
+     "item": "Open Pangram agreement",
+     "result": "segment AUC 0.72 to 0.75, document Spearman 0.42 to 0.48",
+     "decision": "coarse filter, RoBERTa only"
+    },
+    {
+     "date": "11-07",
+     "item": "Exp 1: Claude rewrites flagged lines",
+     "result": "0.35 to 0.33, 0.27 to 0.17, 0.15 to 0.27",
+     "decision": "Claude never writes the lines"
+    },
+    {
+     "date": "11-07",
+     "item": "Exp 2: skeleton or words",
+     "result": "author skeletons 0.46, model skeletons 0.91",
+     "decision": "skeletons carry the score"
+    },
+    {
+     "date": "11-07",
+     "item": "Bake-offs 1 and 2",
+     "result": "Mistral base 0.08, humanizer model 1.00",
+     "decision": "Mistral 24B base writes"
+    },
+    {
+     "date": "11-08",
+     "item": "Entropy profile",
+     "result": "author 2.8 to 2.9 nats a token, Claude 3.11, Mistral 1.95",
+     "decision": "a sampling knob, not core"
+    },
+    {
+     "date": "11-08",
+     "item": "Exp 3: unguided sentence regrowth",
+     "result": "1.00, 0.96, 0.96, 0.96",
+     "decision": "guidance needed"
+    },
+    {
+     "date": "11-08",
+     "item": "Exp 4: guided sentence regrowth",
+     "result": "1.00 to 0.46",
+     "decision": "aim at anchor sentences"
+    },
+    {
+     "date": "11-08",
+     "item": "Exp 5: protected words",
+     "result": "1.00 in every round",
+     "decision": "cap the must-keep words"
+    },
+    {
+     "date": "11-08",
+     "item": "Diagnostic split",
+     "result": "0.00 and 0.35 apart, 1.00 together",
+     "decision": "regrow by paragraph"
+    },
+    {
+     "date": "11-08",
+     "item": "Exp 6: regrowth from notes, 13 runs",
+     "result": "run 13 reached 0.0006",
+     "decision": "method set"
+    },
+    {
+     "date": "11-08",
+     "item": "Exp 6, second window",
+     "result": "0.73 to 0.59, 0.31, 0.16, 0.16",
+     "decision": "passed the gate"
+    },
+    {
+     "date": "11-08",
+     "item": "Exp 7: base model as editor",
+     "result": "the editor arm stayed at 1.00",
+     "decision": "no editor role"
+    },
+    {
+     "date": "11-08",
+     "item": "Exp 8: steered repair",
+     "result": "8 fact-checked, 0 accepted",
+     "decision": "no repair route on the base"
+    },
+    {
+     "date": "11-08",
+     "item": "Blind read 1",
+     "result": "the author couldn't tell which was which",
+     "decision": "build phase 2"
+    },
+    {
+     "date": "11-08",
+     "item": "Paraphrase adapter trained",
+     "result": "held-out loss 1.23",
+     "decision": "first look"
+    },
+    {
+     "date": "11-08",
+     "item": "Milestone 1: the engine",
+     "result": "rehearsal passed, 49 tests",
+     "decision": "built"
+    },
+    {
+     "date": "11-09",
+     "item": "Milestone 2: first run-day",
+     "result": "sections 0.42, 0.11, 0.59, 0.48",
+     "decision": "author-lines rule"
+    },
+    {
+     "date": "11-09",
+     "item": "Milestone 3: whole-text round",
+     "result": "section 3 reached 0.0006",
+     "decision": "built"
+    },
+    {
+     "date": "11-09",
+     "item": "Paraphrase adapter as a voice pass",
+     "result": "scores moved both ways, Delta flat",
+     "decision": "parked"
+    },
+    {
+     "date": "11-09",
+     "item": "Exp 9: notes-to-text adapter",
+     "result": "window B 0.48 to 0.00; Delta closer in 3 of 3",
+     "decision": "primary writer arm"
+    },
+    {
+     "date": "11-09",
+     "item": "Exp 10 and 10b: restore editors",
+     "result": "moves inside the noise floor",
+     "decision": "restore pass for facts only"
+    },
+    {
+     "date": "11-10",
+     "item": "Section-best rule",
+     "result": "built after section 3 slid 0.00 to 0.29",
+     "decision": "no section ships below its best"
+    },
+    {
+     "date": "11-10",
+     "item": "Document scan",
+     "result": "3,071 words scored 0.19",
+     "decision": "never a target"
+    },
+    {
+     "date": "11-11",
+     "item": "Two-way Discord",
+     "result": "replies veto a cut, rest a window or stop the day",
+     "decision": "built"
+    },
+    {
+     "date": "11-11",
+     "item": "Exp 11: adapter retrain",
+     "result": "window B 0.67 and 1.00 against 0.00",
+     "decision": "live adapter stays"
+    },
+    {
+     "date": "11-13",
+     "item": "Sections 4 to 6 into the loop",
+     "result": "section 4 1.00 to 0.91, section 5 1.00 to 0.79",
+     "decision": "paragraph pass"
+    },
+    {
+     "date": "11-14",
+     "item": "Paragraph pass",
+     "result": "best clean 0.457, 0.324, 0.329 from 0.91, 0.75, 0.60",
+     "decision": "write-back"
+    },
+    {
+     "date": "11-14",
+     "item": "Strict fact gate",
+     "result": "110 of 163 failed; $5 in 19 minutes",
+     "decision": "repair the slips instead"
+    },
+    {
+     "date": "11-14",
+     "item": "Three runs and finals",
+     "result": "served 0.54, 0.35, 0.44",
+     "decision": "morning submission"
+    },
+    {
+     "date": "11-15",
+     "item": "Test scoring",
+     "result": "0.59 against the served 0.54",
+     "decision": "served text stays"
+    },
+    {
+     "date": "11-15",
+     "item": "Night task",
+     "result": "fired twice by hand; the late-start guard skipped the pass",
+     "decision": ""
+    },
+    {
+     "date": "11-16",
+     "item": "First unattended night",
+     "result": "all three sections flagged by the humanizer head",
+     "decision": "nothing written"
+    }
+   ]
+  },
+  {
+   "id": "pipeline",
+   "title": "The pipeline, one paragraph at a time",
+   "unit": "steps",
+   "note": "Counts from the paragraph pass: the paragraph-pass bank and the write-back ledger.",
+   "rows": [
+    {
+     "step": "Notes",
+     "who": "Claude",
+     "what": "facts, quotes, names"
+    },
+    {
+     "step": "Draws",
+     "who": "base model",
+     "what": "adapter or few-shot",
+     "count": 3953
+    },
+    {
+     "step": "Code gates",
+     "who": "code",
+     "what": "quotes, numbers, names, AI tells, length",
+     "count_out": 786
+    },
+    {
+     "step": "Fact check",
+     "who": "Claude",
+     "what": "anything lost or added",
+     "count": 616
+    },
+    {
+     "step": "Open Pangram",
+     "who": "local model",
+     "what": "ranks for free"
+    },
+    {
+     "step": "Pangram",
+     "who": "paid detector",
+     "what": "scores the section as posted"
+    },
+    {
+     "step": "Bank",
+     "who": "file",
+     "what": "every draft, every score"
+    },
+    {
+     "step": "Repair",
+     "who": "Opus + code",
+     "what": "cut, swap, splice"
+    },
+    {
+     "step": "Write-back",
+     "who": "code",
+     "what": "every original kept",
+     "count": 63
+    }
+   ]
+  },
+  {
+   "id": "night",
+   "title": "A night: steps, deadlines and guards",
+   "unit": "clock time",
+   "note": "From the night runner (engine/night.py) and the night log.",
+   "rows": [
+    {
+     "steps": [
+      "branch guard",
+      "STOP file",
+      "late start: at or after 05:00 skips the pass",
+      "busy check: model port and engine processes",
+      "ledger check",
+      "Claude week ceiling",
+      "take in the author's edits"
+     ]
+    },
+    {
+     "fires": "02:00",
+     "late_start": "05:00",
+     "pass_until": "06:00",
+     "finals_max_min": 30,
+     "poll_s": 20,
+     "kill_wait_s": 30
+    },
+    {
+     "after_pass": [
+      "STOP check, then the finals",
+      "STOP and week check, then the submission"
+     ]
+    },
+    {
+     "first_night": {
+      "start": "02:00:01",
+      "pass_end": "02:19:44",
+      "finals_end": "02:20:04",
+      "submission": "02:20:11",
+      "pangram_usd": 2.3,
+      "claude_usd": 0.33
+     }
+    }
+   ]
+  },
+  {
+   "id": "caps",
+   "title": "Budget caps, in the order the code checks them",
+   "unit": "USD / share of the week",
+   "note": "From the budget module (engine/budget.py) and the example config.",
+   "rows": [
+    {
+     "lane": "Pangram",
+     "order": 1,
+     "cap": "month",
+     "value": "$180",
+     "on_hit": "hold to the 1st"
+    },
+    {
+     "lane": "Pangram",
+     "order": 2,
+     "cap": "calendar day (loop)",
+     "value": "$6",
+     "on_hit": "hold to midnight"
+    },
+    {
+     "lane": "Pangram",
+     "order": 3,
+     "cap": "run-day (loop)",
+     "value": "$6",
+     "on_hit": "hold 24 hours"
+    },
+    {
+     "lane": "Pangram",
+     "order": 4,
+     "cap": "window share",
+     "value": "keep $3 for the whole-text round",
+     "on_hit": "window rounds stop"
+    },
+    {
+     "lane": "Claude",
+     "order": 0,
+     "cap": "expected cost",
+     "value": "dearest of the last 20 calls of the kind",
+     "on_hit": ""
+    },
+    {
+     "lane": "Claude",
+     "order": 1,
+     "cap": "week ceiling",
+     "value": "0.90 of the account",
+     "on_hit": "hold to the weekly reset"
+    },
+    {
+     "lane": "Claude",
+     "order": 2,
+     "cap": "loop share",
+     "value": "0.50 of the week",
+     "on_hit": "hold to the weekly reset"
+    },
+    {
+     "lane": "Claude",
+     "order": 3,
+     "cap": "today's allowance",
+     "value": "share left over the days left",
+     "on_hit": "hold to the next start"
+    },
+    {
+     "lane": "Claude",
+     "order": 4,
+     "cap": "5-hour window",
+     "value": "0.90 before 09:00, 0.50 after",
+     "on_hit": "hold to the 5-hour reset"
+    },
+    {
+     "lane": "Claude",
+     "order": 5,
+     "cap": "first-run backstop",
+     "value": "$20",
+     "on_hit": "hold to the next start"
+    },
+    {
+     "lane": "per pass",
+     "cap": "Pangram ceilings",
+     "value": "night $3.50, paragraph pass $10, repair $3, fix, restore, flavor $1 each"
+    },
+    {
+     "lane": "per pass",
+     "cap": "Claude ceilings",
+     "value": "night $5, paragraph pass $5, repair $3, restore $3"
+    },
+    {
+     "lane": "per call",
+     "cap": "Claude per call",
+     "value": "judge $0.30, head-to-head $0.20, facts $0.20, notes $0.60, repair $0.50, reflection $0.60"
+    },
+    {
+     "lane": "all-time",
+     "cap": "Pangram calibration",
+     "value": "$15",
+     "spent": 14.55
+    },
+    {
+     "lane": "outside the capper",
+     "cap": "Paragraph pass and repair",
+     "value": "call Claude under their own ceilings and the night's week check"
+    }
+   ]
+  },
+  {
+   "id": "pangram_spend_by_day",
+   "title": "Pangram spend by day and purpose",
+   "unit": "USD",
+   "note": "From the run ledger. Every call returned ok on model 4.1.",
+   "rows": [
+    {
+     "day": "11-07",
+     "purpose": "calibration",
+     "calls": 88,
+     "usd": 14.55
+    },
+    {
+     "day": "11-07",
+     "purpose": "experiment",
+     "calls": 28,
+     "usd": 5.25
+    },
+    {
+     "day": "11-08",
+     "purpose": "experiment",
+     "calls": 78,
+     "usd": 13.35
+    },
+    {
+     "day": "11-08",
+     "purpose": "loop",
+     "calls": 23,
+     "usd": 4.25
+    },
+    {
+     "day": "11-09",
+     "purpose": "experiment",
+     "calls": 36,
+     "usd": 8.55
+    },
+    {
+     "day": "11-09",
+     "purpose": "loop",
+     "calls": 23,
+     "usd": 5.6
+    },
+    {
+     "day": "11-10",
+     "purpose": "loop",
+     "calls": 16,
+     "usd": 5.6
+    },
+    {
+     "day": "11-11",
+     "purpose": "experiment",
+     "calls": 9,
+     "usd": 1.5
+    },
+    {
+     "day": "11-11",
+     "purpose": "loop",
+     "calls": 21,
+     "usd": 8.2
+    },
+    {
+     "day": "11-12",
+     "purpose": "loop",
+     "calls": 11,
+     "usd": 5.3
+    },
+    {
+     "day": "11-13",
+     "purpose": "loop",
+     "calls": 67,
+     "usd": 18.8
+    },
+    {
+     "day": "11-14",
+     "purpose": "experiment",
+     "calls": 28,
+     "usd": 21.15
+    },
+    {
+     "day": "11-14",
+     "purpose": "loop",
+     "calls": 48,
+     "usd": 14.65
+    },
+    {
+     "day": "11-15",
+     "purpose": "experiment",
+     "calls": 1,
+     "usd": 0.6
+    },
+    {
+     "day": "11-16",
+     "purpose": "loop",
+     "calls": 3,
+     "usd": 2.3
+    },
+    {
+     "day": "total",
+     "calls": 480,
+     "usd": 129.65,
+     "credits": 2593,
+     "words": 236232
+    }
+   ]
+  },
+  {
+   "id": "claude_by_day",
+   "title": "Claude headless calls by day",
+   "unit": "calls / USD (estimated by the CLI)",
+   "note": "From the run ledger. Subscription calls; the dollars are the CLI's estimate.",
+   "rows": [
+    {
+     "day": "11-07",
+     "calls": 18,
+     "usd": 0.4
+    },
+    {
+     "day": "11-08",
+     "calls": 1077,
+     "usd": 26.85
+    },
+    {
+     "day": "11-09",
+     "calls": 468,
+     "usd": 15.92
+    },
+    {
+     "day": "11-10",
+     "calls": 353,
+     "usd": 11.59
+    },
+    {
+     "day": "11-11",
+     "calls": 367,
+     "usd": 11.75
+    },
+    {
+     "day": "11-12",
+     "calls": 54,
+     "usd": 3.06
+    },
+    {
+     "day": "11-13",
+     "calls": 915,
+     "usd": 26.15
+    },
+    {
+     "day": "11-14",
+     "calls": 1541,
+     "usd": 42.81
+    },
+    {
+     "day": "11-15",
+     "calls": 6,
+     "usd": 0.31
+    },
+    {
+     "day": "11-16",
+     "calls": 13,
+     "usd": 0.33
+    },
+    {
+     "day": "total",
+     "calls": 4812,
+     "usd": 139.16
+    }
+   ]
+  },
+  {
+   "id": "claude_by_role",
+   "title": "Claude calls by role",
+   "unit": "calls / USD (estimated by the CLI)",
+   "note": "From the run ledger.",
+   "rows": [
+    {
+     "role": "judge (pick of up to 8)",
+     "model": "sonnet",
+     "calls": 2021,
+     "usd": 65.2
+    },
+    {
+     "role": "head-to-head (blind A/B)",
+     "model": "sonnet",
+     "calls": 1298,
+     "usd": 28.0
+    },
+    {
+     "role": "fact check, paragraph pass",
+     "model": "sonnet",
+     "calls": 616,
+     "usd": 17.17
+    },
+    {
+     "role": "fact check, window loop and experiments",
+     "model": "sonnet",
+     "calls": 458,
+     "usd": 10.0
+    },
+    {
+     "role": "notes",
+     "model": "sonnet",
+     "calls": 128,
+     "usd": 7.16
+    },
+    {
+     "role": "restore editors and directors",
+     "model": "sonnet",
+     "calls": 110,
+     "usd": 3.76
+    },
+    {
+     "role": "restore editors and directors",
+     "model": "opus",
+     "calls": 38,
+     "usd": 3.5
+    },
+    {
+     "role": "stitch (exp05)",
+     "model": "sonnet",
+     "calls": 84,
+     "usd": 1.68
+    },
+    {
+     "role": "reflection",
+     "model": "sonnet",
+     "calls": 9,
+     "usd": 1.54
+    },
+    {
+     "role": "repair",
+     "model": "opus",
+     "calls": 5,
+     "usd": 0.3
+    },
+    {
+     "role": "other",
+     "model": "sonnet",
+     "calls": 26,
+     "usd": 0.82
+    },
+    {
+     "role": "other",
+     "model": "haiku",
+     "calls": 19,
+     "usd": 0.03
+    }
+   ]
+  },
+  {
+   "id": "records",
+   "title": "Every record the system keeps, and what reads it",
+   "unit": "rows / entries",
+   "note": "Counts from the records themselves; readers from the public engine code.",
+   "rows": [
+    {
+     "group": "ledger (SQLite)",
+     "record": "pangram_calls",
+     "count": "480 rows",
+     "readers": "budget caps, analytics"
+    },
+    {
+     "group": "ledger (SQLite)",
+     "record": "pangram_cache",
+     "count": "480 rows",
+     "readers": "Pangram client (no text is paid for twice), analytics"
+    },
+    {
+     "group": "ledger (SQLite)",
+     "record": "baseline_scores",
+     "count": "72 rows, 24 texts",
+     "readers": "analytics"
+    },
+    {
+     "group": "ledger (SQLite)",
+     "record": "claude_calls",
+     "count": "4,812 rows",
+     "readers": "Claude capper, night week check, analytics"
+    },
+    {
+     "group": "ledger (SQLite)",
+     "record": "run_days",
+     "count": "6 rows",
+     "readers": "budget caps, schedule, reflection"
+    },
+    {
+     "group": "ledger (SQLite)",
+     "record": "claude_rates",
+     "count": "5 rows",
+     "readers": "Claude capper"
+    },
+    {
+     "group": "banks (JSONL)",
+     "record": "window bank",
+     "count": "726 entries, 15 kinds",
+     "readers": "the window loop on resume, analytics, digest"
+    },
+    {
+     "group": "banks (JSONL)",
+     "record": "paragraph-pass bank",
+     "count": "4,601: 3,953 draws, 616 facts, 32 scores",
+     "readers": "the paragraph pass on resume, night, morning submission"
+    },
+    {
+     "group": "job files",
+     "record": "write-back ledger",
+     "count": "63 rows",
+     "readers": "sync (takes the author's edits back in)"
+    },
+    {
+     "group": "job files",
+     "record": "picks file",
+     "count": "48 entries",
+     "readers": "write-back, morning submission"
+    },
+    {
+     "group": "job files",
+     "record": "review file",
+     "count": "16 repairs, 9 stuck spans",
+     "readers": "write-back, repair, morning submission"
+    },
+    {
+     "group": "job files",
+     "record": "repair log",
+     "count": "32 reads",
+     "readers": "repair, morning submission"
+    },
+    {
+     "group": "reports",
+     "record": "digests and submissions",
+     "count": "10 files",
+     "readers": "the author, Discord, reflection, analytics"
+    },
+    {
+     "group": "reports",
+     "record": "reflections",
+     "count": "5",
+     "readers": "the author, the next reflection"
+    },
+    {
+     "group": "logs",
+     "record": "Discord log",
+     "count": "103 entries",
+     "readers": "the author"
+    },
+    {
+     "group": "logs",
+     "record": "night and pass logs",
+     "count": "2 logs",
+     "readers": "the author"
+    }
+   ]
+  },
+  {
+   "id": "alerts",
+   "title": "Discord message kinds and when each fires",
+   "unit": "message kinds",
+   "note": "From the Discord and run modules of the engine.",
+   "rows": [
+    {
+     "group": "reports",
+     "kind": "run-day start",
+     "when": "first entry of a run-day",
+     "how_often": "once a run-day"
+    },
+    {
+     "group": "reports",
+     "kind": "hourly post",
+     "when": "each clock hour while the loop runs",
+     "how_often": "hourly"
+    },
+    {
+     "group": "reports",
+     "kind": "digest card + report",
+     "when": "end of every run, crash included",
+     "how_often": "once a run"
+    },
+    {
+     "group": "reports",
+     "kind": "morning submission",
+     "when": "end of the night",
+     "how_often": "once a night"
+    },
+    {
+     "group": "reports",
+     "kind": "ETA pings",
+     "when": "long jobs: start, 5 min, 25/50/75%, done, stuck after 3 h",
+     "how_often": "per job"
+    },
+    {
+     "group": "alerts",
+     "kind": "cap held",
+     "when": "any Pangram or Claude cap says no",
+     "how_often": "once per cap and hold"
+    },
+    {
+     "group": "alerts",
+     "kind": "door held",
+     "when": "3 failed tries",
+     "how_often": "once a day per door"
+    },
+    {
+     "group": "alerts",
+     "kind": "Claude token",
+     "when": "rejected, or expiring within 30 days",
+     "how_often": "once a process"
+    },
+    {
+     "group": "alerts",
+     "kind": "Pangram model change",
+     "when": "response version differs from 4.1",
+     "how_often": "on a scoring, and at each run-day start"
+    },
+    {
+     "group": "alerts",
+     "kind": "window flipped",
+     "when": "a window that passed now flags",
+     "how_often": "once per window and process"
+    },
+    {
+     "group": "alerts",
+     "kind": "restart or crash",
+     "when": "an error; 5 in a row ends the day",
+     "how_often": "per restart"
+    },
+    {
+     "group": "alerts",
+     "kind": "night halt",
+     "when": "a guard stops the night",
+     "how_often": "per night"
+    },
+    {
+     "group": "two-way",
+     "kind": "question on a drop-rule cut",
+     "when": "each cut; the cut happens, a reply can undo it",
+     "how_often": "per cut"
+    },
+    {
+     "group": "two-way",
+     "kind": "replies read back",
+     "when": "a number, thumbs-up (option 1), a cross (veto), 'stop', 'rest' plus a window",
+     "how_often": "every 60 s while waiting, before each pass and at the digest"
+    },
+    {
+     "reply_rules": {
+      "veto": "puts the line back for good",
+      "rest": "rests that window for the run-day",
+      "stop": "stops the day, like the STOP file",
+      "default_after_days": 2,
+      "never": "raise a cap, change a target or spend money"
+     }
+    }
+   ]
+  },
+  {
+   "id": "gpu_guard",
+   "title": "The GPU guard: handing the card back during the day",
+   "unit": "steps",
+   "note": "From the guard module (engine/guard.py) and its default settings.",
+   "rows": [
+    {
+     "signals": [
+      "a key or the mouse in the last 3 minutes",
+      "something fullscreen in front",
+      "another process holds 1,500 MB of VRAM or more"
+     ]
+    },
+    {
+     "steps": [
+      "close the gate",
+      "let requests in flight finish",
+      "stop the model server: VRAM freed",
+      "wait until clear for 10 minutes",
+      "next request restarts it"
+     ]
+    },
+    {
+     "poll_s": 15,
+     "active_min": 3,
+     "idle_min": 10,
+     "other_gpu_mb": 1500,
+     "rules": [
+      "a pause never moves a deadline",
+      "every pause and resume is logged with its reason"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "learning",
+   "title": "The learning layer: how the loop picks what to try and how the playbook changes",
+   "unit": "steps",
+   "note": "The design in the project plan.",
+   "rows": [
+    {
+     "step": "bank",
+     "text": "every scored draft, with every knob that made it"
+    },
+    {
+     "step": "director",
+     "text": "reads the bank and the night's results; proposes a change to the setup, the model or the knobs"
+    },
+    {
+     "step": "test night",
+     "text": "the change runs against the current playbook on windows neither was tuned on: Open Pangram first, then a small paid Pangram check"
+    },
+    {
+     "step": "random slice",
+     "text": "a fixed share of attempts picked at random by code",
+     "share": 0.2
+    },
+    {
+     "step": "adopt",
+     "text": "only if it wins without losing on voice or facts; code decides, not the director"
+    },
+    {
+     "step": "playbook",
+     "text": "numbered versions with a changelog"
+    },
+    {
+     "rule": "the writers never see a score; code holds every limit and makes the adoption call"
+    }
+   ]
+  }
+ ]
+}

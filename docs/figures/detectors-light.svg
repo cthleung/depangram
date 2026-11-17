@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="604.8pt" height="360pt" viewBox="0 0 604.8 360" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>depangram docs/figures/make_figures.py</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 360 
+L 604.8 360 
+L 604.8 0 
+L 0 0 
+z
+" style="fill: #fcfcfb"/>
+  </g>
+  <g id="axes_1">
+   <g id="line2d_1">
+    <path d="M 279.396 68.4 
+L 326.88 76.32 
+" clip-path="url(#p4c4e1e31cc)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.6"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 122.904 144.432 
+L 326.88 102.96 
+" clip-path="url(#p4c4e1e31cc)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.6"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 120.42 213.336 
+L 326.88 129.6 
+" clip-path="url(#p4c4e1e31cc)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.6"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 110.484 229.968 
+L 326.88 156.24 
+" clip-path="url(#p4c4e1e31cc)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.6"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 105.516 267.984 
+L 326.88 182.88 
+" clip-path="url(#p4c4e1e31cc)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.6"/>
+   </g>
+   <g id="line2d_6">
+    <path d="M 110.484 275.112 
+L 326.88 209.52 
+" clip-path="url(#p4c4e1e31cc)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.6"/>
+   </g>
+   <g id="line2d_7">
+    <path d="M 108 277.488 
+L 326.88 236.16 
+" clip-path="url(#p4c4e1e31cc)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.6"/>
+   </g>
+   <g id="line2d_8">
+    <path d="M 100.548 286.992 
+L 326.88 262.8 
+" clip-path="url(#p4c4e1e31cc)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.6"/>
+   </g>
+   <g id="line2d_9">
+    <path d="M 98.064 303.624 
+L 326.88 289.44 
+" clip-path="url(#p4c4e1e31cc)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.6"/>
+   </g>
+   <g id="text_1">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 700 11px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="25.92" transform="rotate(-0 18 25.92)">Pangram against Open Pangram on the bake-off models</text>
+   </g>
+   <g id="text_2">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="41.76" transform="rotate(-0 18 41.76)">Open Pangram ranks for free; Pangram decides. Each dot is one model's mean over 6 Pangram scorings.</text>
+   </g>
+   <g id="text_3">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="54.72" transform="rotate(-0 18 54.72)">Spearman over the 9 model means: 0.94 (0.91 without the humanizer model). Per document it is 0.48.</text>
+   </g>
+   <g id="text_4">
+    <text style="text-anchor: middle; fill: #898781; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="177.84" y="334.8" transform="rotate(-0 177.84 334.8)">Open Pangram score (local, free)</text>
+   </g>
+   <g id="text_5">
+    <text style="fill: #898781; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" transform="translate(17.788535 232.509375) rotate(-90)">Pangram AI share (paid)</text>
+   </g>
+   <g id="text_6">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="73.44" transform="rotate(-0 331.2 73.44)">humanizer model (instruct)  (round 1)</text>
+   </g>
+   <g id="text_7">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="84.24" transform="rotate(-0 331.2 84.24)">Pangram 1.00, Open Pangram 0.89; dropped</text>
+   </g>
+   <g id="text_8">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="100.08" transform="rotate(-0 331.2 100.08)">Qwen3-14B base  (round 1)</text>
+   </g>
+   <g id="text_9">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="110.88" transform="rotate(-0 331.2 110.88)">Pangram 0.68, Open Pangram 0.26; dropped</text>
+   </g>
+   <g id="text_10">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="126.72" transform="rotate(-0 331.2 126.72)">OLMo 3 7B base  (round 2)</text>
+   </g>
+   <g id="text_11">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="137.52" transform="rotate(-0 331.2 137.52)">Pangram 0.39, Open Pangram 0.25; dropped</text>
+   </g>
+   <g id="text_12">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="153.36" transform="rotate(-0 331.2 153.36)">Gemma 4 26B base  (round 1)</text>
+   </g>
+   <g id="text_13">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="164.16" transform="rotate(-0 331.2 164.16)">Pangram 0.32, Open Pangram 0.21; dropped</text>
+   </g>
+   <g id="text_14">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="180" transform="rotate(-0 331.2 180)">Mistral Small 24B base 2501  (round 3)</text>
+   </g>
+   <g id="text_15">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="190.8" transform="rotate(-0 331.2 190.8)">Pangram 0.16, Open Pangram 0.19; kept: adapter base</text>
+   </g>
+   <g id="text_16">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="206.64" transform="rotate(-0 331.2 206.64)">OLMo-2 32B base 3-bit  (round 2)</text>
+   </g>
+   <g id="text_17">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="217.44" transform="rotate(-0 331.2 217.44)">Pangram 0.13, Open Pangram 0.21; alternate</text>
+   </g>
+   <g id="text_18">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="233.28" transform="rotate(-0 331.2 233.28)">OLMo 3 32B base 3-bit  (round 2)</text>
+   </g>
+   <g id="text_19">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="244.08" transform="rotate(-0 331.2 244.08)">Pangram 0.12, Open Pangram 0.20; alternate</text>
+   </g>
+   <g id="text_20">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="259.92" transform="rotate(-0 331.2 259.92)">Mistral Small 3.1 24B base 4-bit  (round 2)</text>
+   </g>
+   <g id="text_21">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="270.72" transform="rotate(-0 331.2 270.72)">Pangram 0.08, Open Pangram 0.17; kept: main writer</text>
+   </g>
+   <g id="text_22">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="286.56" transform="rotate(-0 331.2 286.56)">OLMo-2 32B base 4-bit  (round 1)</text>
+   </g>
+   <g id="text_23">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="297.36" transform="rotate(-0 331.2 297.36)">Pangram 0.01, Open Pangram 0.16; dropped</text>
+   </g>
+   <g id="text_24">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="66.24" y="351.36" transform="rotate(-0 66.24 351.36)">kept</text>
+   </g>
+   <g id="text_25">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="114.336" y="351.36" transform="rotate(-0 114.336 351.36)">alternate</text>
+   </g>
+   <g id="text_26">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="184.752" y="351.36" transform="rotate(-0 184.752 351.36)">dropped</text>
+   </g>
+   <g id="patch_2">
+    <path d="M 57.6 352.08 
+C 58.459258 352.08 59.283439 351.738613 59.891026 351.131026 
+C 60.498613 350.523439 60.84 349.699258 60.84 348.84 
+C 60.84 347.980742 60.498613 347.156561 59.891026 346.548974 
+C 59.283439 345.941387 58.459258 345.6 57.6 345.6 
+C 56.740742 345.6 55.916561 345.941387 55.308974 346.548974 
+C 54.701387 347.156561 54.36 347.980742 54.36 348.84 
+C 54.36 349.699258 54.701387 350.523439 55.308974 351.131026 
+C 55.916561 351.738613 56.740742 352.08 57.6 352.08 
+z
+" clip-path="url(#p4c4e1e31cc)" style="fill: #2a78d6"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 105.696 352.08 
+C 106.555258 352.08 107.379439 351.738613 107.987026 351.131026 
+C 108.594613 350.523439 108.936 349.699258 108.936 348.84 
+C 108.936 347.980742 108.594613 347.156561 107.987026 346.548974 
+C 107.379439 345.941387 106.555258 345.6 105.696 345.6 
+C 104.836742 345.6 104.012561 345.941387 103.404974 346.548974 
+C 102.797387 347.156561 102.456 347.980742 102.456 348.84 
+C 102.456 349.699258 102.797387 350.523439 103.404974 351.131026 
+C 104.012561 351.738613 104.836742 352.08 105.696 352.08 
+z
+" clip-path="url(#p4c4e1e31cc)" style="fill: #1baf7a"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 176.112 352.08 
+C 176.971258 352.08 177.795439 351.738613 178.403026 351.131026 
+C 179.010613 350.523439 179.352 349.699258 179.352 348.84 
+C 179.352 347.980742 179.010613 347.156561 178.403026 346.548974 
+C 177.795439 345.941387 176.971258 345.6 176.112 345.6 
+C 175.252742 345.6 174.428561 345.941387 173.820974 346.548974 
+C 173.213387 347.156561 172.872 347.980742 172.872 348.84 
+C 172.872 349.699258 173.213387 350.523439 173.820974 351.131026 
+C 174.428561 351.738613 175.252742 352.08 176.112 352.08 
+z
+" clip-path="url(#p4c4e1e31cc)" style="fill: #eb6834"/>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="line2d_10">
+    <path d="M 54 306 
+L 302.4 306 
+" clip-path="url(#p68a45f41b5)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.75; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_11">
+    <path d="M 54 246.6 
+L 302.4 246.6 
+" clip-path="url(#p68a45f41b5)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.75; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_12">
+    <path d="M 54 187.2 
+L 302.4 187.2 
+" clip-path="url(#p68a45f41b5)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.75; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_13">
+    <path d="M 54 127.8 
+L 302.4 127.8 
+" clip-path="url(#p68a45f41b5)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.75; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_14">
+    <path d="M 54 68.4 
+L 302.4 68.4 
+" clip-path="url(#p68a45f41b5)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.75; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_15">
+    <path d="M 116.1 306 
+L 116.1 68.4 
+" clip-path="url(#p68a45f41b5)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.75; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_16">
+    <path d="M 178.2 306 
+L 178.2 68.4 
+" clip-path="url(#p68a45f41b5)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.75; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_17">
+    <path d="M 240.3 306 
+L 240.3 68.4 
+" clip-path="url(#p68a45f41b5)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.75; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_18">
+    <path d="M 302.4 306 
+L 302.4 68.4 
+" clip-path="url(#p68a45f41b5)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.75; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_19">
+    <path d="M 54 306 
+L 302.4 306 
+" clip-path="url(#p68a45f41b5)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.75; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_20">
+    <path d="M 54 306 
+L 54 68.4 
+" clip-path="url(#p68a45f41b5)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.75; stroke-linecap: round"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_21"/>
+     <g id="text_27">
+      <text style="text-anchor: middle; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="54" y="315.198242" transform="rotate(-0 54 315.198242)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_22"/>
+     <g id="text_28">
+      <text style="text-anchor: middle; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="116.1" y="315.198242" transform="rotate(-0 116.1 315.198242)">0.25</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_23"/>
+     <g id="text_29">
+      <text style="text-anchor: middle; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="178.2" y="315.198242" transform="rotate(-0 178.2 315.198242)">0.5</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_24"/>
+     <g id="text_30">
+      <text style="text-anchor: middle; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="240.3" y="315.198242" transform="rotate(-0 240.3 315.198242)">0.75</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_25"/>
+     <g id="text_31">
+      <text style="text-anchor: middle; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="302.4" y="315.198242" transform="rotate(-0 302.4 315.198242)">1</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_26"/>
+     <g id="text_32">
+      <text style="text-anchor: end; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="50.5" y="308.849121" transform="rotate(-0 50.5 308.849121)">0</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_27"/>
+     <g id="text_33">
+      <text style="text-anchor: end; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="50.5" y="249.449121" transform="rotate(-0 50.5 249.449121)">0.25</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_28"/>
+     <g id="text_34">
+      <text style="text-anchor: end; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="50.5" y="190.049121" transform="rotate(-0 50.5 190.049121)">0.5</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_29"/>
+     <g id="text_35">
+      <text style="text-anchor: end; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="50.5" y="130.649121" transform="rotate(-0 50.5 130.649121)">0.75</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_30"/>
+     <g id="text_36">
+      <text style="text-anchor: end; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="50.5" y="71.249121" transform="rotate(-0 50.5 71.249121)">1</text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_31">
+    <defs>
+     <path id="m51b5f8d351" d="M 0 3.5 
+C 0.928211 3.5 1.81853 3.131218 2.474874 2.474874 
+C 3.131218 1.81853 3.5 0.928211 3.5 0 
+C 3.5 -0.928211 3.131218 -1.81853 2.474874 -2.474874 
+C 1.81853 -3.131218 0.928211 -3.5 0 -3.5 
+C -0.928211 -3.5 -1.81853 -3.131218 -2.474874 -2.474874 
+C -3.131218 -1.81853 -3.5 -0.928211 -3.5 0 
+C -3.5 0.928211 -3.131218 1.81853 -2.474874 2.474874 
+C -1.81853 3.131218 -0.928211 3.5 0 3.5 
+z
+" style="stroke: #fcfcfb; stroke-width: 1.5"/>
+    </defs>
+    <g>
+     <use xlink:href="#m51b5f8d351" x="118.584" y="144.432" style="fill: #eb6834; stroke: #fcfcfb; stroke-width: 1.5"/>
+    </g>
+   </g>
+   <g id="line2d_32">
+    <g>
+     <use xlink:href="#m51b5f8d351" x="106.164" y="229.968" style="fill: #eb6834; stroke: #fcfcfb; stroke-width: 1.5"/>
+    </g>
+   </g>
+   <g id="line2d_33">
+    <g>
+     <use xlink:href="#m51b5f8d351" x="275.076" y="68.4" style="fill: #eb6834; stroke: #fcfcfb; stroke-width: 1.5"/>
+    </g>
+   </g>
+   <g id="line2d_34">
+    <g>
+     <use xlink:href="#m51b5f8d351" x="93.744" y="303.624" style="fill: #eb6834; stroke: #fcfcfb; stroke-width: 1.5"/>
+    </g>
+   </g>
+   <g id="line2d_35">
+    <defs>
+     <path id="m3457015b83" d="M 0 3.5 
+C 0.928211 3.5 1.81853 3.131218 2.474874 2.474874 
+C 3.131218 1.81853 3.5 0.928211 3.5 0 
+C 3.5 -0.928211 3.131218 -1.81853 2.474874 -2.474874 
+C 1.81853 -3.131218 0.928211 -3.5 0 -3.5 
+C -0.928211 -3.5 -1.81853 -3.131218 -2.474874 -2.474874 
+C -3.131218 -1.81853 -3.5 -0.928211 -3.5 0 
+C -3.5 0.928211 -3.131218 1.81853 -2.474874 2.474874 
+C -1.81853 3.131218 -0.928211 3.5 0 3.5 
+z
+" style="stroke: #fcfcfb; stroke-width: 1.5"/>
+    </defs>
+    <g>
+     <use xlink:href="#m3457015b83" x="106.164" y="275.112" style="fill: #1baf7a; stroke: #fcfcfb; stroke-width: 1.5"/>
+    </g>
+   </g>
+   <g id="line2d_36">
+    <g>
+     <use xlink:href="#m3457015b83" x="103.68" y="277.488" style="fill: #1baf7a; stroke: #fcfcfb; stroke-width: 1.5"/>
+    </g>
+   </g>
+   <g id="line2d_37">
+    <g>
+     <use xlink:href="#m51b5f8d351" x="116.1" y="213.336" style="fill: #eb6834; stroke: #fcfcfb; stroke-width: 1.5"/>
+    </g>
+   </g>
+   <g id="line2d_38">
+    <defs>
+     <path id="m05d05d8283" d="M 0 3.5 
+C 0.928211 3.5 1.81853 3.131218 2.474874 2.474874 
+C 3.131218 1.81853 3.5 0.928211 3.5 0 
+C 3.5 -0.928211 3.131218 -1.81853 2.474874 -2.474874 
+C 1.81853 -3.131218 0.928211 -3.5 0 -3.5 
+C -0.928211 -3.5 -1.81853 -3.131218 -2.474874 -2.474874 
+C -3.131218 -1.81853 -3.5 -0.928211 -3.5 0 
+C -3.5 0.928211 -3.131218 1.81853 -2.474874 2.474874 
+C -1.81853 3.131218 -0.928211 3.5 0 3.5 
+z
+" style="stroke: #fcfcfb; stroke-width: 1.5"/>
+    </defs>
+    <g>
+     <use xlink:href="#m05d05d8283" x="96.228" y="286.992" style="fill: #2a78d6; stroke: #fcfcfb; stroke-width: 1.5"/>
+    </g>
+   </g>
+   <g id="line2d_39">
+    <g>
+     <use xlink:href="#m05d05d8283" x="101.196" y="267.984" style="fill: #2a78d6; stroke: #fcfcfb; stroke-width: 1.5"/>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p4c4e1e31cc">
+   <rect x="0" y="0" width="604.8" height="360"/>
+  </clipPath>
+  <clipPath id="p68a45f41b5">
+   <rect x="54" y="68.4" width="248.4" height="237.6"/>
+  </clipPath>
+ </defs>
+</svg>

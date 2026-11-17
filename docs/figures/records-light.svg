@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="648pt" height="493.92pt" viewBox="0 0 648 493.92" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>depangram docs/figures/make_figures.py</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 493.92 
+L 648 493.92 
+L 648 0 
+L 0 0 
+z
+" style="fill: #fcfcfb"/>
+  </g>
+  <g id="axes_1">
+   <g id="line2d_1">
+    <path d="M 18 92.16 
+L 630 92.16 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.75"/>
+   </g>
+   <g id="patch_2">
+    <path d="M 363.6 103.68 
+Q 375.12 103.68 385.745573 103.68 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 382.545573 102.08 
+L 385.745573 103.68 
+L 382.545573 105.28 
+z
+" clip-path="url(#pc22195ce40)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 363.6 122.4 
+Q 375.12 122.4 385.745573 122.4 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 382.545573 120.8 
+L 385.745573 122.4 
+L 382.545573 124 
+z
+" clip-path="url(#pc22195ce40)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 363.6 141.12 
+Q 375.12 141.12 385.745573 141.12 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 382.545573 139.52 
+L 385.745573 141.12 
+L 382.545573 142.72 
+z
+" clip-path="url(#pc22195ce40)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 363.6 159.84 
+Q 375.12 159.84 385.745573 159.84 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 382.545573 158.24 
+L 385.745573 159.84 
+L 382.545573 161.44 
+z
+" clip-path="url(#pc22195ce40)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 363.6 178.56 
+Q 375.12 178.56 385.745573 178.56 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 382.545573 176.96 
+L 385.745573 178.56 
+L 382.545573 180.16 
+z
+" clip-path="url(#pc22195ce40)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 363.6 197.28 
+Q 375.12 197.28 385.745573 197.28 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 382.545573 195.68 
+L 385.745573 197.28 
+L 382.545573 198.88 
+z
+" clip-path="url(#pc22195ce40)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 18 226.08 
+L 630 226.08 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.75"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 363.6 237.6 
+Q 375.12 237.6 385.745573 237.6 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 382.545573 236 
+L 385.745573 237.6 
+L 382.545573 239.2 
+z
+" clip-path="url(#pc22195ce40)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 363.6 256.32 
+Q 375.12 256.32 385.745573 256.32 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 382.545573 254.72 
+L 385.745573 256.32 
+L 382.545573 257.92 
+z
+" clip-path="url(#pc22195ce40)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 18 285.12 
+L 630 285.12 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.75"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 363.6 296.64 
+Q 375.12 296.64 385.745573 296.64 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 382.545573 295.04 
+L 385.745573 296.64 
+L 382.545573 298.24 
+z
+" clip-path="url(#pc22195ce40)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 363.6 315.36 
+Q 375.12 315.36 385.745573 315.36 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 382.545573 313.76 
+L 385.745573 315.36 
+L 382.545573 316.96 
+z
+" clip-path="url(#pc22195ce40)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 363.6 334.08 
+Q 375.12 334.08 385.745573 334.08 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 382.545573 332.48 
+L 385.745573 334.08 
+L 382.545573 335.68 
+z
+" clip-path="url(#pc22195ce40)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 363.6 352.8 
+Q 375.12 352.8 385.745573 352.8 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 382.545573 351.2 
+L 385.745573 352.8 
+L 382.545573 354.4 
+z
+" clip-path="url(#pc22195ce40)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 18 381.6 
+L 630 381.6 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.75"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 363.6 393.12 
+Q 375.12 393.12 385.745573 393.12 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 382.545573 391.52 
+L 385.745573 393.12 
+L 382.545573 394.72 
+z
+" clip-path="url(#pc22195ce40)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 363.6 411.84 
+Q 375.12 411.84 385.745573 411.84 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 382.545573 410.24 
+L 385.745573 411.84 
+L 382.545573 413.44 
+z
+" clip-path="url(#pc22195ce40)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 18 440.64 
+L 630 440.64 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.75"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 363.6 452.16 
+Q 375.12 452.16 385.745573 452.16 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 382.545573 450.56 
+L 385.745573 452.16 
+L 382.545573 453.76 
+z
+" clip-path="url(#pc22195ce40)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 363.6 470.88 
+Q 375.12 470.88 385.745573 470.88 
+" clip-path="url(#pc22195ce40)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 382.545573 469.28 
+L 385.745573 470.88 
+L 382.545573 472.48 
+z
+" clip-path="url(#pc22195ce40)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 700 11px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="25.92" transform="rotate(-0 18 25.92)">Observability: every record the system keeps, and what reads it</text>
+   </g>
+   <g id="text_2">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="41.76" transform="rotate(-0 18 41.76)">Every paid call, every draft and every write-back leaves a record. The banks let a run resume, and the job files keep every original.</text>
+   </g>
+   <g id="text_3">
+    <text style="text-anchor: start; fill: #898781; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="70.56" transform="rotate(-0 18 70.56)">record</text>
+   </g>
+   <g id="text_4">
+    <text style="text-anchor: start; fill: #898781; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="70.56" transform="rotate(-0 183.6 70.56)">size</text>
+   </g>
+   <g id="text_5">
+    <text style="text-anchor: start; fill: #898781; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="70.56" transform="rotate(-0 392.4 70.56)">read by</text>
+   </g>
+   <g id="text_6">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 700 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="87.84" transform="rotate(-0 18 87.84)">ledger (SQLite)</text>
+   </g>
+   <g id="text_7">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="106.56" transform="rotate(-0 25.2 106.56)">pangram_calls</text>
+   </g>
+   <g id="text_8">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="106.56" transform="rotate(-0 183.6 106.56)">480 rows</text>
+   </g>
+   <g id="text_9">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="106.56" transform="rotate(-0 392.4 106.56)">budget caps, analytics</text>
+   </g>
+   <g id="text_10">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="125.28" transform="rotate(-0 25.2 125.28)">pangram_cache</text>
+   </g>
+   <g id="text_11">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="125.28" transform="rotate(-0 183.6 125.28)">480 rows</text>
+   </g>
+   <g id="text_12">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="125.28" transform="rotate(-0 392.4 125.28)">Pangram client (no text is paid for twice), analytics</text>
+   </g>
+   <g id="text_13">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="144" transform="rotate(-0 25.2 144)">baseline_scores</text>
+   </g>
+   <g id="text_14">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="144" transform="rotate(-0 183.6 144)">72 rows, 24 texts</text>
+   </g>
+   <g id="text_15">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="144" transform="rotate(-0 392.4 144)">analytics</text>
+   </g>
+   <g id="text_16">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="162.72" transform="rotate(-0 25.2 162.72)">claude_calls</text>
+   </g>
+   <g id="text_17">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="162.72" transform="rotate(-0 183.6 162.72)">4,812 rows</text>
+   </g>
+   <g id="text_18">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="162.72" transform="rotate(-0 392.4 162.72)">Claude capper, night week check, analytics</text>
+   </g>
+   <g id="text_19">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="181.44" transform="rotate(-0 25.2 181.44)">run_days</text>
+   </g>
+   <g id="text_20">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="181.44" transform="rotate(-0 183.6 181.44)">6 rows</text>
+   </g>
+   <g id="text_21">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="181.44" transform="rotate(-0 392.4 181.44)">budget caps, schedule, reflection</text>
+   </g>
+   <g id="text_22">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="200.16" transform="rotate(-0 25.2 200.16)">claude_rates</text>
+   </g>
+   <g id="text_23">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="200.16" transform="rotate(-0 183.6 200.16)">5 rows</text>
+   </g>
+   <g id="text_24">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="200.16" transform="rotate(-0 392.4 200.16)">Claude capper</text>
+   </g>
+   <g id="text_25">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 700 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="221.76" transform="rotate(-0 18 221.76)">banks (JSONL)</text>
+   </g>
+   <g id="text_26">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="240.48" transform="rotate(-0 25.2 240.48)">window bank</text>
+   </g>
+   <g id="text_27">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="240.48" transform="rotate(-0 183.6 240.48)">726 entries, 15 kinds</text>
+   </g>
+   <g id="text_28">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="240.48" transform="rotate(-0 392.4 240.48)">the window loop on resume, analytics, digest</text>
+   </g>
+   <g id="text_29">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="259.2" transform="rotate(-0 25.2 259.2)">paragraph-pass bank</text>
+   </g>
+   <g id="text_30">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="259.2" transform="rotate(-0 183.6 259.2)">4,601: 3,953 draws, 616 facts, 32 scores</text>
+   </g>
+   <g id="text_31">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="259.2" transform="rotate(-0 392.4 259.2)">the paragraph pass on resume, night, morning submission</text>
+   </g>
+   <g id="text_32">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 700 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="280.8" transform="rotate(-0 18 280.8)">job files</text>
+   </g>
+   <g id="text_33">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="299.52" transform="rotate(-0 25.2 299.52)">write-back ledger</text>
+   </g>
+   <g id="text_34">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="299.52" transform="rotate(-0 183.6 299.52)">63 rows</text>
+   </g>
+   <g id="text_35">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="299.52" transform="rotate(-0 392.4 299.52)">sync (takes the author's edits back in)</text>
+   </g>
+   <g id="text_36">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="318.24" transform="rotate(-0 25.2 318.24)">picks file</text>
+   </g>
+   <g id="text_37">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="318.24" transform="rotate(-0 183.6 318.24)">48 entries</text>
+   </g>
+   <g id="text_38">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="318.24" transform="rotate(-0 392.4 318.24)">write-back, morning submission</text>
+   </g>
+   <g id="text_39">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="336.96" transform="rotate(-0 25.2 336.96)">review file</text>
+   </g>
+   <g id="text_40">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="336.96" transform="rotate(-0 183.6 336.96)">16 repairs, 9 stuck spans</text>
+   </g>
+   <g id="text_41">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="336.96" transform="rotate(-0 392.4 336.96)">write-back, repair, morning submission</text>
+   </g>
+   <g id="text_42">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="355.68" transform="rotate(-0 25.2 355.68)">repair log</text>
+   </g>
+   <g id="text_43">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="355.68" transform="rotate(-0 183.6 355.68)">32 reads</text>
+   </g>
+   <g id="text_44">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="355.68" transform="rotate(-0 392.4 355.68)">repair, morning submission</text>
+   </g>
+   <g id="text_45">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 700 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="377.28" transform="rotate(-0 18 377.28)">reports</text>
+   </g>
+   <g id="text_46">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="396" transform="rotate(-0 25.2 396)">digests and submissions</text>
+   </g>
+   <g id="text_47">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="396" transform="rotate(-0 183.6 396)">10 files</text>
+   </g>
+   <g id="text_48">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="396" transform="rotate(-0 392.4 396)">the author, Discord, reflection, analytics</text>
+   </g>
+   <g id="text_49">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="414.72" transform="rotate(-0 25.2 414.72)">reflections</text>
+   </g>
+   <g id="text_50">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="414.72" transform="rotate(-0 183.6 414.72)">5</text>
+   </g>
+   <g id="text_51">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="414.72" transform="rotate(-0 392.4 414.72)">the author, the next reflection</text>
+   </g>
+   <g id="text_52">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 700 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="436.32" transform="rotate(-0 18 436.32)">logs</text>
+   </g>
+   <g id="text_53">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="455.04" transform="rotate(-0 25.2 455.04)">Discord log</text>
+   </g>
+   <g id="text_54">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="455.04" transform="rotate(-0 183.6 455.04)">103 entries</text>
+   </g>
+   <g id="text_55">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="455.04" transform="rotate(-0 392.4 455.04)">the author</text>
+   </g>
+   <g id="text_56">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 8px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="473.76" transform="rotate(-0 25.2 473.76)">night and pass logs</text>
+   </g>
+   <g id="text_57">
+    <text style="text-anchor: start; fill: #52514e; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="183.6" y="473.76" transform="rotate(-0 183.6 473.76)">2 logs</text>
+   </g>
+   <g id="text_58">
+    <text style="text-anchor: start; fill: #0b0b0b; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="392.4" y="473.76" transform="rotate(-0 392.4 473.76)">the author</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pc22195ce40">
+   <rect x="0" y="0" width="648" height="493.92"/>
+  </clipPath>
+ </defs>
+</svg>

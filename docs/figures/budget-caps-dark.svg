@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="648pt" height="428.4pt" viewBox="0 0 648 428.4" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>depangram docs/figures/make_figures.py</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 428.4 
+L 648 428.4 
+L 648 0 
+L 0 0 
+z
+" style="fill: #1a1a19"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 115.2 159.84 
+Q 115.2 163.44 115.2 165.921966 
+" clip-path="url(#p05b4e1cf4f)" style="fill: none; stroke: #c3c2b7; stroke-linecap: round"/>
+    <path d="M 116.8 162.721966 
+L 115.2 165.921966 
+L 113.6 162.721966 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #c3c2b7; stroke: #c3c2b7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 115.2 208.8 
+Q 115.2 212.4 115.2 214.881966 
+" clip-path="url(#p05b4e1cf4f)" style="fill: none; stroke: #c3c2b7; stroke-linecap: round"/>
+    <path d="M 116.8 211.681966 
+L 115.2 214.881966 
+L 113.6 211.681966 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #c3c2b7; stroke: #c3c2b7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 115.2 257.76 
+Q 115.2 261.36 115.2 263.841966 
+" clip-path="url(#p05b4e1cf4f)" style="fill: none; stroke: #c3c2b7; stroke-linecap: round"/>
+    <path d="M 116.8 260.641966 
+L 115.2 263.841966 
+L 113.6 260.641966 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #c3c2b7; stroke: #c3c2b7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 331.2 159.84 
+Q 331.2 163.44 331.2 165.921966 
+" clip-path="url(#p05b4e1cf4f)" style="fill: none; stroke: #c3c2b7; stroke-linecap: round"/>
+    <path d="M 332.8 162.721966 
+L 331.2 165.921966 
+L 329.6 162.721966 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #c3c2b7; stroke: #c3c2b7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 331.2 208.8 
+Q 331.2 212.4 331.2 214.881966 
+" clip-path="url(#p05b4e1cf4f)" style="fill: none; stroke: #c3c2b7; stroke-linecap: round"/>
+    <path d="M 332.8 211.681966 
+L 331.2 214.881966 
+L 329.6 211.681966 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #c3c2b7; stroke: #c3c2b7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 331.2 257.76 
+Q 331.2 261.36 331.2 263.841966 
+" clip-path="url(#p05b4e1cf4f)" style="fill: none; stroke: #c3c2b7; stroke-linecap: round"/>
+    <path d="M 332.8 260.641966 
+L 331.2 263.841966 
+L 329.6 260.641966 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #c3c2b7; stroke: #c3c2b7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 331.2 306.72 
+Q 331.2 310.32 331.2 312.801966 
+" clip-path="url(#p05b4e1cf4f)" style="fill: none; stroke: #c3c2b7; stroke-linecap: round"/>
+    <path d="M 332.8 309.601966 
+L 331.2 312.801966 
+L 329.6 309.601966 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #c3c2b7; stroke: #c3c2b7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 331.2 355.68 
+Q 331.2 359.28 331.2 361.761966 
+" clip-path="url(#p05b4e1cf4f)" style="fill: none; stroke: #c3c2b7; stroke-linecap: round"/>
+    <path d="M 332.8 358.561966 
+L 331.2 361.761966 
+L 329.6 358.561966 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #c3c2b7; stroke: #c3c2b7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 22.32 159.12 
+L 208.08 159.12 
+Q 212.4 159.12 212.4 154.8 
+L 212.4 123.12 
+Q 212.4 118.8 208.08 118.8 
+L 22.32 118.8 
+Q 18 118.8 18 123.12 
+L 18 154.8 
+Q 18 159.12 22.32 159.12 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #2c2c2a; stroke: #3987e5; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 22.32 208.08 
+L 208.08 208.08 
+Q 212.4 208.08 212.4 203.76 
+L 212.4 172.08 
+Q 212.4 167.76 208.08 167.76 
+L 22.32 167.76 
+Q 18 167.76 18 172.08 
+L 18 203.76 
+Q 18 208.08 22.32 208.08 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 22.32 257.04 
+L 208.08 257.04 
+Q 212.4 257.04 212.4 252.72 
+L 212.4 221.04 
+Q 212.4 216.72 208.08 216.72 
+L 22.32 216.72 
+Q 18 216.72 18 221.04 
+L 18 252.72 
+Q 18 257.04 22.32 257.04 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 22.32 306 
+L 208.08 306 
+Q 212.4 306 212.4 301.68 
+L 212.4 270 
+Q 212.4 265.68 208.08 265.68 
+L 22.32 265.68 
+Q 18 265.68 18 270 
+L 18 301.68 
+Q 18 306 22.32 306 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 238.32 159.12 
+L 424.08 159.12 
+Q 428.4 159.12 428.4 154.8 
+L 428.4 123.12 
+Q 428.4 118.8 424.08 118.8 
+L 238.32 118.8 
+Q 234 118.8 234 123.12 
+L 234 154.8 
+Q 234 159.12 238.32 159.12 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 238.32 208.08 
+L 424.08 208.08 
+Q 428.4 208.08 428.4 203.76 
+L 428.4 172.08 
+Q 428.4 167.76 424.08 167.76 
+L 238.32 167.76 
+Q 234 167.76 234 172.08 
+L 234 203.76 
+Q 234 208.08 238.32 208.08 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #2c2c2a; stroke: #3987e5; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 238.32 257.04 
+L 424.08 257.04 
+Q 428.4 257.04 428.4 252.72 
+L 428.4 221.04 
+Q 428.4 216.72 424.08 216.72 
+L 238.32 216.72 
+Q 234 216.72 234 221.04 
+L 234 252.72 
+Q 234 257.04 238.32 257.04 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 238.32 306 
+L 424.08 306 
+Q 428.4 306 428.4 301.68 
+L 428.4 270 
+Q 428.4 265.68 424.08 265.68 
+L 238.32 265.68 
+Q 234 265.68 234 270 
+L 234 301.68 
+Q 234 306 238.32 306 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 238.32 354.96 
+L 424.08 354.96 
+Q 428.4 354.96 428.4 350.64 
+L 428.4 318.96 
+Q 428.4 314.64 424.08 314.64 
+L 238.32 314.64 
+Q 234 314.64 234 318.96 
+L 234 350.64 
+Q 234 354.96 238.32 354.96 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 238.32 403.92 
+L 424.08 403.92 
+Q 428.4 403.92 428.4 399.6 
+L 428.4 367.92 
+Q 428.4 363.6 424.08 363.6 
+L 238.32 363.6 
+Q 234 363.6 234 367.92 
+L 234 399.6 
+Q 234 403.92 238.32 403.92 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 454.32 171.72 
+L 625.68 171.72 
+Q 630 171.72 630 167.4 
+L 630 123.12 
+Q 630 118.8 625.68 118.8 
+L 454.32 118.8 
+Q 450 118.8 450 123.12 
+L 450 167.4 
+Q 450 171.72 454.32 171.72 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_21">
+    <path d="M 454.32 222.84 
+L 625.68 222.84 
+Q 630 222.84 630 218.52 
+L 630 184.68 
+Q 630 180.36 625.68 180.36 
+L 454.32 180.36 
+Q 450 180.36 450 184.68 
+L 450 218.52 
+Q 450 222.84 454.32 222.84 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_22">
+    <path d="M 454.32 284.4 
+L 625.68 284.4 
+Q 630 284.4 630 280.08 
+L 630 235.8 
+Q 630 231.48 625.68 231.48 
+L 454.32 231.48 
+Q 450 231.48 450 235.8 
+L 450 280.08 
+Q 450 284.4 454.32 284.4 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_23">
+    <path d="M 454.32 335.52 
+L 625.68 335.52 
+Q 630 335.52 630 331.2 
+L 630 297.36 
+Q 630 293.04 625.68 293.04 
+L 454.32 293.04 
+Q 450 293.04 450 297.36 
+L 450 331.2 
+Q 450 335.52 454.32 335.52 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_24">
+    <path d="M 454.32 397.08 
+L 625.68 397.08 
+Q 630 397.08 630 392.76 
+L 630 348.48 
+Q 630 344.16 625.68 344.16 
+L 454.32 344.16 
+Q 450 344.16 450 348.48 
+L 450 392.76 
+Q 450 397.08 454.32 397.08 
+z
+" clip-path="url(#p05b4e1cf4f)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 11px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="25.92" transform="rotate(-0 18 25.92)">Budget controls: every cap, in the order the code checks it</text>
+   </g>
+   <g id="text_2">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="41.76" transform="rotate(-0 18 41.76)">A call goes through its lane top to bottom, and the first cap that says no holds it until that cap's reset.</text>
+   </g>
+   <g id="text_3">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="54.72" transform="rotate(-0 18 54.72)">The paragraph pass and repair call Claude outside the lane, under their own ceilings (right).</text>
+   </g>
+   <g id="text_4">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 9.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="95.76" transform="rotate(-0 18 95.76)">Pangram</text>
+   </g>
+   <g id="text_5">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="108" transform="rotate(-0 18 108)">every paid call; 2 to 4 for the loop only</text>
+   </g>
+   <g id="text_6">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="23.76" y="133.2" transform="rotate(-0 23.76 133.2)">1. month</text>
+   </g>
+   <g id="text_7">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="23.76" y="143.64" transform="rotate(-0 23.76 143.64)">$180</text>
+   </g>
+   <g id="text_8">
+    <text style="text-anchor: start; fill: #898781; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="23.76" y="154.08" transform="rotate(-0 23.76 154.08)">no: hold to the 1st</text>
+   </g>
+   <g id="text_9">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="23.76" y="182.16" transform="rotate(-0 23.76 182.16)">2. calendar day (loop)</text>
+   </g>
+   <g id="text_10">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="23.76" y="192.6" transform="rotate(-0 23.76 192.6)">$6</text>
+   </g>
+   <g id="text_11">
+    <text style="text-anchor: start; fill: #898781; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="23.76" y="203.04" transform="rotate(-0 23.76 203.04)">no: hold to midnight</text>
+   </g>
+   <g id="text_12">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="23.76" y="231.12" transform="rotate(-0 23.76 231.12)">3. run-day (loop)</text>
+   </g>
+   <g id="text_13">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="23.76" y="241.56" transform="rotate(-0 23.76 241.56)">$6</text>
+   </g>
+   <g id="text_14">
+    <text style="text-anchor: start; fill: #898781; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="23.76" y="252" transform="rotate(-0 23.76 252)">no: hold 24 hours</text>
+   </g>
+   <g id="text_15">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="23.76" y="280.08" transform="rotate(-0 23.76 280.08)">4. window share</text>
+   </g>
+   <g id="text_16">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="23.76" y="290.52" transform="rotate(-0 23.76 290.52)">keep $3 for the whole-text round</text>
+   </g>
+   <g id="text_17">
+    <text style="text-anchor: start; fill: #898781; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="23.76" y="300.96" transform="rotate(-0 23.76 300.96)">no: window rounds stop</text>
+   </g>
+   <g id="text_18">
+    <text style="text-anchor: middle; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="115.2" y="313.2" transform="rotate(-0 115.2 313.2)">call sent, cost logged</text>
+   </g>
+   <g id="text_19">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 9.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="234" y="95.76" transform="rotate(-0 234 95.76)">Claude</text>
+   </g>
+   <g id="text_20">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="234" y="108" transform="rotate(-0 234 108)">every Claude call in the loop</text>
+   </g>
+   <g id="text_21">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="133.2" transform="rotate(-0 239.76 133.2)">expected cost</text>
+   </g>
+   <g id="text_22">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="143.64" transform="rotate(-0 239.76 143.64)">dearest of the last 20 calls of the kind</text>
+   </g>
+   <g id="text_23">
+    <text style="text-anchor: start; fill: #898781; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="154.08" transform="rotate(-0 239.76 154.08)">prices the call for the checks below</text>
+   </g>
+   <g id="text_24">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="182.16" transform="rotate(-0 239.76 182.16)">1. week ceiling</text>
+   </g>
+   <g id="text_25">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="192.6" transform="rotate(-0 239.76 192.6)">0.90 of the account</text>
+   </g>
+   <g id="text_26">
+    <text style="text-anchor: start; fill: #898781; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="203.04" transform="rotate(-0 239.76 203.04)">no: hold to the weekly reset</text>
+   </g>
+   <g id="text_27">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="231.12" transform="rotate(-0 239.76 231.12)">2. loop share</text>
+   </g>
+   <g id="text_28">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="241.56" transform="rotate(-0 239.76 241.56)">0.50 of the week</text>
+   </g>
+   <g id="text_29">
+    <text style="text-anchor: start; fill: #898781; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="252" transform="rotate(-0 239.76 252)">no: hold to the weekly reset</text>
+   </g>
+   <g id="text_30">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="280.08" transform="rotate(-0 239.76 280.08)">3. today's allowance</text>
+   </g>
+   <g id="text_31">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="290.52" transform="rotate(-0 239.76 290.52)">share left over the days left</text>
+   </g>
+   <g id="text_32">
+    <text style="text-anchor: start; fill: #898781; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="300.96" transform="rotate(-0 239.76 300.96)">no: hold to the next start</text>
+   </g>
+   <g id="text_33">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="329.04" transform="rotate(-0 239.76 329.04)">4. 5-hour window</text>
+   </g>
+   <g id="text_34">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="339.48" transform="rotate(-0 239.76 339.48)">0.90 before 09:00, 0.50 after</text>
+   </g>
+   <g id="text_35">
+    <text style="text-anchor: start; fill: #898781; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="349.92" transform="rotate(-0 239.76 349.92)">no: hold to the 5-hour reset</text>
+   </g>
+   <g id="text_36">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="378" transform="rotate(-0 239.76 378)">5. first-run backstop</text>
+   </g>
+   <g id="text_37">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="388.44" transform="rotate(-0 239.76 388.44)">$20</text>
+   </g>
+   <g id="text_38">
+    <text style="text-anchor: start; fill: #898781; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="239.76" y="398.88" transform="rotate(-0 239.76 398.88)">no: hold to the next start</text>
+   </g>
+   <g id="text_39">
+    <text style="text-anchor: middle; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="331.2" y="411.12" transform="rotate(-0 331.2 411.12)">call sent, cost logged</text>
+   </g>
+   <g id="text_40">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 9.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="450" y="95.76" transform="rotate(-0 450 95.76)">Also checked</text>
+   </g>
+   <g id="text_41">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="450" y="108" transform="rotate(-0 450 108)">by each pass and each call</text>
+   </g>
+   <g id="text_42">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="133.2" transform="rotate(-0 455.76 133.2)">Pangram ceilings</text>
+   </g>
+   <g id="text_43">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="143.64" transform="rotate(-0 455.76 143.64)">night $3.50, paragraph pass $10,</text>
+   </g>
+   <g id="text_44">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="154.08" transform="rotate(-0 455.76 154.08)">repair $3, fix, restore, flavor $1</text>
+   </g>
+   <g id="text_45">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="164.52" transform="rotate(-0 455.76 164.52)">each</text>
+   </g>
+   <g id="text_46">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="194.76" transform="rotate(-0 455.76 194.76)">Claude ceilings</text>
+   </g>
+   <g id="text_47">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="205.2" transform="rotate(-0 455.76 205.2)">night $5, paragraph pass $5,</text>
+   </g>
+   <g id="text_48">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="215.64" transform="rotate(-0 455.76 215.64)">repair $3, restore $3</text>
+   </g>
+   <g id="text_49">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="245.88" transform="rotate(-0 455.76 245.88)">Claude per call</text>
+   </g>
+   <g id="text_50">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="256.32" transform="rotate(-0 455.76 256.32)">judge $0.30, head-to-head $0.20,</text>
+   </g>
+   <g id="text_51">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="266.76" transform="rotate(-0 455.76 266.76)">facts $0.20, notes $0.60, repair</text>
+   </g>
+   <g id="text_52">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="277.2" transform="rotate(-0 455.76 277.2)">$0.50, reflection $0.60</text>
+   </g>
+   <g id="text_53">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="307.44" transform="rotate(-0 455.76 307.44)">Pangram calibration</text>
+   </g>
+   <g id="text_54">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="317.88" transform="rotate(-0 455.76 317.88)">$15</text>
+   </g>
+   <g id="text_55">
+    <text style="text-anchor: start; fill: #898781; font: normal 400 7px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="328.32" transform="rotate(-0 455.76 328.32)">spent $14.55</text>
+   </g>
+   <g id="text_56">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="358.56" transform="rotate(-0 455.76 358.56)">Paragraph pass and repair</text>
+   </g>
+   <g id="text_57">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="369" transform="rotate(-0 455.76 369)">call Claude under their own</text>
+   </g>
+   <g id="text_58">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="379.44" transform="rotate(-0 455.76 379.44)">ceilings and the night's week</text>
+   </g>
+   <g id="text_59">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="455.76" y="389.88" transform="rotate(-0 455.76 389.88)">check</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p05b4e1cf4f">
+   <rect x="0" y="0" width="648" height="428.4"/>
+  </clipPath>
+ </defs>
+</svg>

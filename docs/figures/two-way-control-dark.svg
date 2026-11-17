@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="648pt" height="309.6pt" viewBox="0 0 648 309.6" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>depangram docs/figures/make_figures.py</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 309.6 
+L 648 309.6 
+L 648 0 
+L 0 0 
+z
+" style="fill: #1a1a19"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 159.84 93.6 
+Q 171 93.6 181.041966 93.6 
+" clip-path="url(#pc176a2a370)" style="fill: none; stroke: #c3c2b7; stroke-linecap: round"/>
+    <path d="M 177.841966 92 
+L 181.041966 93.6 
+L 177.841966 95.2 
+z
+" clip-path="url(#pc176a2a370)" style="fill: #c3c2b7; stroke: #c3c2b7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 325.44 93.6 
+Q 336.6 93.6 346.641966 93.6 
+" clip-path="url(#pc176a2a370)" style="fill: none; stroke: #c3c2b7; stroke-linecap: round"/>
+    <path d="M 343.441966 92 
+L 346.641966 93.6 
+L 343.441966 95.2 
+z
+" clip-path="url(#pc176a2a370)" style="fill: #c3c2b7; stroke: #c3c2b7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 491.04 93.6 
+Q 502.2 93.6 512.241966 93.6 
+" clip-path="url(#pc176a2a370)" style="fill: none; stroke: #c3c2b7; stroke-linecap: round"/>
+    <path d="M 509.041966 92 
+L 512.241966 93.6 
+L 509.041966 95.2 
+z
+" clip-path="url(#pc176a2a370)" style="fill: #c3c2b7; stroke: #c3c2b7; stroke-linecap: round"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 572.4 131.04 
+Q 331.92 149.4 92.331832 167.691911 
+" clip-path="url(#pc176a2a370)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 95.644347 169.043666 
+L 92.331832 167.691911 
+L 95.400745 165.852951 
+z
+" clip-path="url(#pc176a2a370)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 572.4 131.04 
+Q 409.32 149.4 247.128812 167.659935 
+" clip-path="url(#pc176a2a370)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 250.487725 168.891887 
+L 247.128812 167.659935 
+L 250.129721 165.711976 
+z
+" clip-path="url(#pc176a2a370)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 572.4 131.04 
+Q 486.72 149.4 401.914573 167.572591 
+" clip-path="url(#pc176a2a370)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 405.378787 168.466582 
+L 401.914573 167.572591 
+L 404.708294 165.337615 
+z
+" clip-path="url(#pc176a2a370)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 572.4 131.04 
+Q 564.12 149.4 556.207706 166.944652 
+" clip-path="url(#pc176a2a370)" style="fill: none; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 558.98179 164.685347 
+L 556.207706 166.944652 
+L 556.064712 163.369802 
+z
+" clip-path="url(#pc176a2a370)" style="fill: #898781; stroke: #898781; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 22.32 284.4 
+L 625.68 284.4 
+Q 630 284.4 630 280.08 
+L 630 258.48 
+Q 630 254.16 625.68 254.16 
+L 22.32 254.16 
+Q 18 254.16 18 258.48 
+L 18 280.08 
+Q 18 284.4 22.32 284.4 
+z
+" clip-path="url(#pc176a2a370)" style="fill: #1a1a19; stroke: #c3c2b7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 22.32 129.6 
+L 154.08 129.6 
+Q 158.4 129.6 158.4 125.28 
+L 158.4 61.92 
+Q 158.4 57.6 154.08 57.6 
+L 22.32 57.6 
+Q 18 57.6 18 61.92 
+L 18 125.28 
+Q 18 129.6 22.32 129.6 
+z
+" clip-path="url(#pc176a2a370)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 187.92 129.6 
+L 319.68 129.6 
+Q 324 129.6 324 125.28 
+L 324 61.92 
+Q 324 57.6 319.68 57.6 
+L 187.92 57.6 
+Q 183.6 57.6 183.6 61.92 
+L 183.6 125.28 
+Q 183.6 129.6 187.92 129.6 
+z
+" clip-path="url(#pc176a2a370)" style="fill: #2c2c2a; stroke: #3987e5; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 353.52 129.6 
+L 485.28 129.6 
+Q 489.6 129.6 489.6 125.28 
+L 489.6 61.92 
+Q 489.6 57.6 485.28 57.6 
+L 353.52 57.6 
+Q 349.2 57.6 349.2 61.92 
+L 349.2 125.28 
+Q 349.2 129.6 353.52 129.6 
+z
+" clip-path="url(#pc176a2a370)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 519.12 129.6 
+L 625.68 129.6 
+Q 630 129.6 630 125.28 
+L 630 61.92 
+Q 630 57.6 625.68 57.6 
+L 519.12 57.6 
+Q 514.8 57.6 514.8 61.92 
+L 514.8 125.28 
+Q 514.8 129.6 519.12 129.6 
+z
+" clip-path="url(#pc176a2a370)" style="fill: #2c2c2a; stroke: #3987e5; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 22.32 225.36 
+L 161.28 225.36 
+Q 165.6 225.36 165.6 221.04 
+L 165.6 173.52 
+Q 165.6 169.2 161.28 169.2 
+L 22.32 169.2 
+Q 18 169.2 18 173.52 
+L 18 221.04 
+Q 18 225.36 22.32 225.36 
+z
+" clip-path="url(#pc176a2a370)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 177.12 225.36 
+L 316.08 225.36 
+Q 320.4 225.36 320.4 221.04 
+L 320.4 173.52 
+Q 320.4 169.2 316.08 169.2 
+L 177.12 169.2 
+Q 172.8 169.2 172.8 173.52 
+L 172.8 221.04 
+Q 172.8 225.36 177.12 225.36 
+z
+" clip-path="url(#pc176a2a370)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 331.92 225.36 
+L 470.88 225.36 
+Q 475.2 225.36 475.2 221.04 
+L 475.2 173.52 
+Q 475.2 169.2 470.88 169.2 
+L 331.92 169.2 
+Q 327.6 169.2 327.6 173.52 
+L 327.6 221.04 
+Q 327.6 225.36 331.92 225.36 
+z
+" clip-path="url(#pc176a2a370)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 486.72 225.36 
+L 625.68 225.36 
+Q 630 225.36 630 221.04 
+L 630 173.52 
+Q 630 169.2 625.68 169.2 
+L 486.72 169.2 
+Q 482.4 169.2 482.4 173.52 
+L 482.4 221.04 
+Q 482.4 225.36 486.72 225.36 
+z
+" clip-path="url(#pc176a2a370)" style="fill: #2c2c2a; stroke: #383835; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 11px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="25.92" transform="rotate(-0 18 25.92)">Two-way control: the author steers the loop by replying on Discord</text>
+   </g>
+   <g id="text_2">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="18" y="41.76" transform="rotate(-0 18 41.76)">Questions go out on drop-rule cuts; the loop reads the answers back and acts on them.</text>
+   </g>
+   <g id="text_3">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 9px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="73.44" transform="rotate(-0 25.2 73.44)">A drop-rule cut</text>
+   </g>
+   <g id="text_4">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="85.68" transform="rotate(-0 25.2 85.68)">the loop drops a line</text>
+   </g>
+   <g id="text_5">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="96.12" transform="rotate(-0 25.2 96.12)">and the judge says why</text>
+   </g>
+   <g id="text_6">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 9px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="190.8" y="73.44" transform="rotate(-0 190.8 73.44)">Question posted</text>
+   </g>
+   <g id="text_7">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="190.8" y="85.68" transform="rotate(-0 190.8 85.68)">the cut happens now;</text>
+   </g>
+   <g id="text_8">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="190.8" y="96.12" transform="rotate(-0 190.8 96.12)">a reply can undo it</text>
+   </g>
+   <g id="text_9">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 9px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="356.4" y="73.44" transform="rotate(-0 356.4 73.44)">The author replies</text>
+   </g>
+   <g id="text_10">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="356.4" y="85.68" transform="rotate(-0 356.4 85.68)">a number, a reaction,</text>
+   </g>
+   <g id="text_11">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="356.4" y="96.12" transform="rotate(-0 356.4 96.12)">'stop', or 'rest' + window</text>
+   </g>
+   <g id="text_12">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 9px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="522" y="73.44" transform="rotate(-0 522 73.44)">Read back</text>
+   </g>
+   <g id="text_13">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="522" y="85.68" transform="rotate(-0 522 85.68)">every 60 s while</text>
+   </g>
+   <g id="text_14">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="522" y="96.12" transform="rotate(-0 522 96.12)">waiting, before</text>
+   </g>
+   <g id="text_15">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="522" y="106.56" transform="rotate(-0 522 106.56)">each pass, at</text>
+   </g>
+   <g id="text_16">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="522" y="117" transform="rotate(-0 522 117)">the digest</text>
+   </g>
+   <g id="text_17">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 9px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="185.04" transform="rotate(-0 25.2 185.04)">Veto</text>
+   </g>
+   <g id="text_18">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="25.2" y="197.28" transform="rotate(-0 25.2 197.28)">puts the line back for good</text>
+   </g>
+   <g id="text_19">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 9px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="180" y="185.04" transform="rotate(-0 180 185.04)">Rest</text>
+   </g>
+   <g id="text_20">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="180" y="197.28" transform="rotate(-0 180 197.28)">rests that window for the</text>
+   </g>
+   <g id="text_21">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="180" y="207.72" transform="rotate(-0 180 207.72)">run-day</text>
+   </g>
+   <g id="text_22">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 9px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="334.8" y="185.04" transform="rotate(-0 334.8 185.04)">Stop</text>
+   </g>
+   <g id="text_23">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="334.8" y="197.28" transform="rotate(-0 334.8 197.28)">stops the day, like the STOP</text>
+   </g>
+   <g id="text_24">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="334.8" y="207.72" transform="rotate(-0 334.8 207.72)">file</text>
+   </g>
+   <g id="text_25">
+    <text style="text-anchor: start; fill: #f0efec; font: normal 700 9px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="489.6" y="185.04" transform="rotate(-0 489.6 185.04)">No answer</text>
+   </g>
+   <g id="text_26">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="489.6" y="197.28" transform="rotate(-0 489.6 197.28)">the default stands after 2</text>
+   </g>
+   <g id="text_27">
+    <text style="text-anchor: start; fill: #c3c2b7; font: normal 400 7.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="489.6" y="207.72" transform="rotate(-0 489.6 207.72)">days</text>
+   </g>
+   <g id="text_28">
+    <text style="text-anchor: middle; fill: #f0efec; font: normal 700 8.5px system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" x="324" y="273.6" transform="rotate(-0 324 273.6)">A reply can never raise a cap, change a target or spend money. Only the author's replies count.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pc176a2a370">
+   <rect x="0" y="0" width="648" height="309.6"/>
+  </clipPath>
+ </defs>
+</svg>

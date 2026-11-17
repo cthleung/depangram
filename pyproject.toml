@@ -15,6 +15,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+figures = [
+    "matplotlib==3.11.2",
+]
 api = [
     "anthropic==2.0.0",
 ]

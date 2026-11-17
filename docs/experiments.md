@@ -4,7 +4,10 @@ I didn't start with a pipeline. I started with a question and about a dollar of 
 
 This is that run, in order, over about ten days.
 
-<!-- figure: timeline -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/timeline-dark.svg">
+  <img alt="Every experiment and milestone in order, with its result and the decision it led to" src="figures/timeline-light.svg">
+</picture>
 
 ## November 7
 
@@ -23,7 +26,10 @@ This is that run, in order, over about ten days.
 
 Claude's skeletons stay flagged WHATEVER words you dress them in. Word choice matters too (0.00 to 0.46 is a big jump), but the skeleton's the fingerprint, and you can't really paraphrase your way out of a skeleton.
 
-<!-- figure: skeleton swap -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/skeleton-swap-dark.svg">
+  <img alt="The skeleton and word swap: Pangram's AI share for each combination" src="figures/skeleton-swap-light.svg">
+</picture>
 
 **Which model writes?** If chat tuning leaves the fingerprint, a base model shouldn't have one. Well, two bake-offs of about 250 continuations each backed that up. The instruct "humanizer" model scored 1.00, while Mistral Small 24B base came in at 0.08, OLMo 3 32B base at 0.12 and OLMo-2 32B at 0.13 (OLMo-2 managed 0.01 in the first round, but at 3 tokens a second on my card it wasn't ever going to be the workhorse).
 
@@ -33,7 +39,10 @@ Claude's skeletons stay flagged WHATEVER words you dress them in. Word choice ma
 
 **The split that explained the wall.** I took one window and scored my 6 sentences and Claude's 7 separately, then together.
 
-<!-- figure: split -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/split-dark.svg">
+  <img alt="The author's sentences alone, Claude's alone, and both together" src="figures/split-light.svg">
+</picture>
 
 My sentences alone scored 0.00, Claude's alone 0.35, and together 1.00. So the machine text drags the human text down with it, which means patching sentences in a mixed paragraph was never going to work, and the paragraph had to go as a unit.
 
@@ -60,6 +69,11 @@ My sentences alone scored 0.00, Claude's alone 0.35, and together 1.00. So the m
 ## November 13 to 16
 
 **The paragraph pass.** Sections 4 to 6 were mostly Claude's and scored 0.91, 0.75 and 0.60 going in. The paragraph pass regrows full paragraphs with both writers, gates them in code, fact-checks them and scores each section as posted, and its best clean rounds came in at 0.46, 0.32 and 0.33.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/section-trajectories-dark.svg">
+  <img alt="Every scoring of every section, in order, with each section's low" src="figures/section-trajectories-light.svg">
+</picture>
 
 **A strict fact gate.** I tried rejecting any draft with even a small slip, and it failed 110 of 163, spending its $5 ceiling in nineteen minutes. So I flipped the design around: a draft with a small slip keeps its detector-beating text and gets repaired, with a cut, a swap of up to three words or one original sentence spliced back, and only what can't be repaired goes to me in bold.
 

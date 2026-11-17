@@ -2,7 +2,10 @@
 
 The research question is whether you can bend machine text into one person's voice. But the engineering question ate more of my evenings, which is how you let a system chew on that for days at a time without it overspending, going rogue, wrecking the document or getting in my way. What I ended up with is a steerable, evaluable, white box, semi-autonomous system that takes an input and slowly shapes it into an output while learning from the process, so this doc is about the "semi-autonomous" part, and the next three words after it.
 
-<!-- figure: pipeline -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/pipeline-dark.svg">
+  <img alt="The pipeline, from notes to write-back" src="figures/pipeline-light.svg">
+</picture>
 
 ## Schedule
 
@@ -16,7 +19,10 @@ The night run is basically the short, sharp version of that. It fires at 2am and
 4. It runs the repair step on anything new.
 5. It writes the document back, every change under its original, commits, publishes and posts the digest.
 
-<!-- figure: a night -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/night-dark.svg">
+  <img alt="A night run: the guards, the steps and the deadlines" src="figures/night-light.svg">
+</picture>
 
 But if a step runs past its deadline, the night kills its process tree (the model server included) and just carries on with the next step. If the process dies in the middle of writing a log line, the next load skips the broken line and cuts it out at the first write, so a crash at 4am never breaks the morning.
 
@@ -24,7 +30,10 @@ But if a step runs past its deadline, the night kills its process tree (the mode
 
 Every paid call goes through a capper first, and every call lands in a ledger, so the system always knows what it's spent and what it's allowed to spend next (which, given it's spending my money while I sleep, was really non-negotiable).
 
-<!-- figure: budget controls -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/budget-caps-dark.svg">
+  <img alt="Every budget cap, in the order the code checks it" src="figures/budget-caps-light.svg">
+</picture>
 
 **Pangram** has a hard monthly cap of $180 and a daily cap of $6, plus a $3 reserve held back for the round that scores the full document, which goes back to the window rounds once that round's done. On top of that there's a $15 cap on calibration work and a ceiling on every pass. That's a lot of caps, I know. But **Claude** was trickier still, because it's my own subscription and I use it all day. The loop gets at most 50% of my week, and everything stops at 90% of it no matter whose usage it is. Inside the 5-hour window, the loop can use up to 90% of it before 9am and only 50% after, which keeps my mornings free. Every call type also has its own dollar ceiling, from $0.20 for a fact check up to $0.60 for a set of notes.
 
@@ -32,7 +41,15 @@ The catch is that Claude's usage readings come back in coarse steps, so the capp
 
 Errors get the same treatment: three tries with a 30 and then a 90 second wait, then the door's held for 10 minutes while everything else carries on, and five failures in a row with nothing finished in between ends the day with a crash alert.
 
-<!-- figure: spend by day -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/pangram-spend-dark.svg">
+  <img alt="Pangram spend by day and purpose" src="figures/pangram-spend-light.svg">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/claude-spend-dark.svg">
+  <img alt="Claude spend by day and by role" src="figures/claude-spend-light.svg">
+</picture>
 
 Over the run that came to 480 Pangram calls for $129.65 and 4,812 Claude calls, and every one of them is in the ledger.
 
@@ -47,7 +64,10 @@ White box just means nothing happens off the record, so the system keeps all of 
 - **the write-back ledger**, which knows every paragraph the machine ever wrote, so it can tell my edits from its own.
 - **the digests and the logs**, which are the human-readable version of all of the above.
 
-<!-- figure: observability -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/records-dark.svg">
+  <img alt="Every record the system keeps, and what reads it" src="figures/records-light.svg">
+</picture>
 
 And because the write-back keeps every original in a comment, the document itself is part of the record: strip the comments and you're back to the source, byte for byte.
 
@@ -55,9 +75,17 @@ And because the write-back keeps every original in a comment, the document itsel
 
 The loop reports to a Discord channel. It posts when a run-day starts, once an hour while it's running, whenever a cap holds or a door gets held after retries, if a window that passed suddenly flags, if Pangram's model version changes under it, if my Claude token is about to expire, and a full digest at the end of every run, crashes included. Long jobs like a fine-tune post their start, an ETA once they've measured their pace, progress at a quarter, two quarters and three quarters, and when they finish. Over the run that came to 64 hourly posts, 14 run-day starts, 13 digests and 9 cap holds.
 
-<!-- figure: alerts -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/alerts-dark.svg">
+  <img alt="Every Discord message kind and when it fires" src="figures/alerts-light.svg">
+</picture>
 
 Oh, and it's two-way. When the loop wants to cut a run it can't crack, it asks first, and I answer from my phone with a number, a thumbs-up, a cross to veto the cut, "rest" and a window to rest it, or "stop" to end the day. It reads replies every minute, and a question I ignore closes on its default after two days. But the one thing a reply can never do is raise a cap, which is very much on purpose.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/two-way-control-dark.svg">
+  <img alt="Two-way control over Discord: a question, a reply, and what a reply can do" src="figures/two-way-control-light.svg">
+</picture>
 
 ## Steering
 
@@ -80,6 +108,9 @@ The design goes one level up, with a learning layer on top of the loop:
 3. It's adopted only if it wins without losing on voice or facts.
 4. The playbook is versioned, so every adopted change can be traced back to the night that earned it.
 
-<!-- figure: learning layer -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="figures/learning-layer-dark.svg">
+  <img alt="The learning layer: proposals, test nights and a versioned playbook" src="figures/learning-layer-light.svg">
+</picture>
 
 It's the same rule the experiments ran on: nothing changes on vibes.
