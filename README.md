@@ -4,7 +4,7 @@ I built a self-improving system that improves machine text against an adversaria
 
 Why bother? Well, machines that exemplify individuality are, for lack of a less grand way to put it, my thing. An RLHF-tuned model writes like everyone and no one at the same time, and I really wanted to see if I could bend one into my individual voice, which, from everything I've read, is still an open problem. And the detectors have been used to witch hunt people unfairly for a while now, so beating one felt like a public service on top of a research question, though I'll admit the research question is what kept me up at night. Pangram serves as a stand-in for a slop detector here, and I'm the world's harshest evaluator, so between the two of us the bar sat pretty high.
 
-## What it did
+## Results
 
 All scores are Pangram 4.1's AI share, where 0.00 reads as human and 1.00 as AI. Pangram wobbles, too. Small edits that changed nothing about the meaning moved a passage's score by as much as 0.21, so the loop only keeps a change that beats its noise threshold (0.05), and anything under that is basically weather.
 
@@ -46,18 +46,18 @@ A few design choices matter more than the rest, I think.
 - **Everything's reversible.** Every changed paragraph sits under a comment holding its original, so if you strip the comments you'll get the source back byte for byte.
 - **It runs unattended.** A night run (Task Scheduler, cron or systemd) takes in my edits, runs a round, rescores, repairs, writes back and posts a digest, under hard Pangram and Claude ceilings, a STOP file and a deadline that kills the process tree if a run won't finish.
 
-There's more in [how it works](docs/how%20it%20works.md).
+There's more in [the loop](docs/the-loop.md) (schedule, budget controls, observability, alerts and steering), [the evals](docs/evals.md) (how I know a model helped) and [the machine](docs/the-machine.md) (the GPU it runs on, and how it stays out of my way).
 
-## What I found
+## Findings
 
-The experiments were the fun part, so they get [their own doc](docs/findings.md), but here are the headlines.
+The experiments were the fun part, so they get [their own doc](docs/experiments.md), but here are the headlines.
 
 - **Pangram reads skeletons more than words.** I swapped sentence skeletons and word choice between my writing and Claude's. Claude's skeletons wearing my words scored 0.91, but my skeletons wearing Claude's words only scored 0.46.
 - **AI text is contagious.** Splitting one window by author, my sentences alone scored 0.00 and Claude's alone 0.35, but together they scored 1.00. The machine sentences drag the human ones down with them, which is why patching single sentences never worked.
-- **Humanizer tools are the wrong tool.** Across the bake-offs, an instruct-tuned "humanizer" model scored 1.00 where the plain base model scored 0.08, which honestly surprised me less than it should've.
+- **Humanizer tools are the wrong tool.** Across the bake-offs, an instruct-tuned "humanizer" model scored 1.00 where the plain base model scored 0.08, which surprised me less than it should've.
 - **A strict LLM fact gate fails most drafts.** It rejected 110 of 163 (yikes), so the system moved from "reject" to "repair", which keeps the detector-beating text and fixes the slip.
 
-## What's in the box
+## What's in the repo
 
 | Part | What it is |
 | --- | --- |
@@ -71,7 +71,7 @@ The experiments were the fun part, so they get [their own doc](docs/findings.md)
 | `mcp_server/` | An MCP server, so a Claude session can drive all of it |
 | `training/` | The voice adapter's training recipe (the adapter itself stays with me) |
 
-## Running it
+## Setup
 
 You'll need Python 3.12, a GPU that fits a 24B model at 4 bits, [llama.cpp](https://github.com/ggml-org/llama.cpp), a Pangram API key and either the Claude Code CLI or an Anthropic API key. Fair warning, though, Pangram bills by the word, so a real run costs real money.
 
@@ -103,7 +103,7 @@ And to drive it from Claude Code, add the server to your `.mcp.json`.
 
 Then you can just ask Claude to score a paragraph, start a run with a ceiling, check on it and read the report when it's done. [docs/mcp.md](docs/mcp.md) lists the tools.
 
-## What's next
+## Next
 
 The humanizer head. The early runs got past it clean, but the newer paragraph rounds mostly trip it, and I suspect it's keying on the mix of regrown and standing text inside a section rather than on any one paragraph, which would mean the fix lives in how a section gets put together. That's the next experiment, anyway.
 
