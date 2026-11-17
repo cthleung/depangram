@@ -23,19 +23,10 @@ Over the run it made 480 metered Pangram calls ($129.65, under a $180 monthly ca
 
 So the short version goes like this. Claude reads each machine-written paragraph and boils it down to notes, a local base model writes the paragraph again from those notes in my voice, code throws out every draft that loses or invents a fact, and only then does Pangram get a say.
 
-```mermaid
-flowchart LR
-    A[Machine paragraph] --> B[Notes<br/>Claude]
-    B --> C[Base model drafts<br/>Mistral 24B + voice adapter<br/>or few-shot]
-    C --> D{Code gates<br/>quotes, numbers, names,<br/>AI tells, length}
-    D -- fail --> C
-    D -- pass --> E[Fact check<br/>Claude]
-    E --> F[Open Pangram<br/>ranks for free]
-    F --> G[Pangram<br/>scores the section as posted]
-    G --> H[(Bank: every draft,<br/>every score)]
-    H --> I[Repair<br/>cut, swap, splice]
-    I --> J[Write-back<br/>every original kept]
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/figures/pipeline-dark.svg">
+  <img alt="The pipeline, from notes to write-back" src="docs/figures/pipeline-light.svg">
+</picture>
 
 A few design choices matter more than the rest, I think.
 
