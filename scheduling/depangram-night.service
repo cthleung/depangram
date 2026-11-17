@@ -1,0 +1,29 @@
+# The depangram night run as a systemd user service, started by depangram-night.timer.
+#
+# Install (as your own user, no root needed):
+#   mkdir -p ~/.config/systemd/user
+#   cp scheduling/depangram-night.service scheduling/depangram-night.timer ~/.config/systemd/user/
+#   (edit the paths below first)
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now depangram-night.timer
+#   loginctl enable-linger "$USER"      # so the timer fires while you're logged out
+#
+# Check it with `systemctl --user list-timers` and `journalctl --user -u depangram-night`. The night also writes
+# its own log to RUNS_DIR/<job>/night.log.
+
+[Unit]
+Description=depangram night run (the paragraph pass, the finals and the morning submission)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+# the folder holding engine/; .env and config.toml are read from here
+WorkingDirectory=%h/depangram
+# the Python depangram's requirements are installed in; add --job NAME when config.toml sets no [job] default
+ExecStart=%h/depangram/.venv/bin/python -m engine.night
+Environment=PYTHONIOENCODING=utf-8
+# the night ends a pass still going at [night] pass_until itself; this is the outer limit
+TimeoutStartSec=8h
+# stop the whole process group (the pass and its llama server) if systemd has to stop the run
+KillMode=control-group

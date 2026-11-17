@@ -1,0 +1,11 @@
+# The depangram night run from cron, daily at 02:00. Add the line below to your own crontab with `crontab -e`,
+# after changing the two paths: DEPANGRAM to the folder holding engine/, and the Python to the one depangram's
+# requirements are installed in. Add `--job NAME` after engine.night when config.toml sets no [job] default.
+#
+# cron runs with a bare environment: the night reads its keys from .env in the depangram folder, and git needs
+# credentials it can use without you (an SSH key with no passphrase prompt, or a credential helper) when [git]
+# push or publish is on. The night writes its own log to RUNS_DIR/<job>/night.log; the redirect catches anything
+# printed before that log opens.
+#
+# m  h  dom mon dow  command
+0  2  *   *   *    cd "$HOME/depangram" && "$HOME/depangram/.venv/bin/python" -m engine.night >> "$HOME/depangram/runs/cron.log" 2>&1

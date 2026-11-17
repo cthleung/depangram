@@ -1,0 +1,40 @@
+# The notes adapter with registers. hip_notes.yaml's recipe number for number (two epochs, rank 128,
+# the same learning rate, batch and template), on more data: the same passages, the author's essays and
+# the all-yours paragraphs of the document, every notes row tagged with its register as the first
+# bullet ("- register: essay"). A new run name and data file, so the first notes adapter's files on
+# the volume and on disk stay put.
+model_name: mistralai/Mistral-Small-24B-Base-2501
+run_name: hip_notes2_mistral24b
+
+# data: build_notes_pairs.py writes the pairs in your data folder; `--action upload --pairs FILE` copies
+# that file to pairs_file on the data volume
+pairs_file: /data/pairs_notes2.jsonl
+source_text_field: prompt_source      # pre-rendered: "<notes>\n- register: ...\n- ...\n</notes>" or "<source_text>\n...\n</source_text>"
+target_text_field: text
+only_ok_pairs: true
+sources: [samples, reddit, essays, guide]
+max_train_samples: 0
+holdout: 60
+
+# the CMU recipe at two epochs: three overfit (the eval loss rose in the third)
+seed: 42
+max_length: 2048
+learning_rate: 5.0e-5
+lr_scheduler_type: cosine
+warmup_ratio: 0.03
+num_train_epochs: 2.0
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 8
+logging_steps: 10
+bf16: true
+gradient_checkpointing: true
+attn_implementation: sdpa
+
+load_in_4bit: false
+lora_r: 128
+lora_alpha: 128
+lora_dropout: 0.05
+lora_target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+# the source carries its own tags, so the template only adds the target's
+template: "{source}\n<target_text>\n{target}\n</target_text>"

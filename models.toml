@@ -1,0 +1,102 @@
+# The local model registry: the GGUF models engine/local_models.py can start under llama.cpp's llama-server.
+#
+# Each [models.NAME] table is one model. NAME is what config.toml names ([loop] model, [regrow] model, [loop]
+# seed_model, [regrow] base2_model). The keys:
+#
+#   file        the GGUF file, relative to MODELS_DIR (default: models/ in the repo). Forward slashes work on
+#               every system.
+#   chat        true for an instruct model the engine talks to through /v1/chat/completions; false for a base
+#               model it completes raw text with. The rewriting loop wants base models.
+#   ctx         tokens of context per parallel slot (default 4096). The server gets ctx times parallel in all.
+#   parallel    parallel slots, so several draws run at once (default 4). Big models on a small card want 2.
+#   extra       more llama-server arguments, as a list. ["-ctk", "q8_0", "-ctv", "q8_0"] stores the KV cache in
+#               8 bits, which lets a 24B or 32B model fit a 16 GB card with 2 slots.
+#   lora        a LoRA adapter in GGUF form, relative to MODELS_DIR, loaded with the model. With one loaded, the
+#               loop has two writer arms on one server: the adapter, and the plain base (the adapter at scale 0).
+#   lora_scale  the scale the adapter arm sends with each request (default 1.0). The plain-base arm always
+#               sends 0.0.
+#
+# llama-server is found in LLAMA_CPP_DIR (default: llama.cpp/ in the repo), else on the PATH. Its --fit option
+# (on by default) splits the layers between the GPU and system RAM by itself, so a model bigger than the card
+# still runs, slower.
+#
+# Use MODELS_FILE in .env to point at your own copy of this file instead of editing this one.
+
+# ------------------------------------------------------------------------------------------- base models
+[models.qwen3-14b-base]
+file = "qwen3-14b-base/Qwen3-14B-Base.Q6_K.gguf"
+chat = false
+
+[models.gemma4-26b-base]
+file = "gemma4-26b-base/gemma-4-26B-A4B.i1-Q5_K_M.gguf"
+chat = false
+
+[models.olmo2-32b-base]
+file = "olmo2-32b/OLMo-2-0325-32B.Q4_K_M.gguf"
+chat = false
+
+[models.olmo2-32b-iq3]
+file = "olmo2-32b/OLMo-2-0325-32B.i1-IQ3_XS.gguf"
+chat = false
+parallel = 2
+extra = ["-ctk", "q8_0", "-ctv", "q8_0"]
+
+[models.olmo3-32b-iq3]
+file = "olmo3-32b/Olmo-3-1125-32B.i1-IQ3_XS.gguf"
+chat = false
+parallel = 2
+extra = ["-ctk", "q8_0", "-ctv", "q8_0"]
+
+[models.olmo3-7b]
+file = "olmo3-7b/Olmo-3-1025-7B.i1-Q6_K.gguf"
+chat = false
+
+[models.mistral-small-24b-base]
+file = "mistral-small-24b-base/Mistral-Small-3.1-24B-Base-2503.i1-IQ4_XS.gguf"
+chat = false
+parallel = 2
+extra = ["-ctk", "q8_0", "-ctv", "q8_0"]
+
+# the 3.0 base (text only), the base the notes adapter below is trained on
+[models.mistral-small-24b-base-2501]
+file = "mistral-small-24b-base-2501/Mistral-Small-24B-Base-2501.i1-IQ4_XS.gguf"
+chat = false
+parallel = 2
+extra = ["-ctk", "q8_0", "-ctv", "q8_0"]
+
+# ------------------------------------------------------------------------------------------- instruct models
+[models.styletune-v2]
+file = "styletune-v2/Gemma-4-26B-A4B-StyleTune-V2.i1-Q5_K_M.gguf"
+chat = true
+
+[models.olmo31-32b-sft]
+file = "olmo31-32b-sft/Olmo-3.1-32B-Instruct-SFT.i1-IQ3_XS.gguf"
+chat = true
+parallel = 2
+extra = ["-ctk", "q8_0", "-ctv", "q8_0"]
+
+[models.mistral-small-24b-instruct]
+file = "mistral-small-24b-instruct/mistralai_Mistral-Small-3.1-24B-Instruct-2503-IQ4_XS.gguf"
+chat = true
+parallel = 2
+extra = ["-ctk", "q8_0", "-ctv", "q8_0"]
+
+# ------------------------------------------------------------------------------------------- adapters
+# The notes adapter: the 2501 base plus a LoRA you train on your own writing with training/ (training/README.md).
+# Its prompt is "<notes>\n- ...\n</notes>\n<target_text>\n" and it stops at "</target_text>". This entry is an
+# example: no adapter ships with the repo. Train yours, put the GGUF where `lora` says (or change `lora`), and the
+# loop's adapter arm switches on. The server refuses to start while the file is missing.
+[models.hip-notes-mistral24b]
+file = "mistral-small-24b-base-2501/Mistral-Small-24B-Base-2501.i1-IQ4_XS.gguf"
+chat = false
+parallel = 2
+extra = ["-ctk", "q8_0", "-ctv", "q8_0"]
+lora = "hip-notes-mistral24b/hip_notes_mistral24b-f16.gguf"
+lora_scale = 1.0
+
+# The HIP paraphraser (arXiv 2605.19516): Qwen3-14B-Base plus the paper's public LoRA, converted to GGUF with
+# llama.cpp's convert_lora_to_gguf.py. Prompt: "<source_text>...</source_text>\n<target_text>".
+[models.hip-qwen3-14b]
+file = "qwen3-14b-base/Qwen3-14B-Base.Q6_K.gguf"
+chat = false
+lora = "hip-qwen3-14b-base/hip-qwen3-14b-base-f16.gguf"

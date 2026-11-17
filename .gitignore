@@ -1,5 +1,6 @@
-# keys and machine settings
+# keys and machine settings (config.toml is your own copy of config.example.toml)
 .env
+config.toml
 .env.*
 !.env.example
 *.key
@@ -14,6 +15,7 @@ settings.local.json
 # runs, models and caches
 runs/
 models/
+llama.cpp/
 *.gguf
 *.safetensors
 *.bin
@@ -27,4 +29,12 @@ venv/
 
 # job data stays local (the demo job is added on purpose when it exists)
 jobs/*
+!jobs/example/
 !jobs/README.md
+
+# local data the engine writes beside the code
+analytics/
+digests/
+corpus/
+.mypy_cache/
+*.baseline.json

@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "depangram"
+version = "0.1.0"
+description = "The depangram engine. The docs are coming."
+license = { text = "MIT" }
+requires-python = ">=3.12"
+dependencies = [
+    "requests==2.34.2",
+    "wordfreq==3.1.1",
+    "psutil==7.2.2",
+]
+
+[project.optional-dependencies]
+api = [
+    "anthropic==2.0.0",
+]
+open-pangram = [
+    "torch==2.11.0",
+    "transformers==5.22.2",
+    "peft==0.21.2",
+    "numpy==2.5.4",
+    "scipy==1.18.1",
+    "emoji==2.16.0",
+]
+training = [
+    "modal==1.6.3",
+    "PyYAML==6.0.3",
+]
+
+[tool.setuptools]
+packages = ["engine", "engine.tics", "training"]

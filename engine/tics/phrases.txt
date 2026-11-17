@@ -1,0 +1,272 @@
+# Stock phrases for the AI-tells scanner (tic_patterns.py reads this file).
+#
+# One phrase per line, matched as whole words with case ignored, in narration
+# only. A line that starts with "@" opens a group and names its tag and its
+# family: "@ tag | family". Every phrase below it gets that tag as a check.
+# Lines that start with "#" are comments. A rule in tic_patterns.py that
+# already tags a span wins over a phrase here.
+
+@ engineering word | wrong register
+anchor
+architecture
+blueprint
+calibrate
+construct
+construction
+cornerstone
+detonation
+dynamic
+foundation
+framework
+furniture
+infrastructure
+iterating
+load-bearing
+pillar
+restructure
+scaffolding
+structural
+structurally
+well-structured
+
+@ machine word | wrong register
+calibrated
+coded to
+deployed
+efficient
+engineered
+executed
+feedback loop
+fine-tuned
+frictionless
+granular
+hardwired
+input
+leverage
+methodical
+modular
+operationalized
+optimized
+output
+programmed to
+robust
+scalable
+seamless
+streamlined
+wired to
+
+@ abstract quality | abstraction
+calculated
+devastating
+intensity
+precision
+strategic
+tactical
+
+@ deliberate | announcing
+deliberate
+deliberately
+deliberateness
+
+@ clinical word | distance
+catalogued
+clocked
+execute
+facilitate
+mechanism of
+noted
+optimize
+processing
+recurring motif
+registered
+sensory detail
+sensory experience
+sensory information
+systematic
+the mechanics of
+visual composition
+
+@ AI vocabulary | cliches
+at its core
+delve
+in many ways
+it's important to
+it's not just
+it's worth noting
+not just
+nuanced
+tapestry
+the kind of
+the sort of
+the way that
+
+@ specific | emphasis
+specific
+
+@ spreading feeling | patterns
+ache bloomed
+heat pooled
+longing suffused
+warmth spread through
+
+@ dead metaphor | cliches
+armor
+
+@ filler qualifier | emphasis
+entire
+entirely
+genuine
+genuinely
+genuineness
+
+@ something vague | announcing
+became something
+settling into something
+shifted into something
+something about
+something else entirely
+
+@ air between | abstraction
+hung in the air
+
+@ noticing verb | distance
+filed away
+filed it
+filed that
+filed the
+
+@ explosion word | wrong register
+detonate
+detonated
+detonating
+short circuited
+short circuiting
+short-circuit
+short-circuited
+
+@ said it like | distance
+said it as if
+said it as though
+said it like
+said it so
+said it the way
+said it with
+said that like
+said the name like
+said the word like
+said the words like
+
+@ autopilot | wrong register
+autopilot
+on autopilot
+
+@ feeling settled | abstraction
+settled behind her
+settled behind his
+settled deep in
+settled in her chest
+settled in her gut
+settled in her ribs
+settled in her sternum
+settled in her stomach
+settled in his chest
+settled in his gut
+settled in his ribs
+settled in his sternum
+settled in his stomach
+settled low in
+settled somewhere
+
+@ burden phrase | abstraction
+carried the weight
+carry the weight
+carrying the weight
+the weight of her
+the weight of his
+the weight of it
+the weight of that
+the weight of the
+under the weight of
+
+@ really, actually | emphasis
+actually feeling
+actually felt
+actually listened
+actually listening
+actually looked
+actually looking
+actually saw
+actually seeing
+actually thinking
+actually thought
+actually watched
+actually watching
+really feeling
+really felt
+really listened
+really listening
+really looked
+really looking
+really saw
+really seeing
+really watched
+really watching
+
+@ head tilt | cliches
+cocked her head
+cocked his head
+cocked my head
+cocked their head
+head tilt
+tilted her head
+tilted his head
+tilted my head
+tilted their head
+
+@ voice as a prop | distance
+dropped her voice
+dropped his voice
+dropped my voice
+he breathed
+I breathed
+kept her voice
+kept his voice
+kept my voice
+lowered her voice
+lowered his voice
+lowered my voice
+said it against
+said it into
+said it low
+said it quietly
+said it softly
+she breathed
+voice dropped to
+voice got low
+voice got quiet
+voice got quieter
+voice got softer
+voice went low
+voice went quiet
+voice went soft
+
+@ state label | announcing
+for a fraction of a second
+for just a moment
+for just a second
+tacky now
+thoughtful now
+vulnerable for
+
+@ vague change | cliches
+cast everything in
+casting everything
+casting the room
+cracked an eye
+cracked her eyes
+cracked his eyes
+cracked my eyes
+cracked one eye
+shifted
+than her words
+than his words

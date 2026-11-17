@@ -1,0 +1,2 @@
+# One line a row: a sentence the loop never rewrites, like a heading or a template.
+Basil does not, and it says so by noon.

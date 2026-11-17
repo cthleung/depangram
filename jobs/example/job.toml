@@ -1,0 +1,46 @@
+# A job: one markdown document the engine works on. Copy this file into jobs/NAME/ and fill it in.
+# jobs/README.md explains every field. Paths are relative to the job folder unless they're absolute.
+
+[job]
+# The job's name in logs and digests. Leave it out to use the folder's name.
+name = "example"
+
+# One line about the document. Every prompt that names the kind of document reads it after "a paragraph from".
+description = "a short practical how-to on growing herbs on a balcony"
+
+# The document the write-back writes into, and the frozen copy of it that everything is read against.
+document = "../../docs/herbs.md"
+original = "original.md"
+working = "working.md"
+
+# How the document marks its sections. Give one of these two, or neither for numbered "## 3. Title" headings.
+section_level = 3                       # "### Part one" headings
+# section_pattern = '^## Step (\d+):'   # a regex; a first group of digits becomes the section's id
+
+# The sections in scope: a list of ids, or "all" for every section with prose in it.
+sections = "all"
+# A section with a list line outside a comment is still being drafted, so "all" leaves it out. Set false when
+# finished sections have lists.
+skip_list_sections = true
+# The night's paragraph pass works on these, when that's fewer than the scope.
+# night_sections = [2, 3]
+# The git branch the night and morning steps expect.
+# branch = "work"
+
+# Your own writing, for the voice. Plain markdown works: each heading opens a sample.
+samples = "samples.md"
+# Which samples, by number. Leave it out to use all of them.
+# voice_samples = [1, 2]
+
+# Your own house rules (banned words, spelling, the swear and filler budgets), in the format of rules.toml at the
+# repo root. Only the keys you change are needed. Leave it out to use the repo's rules.
+# rules = "rules.toml"
+
+# Who wrote which line. "file": only your_lines says, and every sentence it doesn't list is the machine's.
+# "scan": the sync step also runs the chat-log scan on new sentences.
+verdicts = "file"
+your_lines = "your lines.md"
+
+# Lines the document quotes as examples (kept out of the prose), and lines that never change. One a line.
+example_lines = "example lines.txt"
+protected_lines = "protected lines.txt"

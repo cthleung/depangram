@@ -1,0 +1,46 @@
+# The paraphrase adapter recipe (HIP): an AI paraphrase in, the author's passage out. Values copied from the
+# CMU repo's train_llama3_8b_hip.yaml, with this model and your data swapped in.
+#
+# Base model. Two choices:
+#   mistralai/Mistral-Small-24B-Base-2501      text-only, plain MistralForCausalLM, converts to a
+#                                             llama.cpp LoRA without fuss. The writer then runs the
+#                                             2501 GGUF too (same tokenizer, same text training).
+#   mistralai/Mistral-Small-3.1-24B-Base-2503  a newer base, but wrapped in a vision
+#                                             model (Mistral3ForConditionalGeneration) whose
+#                                             transformers port the card calls untested.
+model_name: mistralai/Mistral-Small-24B-Base-2501
+run_name: hip_mistral24b
+
+# data: your pairs file, sent to the Modal data volume by `--action upload --pairs FILE`
+pairs_file: /data/pairs.jsonl
+source_text_field: paraphrased_text
+target_text_field: text
+only_ok_pairs: true           # drop paraphrases whose length ratio fell outside 0.6 to 1.6
+sources: [samples, reddit, chat]   # which corpus sources to train on
+max_train_samples: 0          # 0 = all
+holdout: 100                  # pairs kept back for an eval loss at the end
+
+# the CMU recipe
+seed: 42
+max_length: 2048
+learning_rate: 5.0e-5
+lr_scheduler_type: cosine
+warmup_ratio: 0.03
+num_train_epochs: 1.0
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 8     # effective batch 16, as in the paper
+logging_steps: 10
+bf16: true
+gradient_checkpointing: true
+attn_implementation: sdpa
+
+# LoRA (bf16 weights, about 48 GB for 24B, so an 80 GB card). If it goes out of memory, set
+# load_in_4bit: true and lora_r / lora_alpha: 32, which is the CMU 70B QLoRA setting.
+load_in_4bit: false
+lora_r: 128
+lora_alpha: 128
+lora_dropout: 0.05
+lora_target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+# the prompt shape the model trains on and the loop will use (plain text, no chat template)
+template: "<source_text>\n{source}\n</source_text>\n<target_text>\n{target}\n</target_text>"

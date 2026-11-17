@@ -1,0 +1,177 @@
+# depangram's settings: the caps, the schedule and every knob you might tune.
+#
+# Copy this file to config.toml and edit the copy; git ignores config.toml. Without one, the engine reads this
+# file and says so. Keys and machine paths live in .env (see .env.example), never here.
+#
+# Every value below is the engine's tested default. A knob left out of your copy falls back to the code's own
+# default, which is the same number in nearly every case.
+
+[job]
+default = ""                   # the job a command works on when it gets no --job: a folder in jobs/, like "my-document". Empty: every command needs --job
+
+[pangram]
+usd_per_credit = 0.05          # Pangram's price: $0.05 per credit
+words_per_credit = 100         # one credit per 100 words, rounded up per text scored
+monthly_cap_usd = 180.0        # all Pangram spend in a calendar month stays under this
+nightly_cap_usd = 6.0          # the loop's Pangram spend in one day stays under this (the monthly cap spread over a month)
+calibration_cap_usd = 15.0     # the most the one-off calibration runs (baseline, bake-off, noise floor) may spend
+poll_seconds = 1.0             # how often a queued Pangram request is polled
+timeout_seconds = 300          # a Pangram request still waiting after this fails
+model_ack = "4.1"              # the Pangram model version you trust the banked scores under. When Pangram answers with another version the loop alerts and rescores; set this to the new version once you've looked (read at the next start)
+
+[claude]
+# backend = "cli"              # "cli": the Claude Code CLI on a subscription (CLAUDE_CODE_OAUTH_TOKEN in .env); "api": the Anthropic API (ANTHROPIC_API_KEY). CLAUDE_BACKEND in .env wins over this
+loop_share = 0.50              # the loop's share of your weekly Claude limit
+total_ceiling = 0.90           # everything Claude stops once your whole week (yours and the loop's) passes this
+claude_until = "09:00"         # the night phase ends here; after it you're likely using Claude yourself
+night_claude_max_5h = 0.90     # from the start time to claude_until, the loop may use up to this much of the 5-hour window
+day_claude_max_5h = 0.50       # from claude_until to the stop time, up to this much; the rest is yours
+first_night_cap_usd = 20.0     # an estimated-dollar backstop while the capper has no measured nights to go on
+splice_model = "sonnet"        # the model that splices runs together
+check_model = "haiku"          # the model for cheap checks
+director_model = "sonnet"      # the model that reads a window and says what to work on
+# The conversion rates: points of your week (and of the 5-hour window) per estimated dollar of loop calls. These
+# seeds were read off a real overnight run and rounded up; the loop refits both from its own quiet nights.
+week_points_per_usd = 0.007
+five_hour_points_per_usd = 0.05
+rate_clamp = [0.5, 2.0]        # a refit rate stays between these multiples of the seed, so one quiet night can't swing it far
+backstop_run_days = 1          # first_night_cap_usd applies until this many real run-days have finished
+expected_cost_calls = 20       # "the next call" costs as much as the dearest of this many recent calls of its kind
+probe_model = "haiku"          # the cheap call that refreshes the week and 5-hour readings at start-up
+token_made = ""                # the day `claude setup-token` made your token ("YYYY-MM-DD"); the loop warns before it runs out. Empty: no warning
+token_life_days = 365          # how long that token lives
+token_warn_days = 30           # warn this many days before it runs out
+# The API backend only. The engine's short model names map to API model ids, the dollars come from the usage at
+# these prices (per million tokens: input, output, cache read, cache write), and api_max_tokens caps one answer.
+# Check the prices against Anthropic's pricing page; a model with no price is refused before any call.
+# api_models = { opus = "claude-opus-5-5", sonnet = "claude-sonnet-5-5", haiku = "claude-haiku-5-5" }
+# api_prices = { "claude-opus-5-5" = [4.00, 20.00, 0.20, 5.00], "claude-sonnet-5-5" = [2.00, 10.00, 0.10, 2.50], "claude-haiku-5-5" = [0.10, 0.50, 0.01, 0.125] }
+# api_max_tokens = 16000
+# api_effort = ""              # "low" to "max" sets the API's effort; empty leaves the model's default
+
+[loop]
+model = "hip-notes-mistral24b"  # the local server both writer arms run on (a models.toml name): a base model with an adapter loaded
+primary_arm = "notes"          # "notes": the adapter writes from the notes alone; "fewshot": the plain base with worked examples in front
+fallback_arm = "fewshot"       # draws when the primary arm passes nothing in a round, and settles a Claude run the adapter's pick couldn't; "" for none
+seed_model = "mistral-small-24b-base"   # the writer that job.toml's [seed] banks were drawn with (the seed import matches on it)
+rewrite_cleared = false        # true: windows already clean (0.00, no Claude text left) get their few-shot runs regrown once more by the adapter; false leaves them alone
+rounds_per_window = 6          # rounds in one pass over a window
+stuck_after_round = 3          # rounds 1 to this always run
+stuck_streak = 2               # after them, this many rounds in a row with no change ends the pass
+stuck_days = 3                 # a window with no new best for this many run-days rests for good
+target_ai_share = 0.25         # a window at or under this AI share with nothing flagged counts as done
+rest_at_target = true          # and rests even with Claude text left in it
+protected_words = 1            # protected words per line of yours. More protects your voice harder but throws away far more draws
+repeat_must_keep = false       # a deliberate repeat (one word said over and over) goes to the judge as a joke line, not a hard filter
+pool_draws = 192               # while Claude is capped: candidates drawn and banked per run, at most
+wait_minutes = 10              # while capped: how often the loop looks again
+smoke_pangram_usd = 0.60       # --smoke: one window, one round, and no more than this on Pangram
+smoke_claude_usd = 1.00        # --smoke: and no more than this, estimated, on Claude
+retry_tries = 3                # a Pangram, Claude or llama-server error: tries before the door is held
+retry_wait_seconds = [30, 90]  # the waits between those tries
+error_block_minutes = 10       # then the door is held this long, and the loop carries on
+failures_in_row = 5            # this many restarts of the day with no round finished between them ends it
+# the whole-text round and the wrap-up
+whole_text_rounds = 3          # passes in one whole-text round: the first scoring, then context rounds section by section
+whole_text_reserve_usd = 3.00  # kept back from the Pangram day cap for the whole-text round
+whole_text_floor_usd = 0.50    # once that round is done, the rest of the reserve goes back to the window rounds down to this (about one section's scoring)
+write_back = false             # the wrap-up does a dry write-back only; write the document yourself with python -m engine.writeback --write, or let the morning submission do it
+guide_scan = true              # at the wrap-up, after the final scan, the whole document scored once as it stands (from the day cap, free when unchanged). A number for you, never a target
+# The swear and filler budgets live in rules.toml ([swears] multiplier, [filler] cap and words).
+tiny_words = 6                 # the tiny-line rule: a run of fewer words than this...
+tiny_tries = 3                 # ...that has had this many tries today with no accepted change is skipped for the rest of the run-day
+
+[schedule]
+start = "02:00"                # the loop's run-day starts here
+last_attempt = "15:30"         # no new attempt starts after this
+stop = "16:00"                 # and the day stops here, with its digest
+
+[notify]
+# notifier = "discord"         # "discord", "file" (posts and digests written to NOTIFY_DIR) or "none". NOTIFIER in .env wins over this
+
+[discord]
+hourly = true                  # an hourly post while the loop runs
+questions = true               # with a bot token in .env: ask on each drop-rule cut and read your answers (false: never ask)
+poll_seconds = 60              # how often the loop reads your answers while it waits; it also reads before each pass and at the digest
+
+[git]
+# The repo the morning submission and the night commit in, and the publishing of the document.
+# repo_root = ""               # the git checkout; "" means the repo holding the job's document
+# remote = "origin"
+# work_branch = ""             # the branch the engine commits on; "" means any branch but the publish branch
+# publish_branch = "main"      # where the published copy of the document lives, which you edit
+publish = false                # true: after the commit, the document is put on publish_branch (python -m engine.main_copy publish), and your edits there are pulled in first
+# push = false                 # push the work branch after the commit; unset, it follows publish
+
+[morning]
+post = true                    # send the digest through the notifier; it's saved in digests/ either way
+at_digest = true               # the loop runs the submission right after its own digest (never in a rehearsal, a smoke test or a --window run)
+take_main = true               # with publishing on, an edit of yours on the publish branch is pulled and synced in before the night's pass. false: a moved publish branch stops the submission and the night's pass before any pull, and your edit stays there untouched
+
+[night]
+# python -m engine.night: the paragraph pass, the finals, then the morning submission, started by a scheduler
+# (night task.ps1 on Windows, scheduling/ on Linux).
+# branch = ""                  # the night only runs on this branch; unset, [git] work_branch, then the job's branch
+# sections = [1, 2]            # the pass's and the finals' sections; unset, the job's night_sections, then its whole scope
+rounds = 1                     # the pass's new scoring rounds tonight (the night passes regrow --rounds this plus one, since regrow counts the arm-set round too)
+max_pangram_usd = 3.50         # one Pangram ceiling for the pass and the finals together, read from the ledger before each
+max_claude_usd = 5.00          # the pass's fact check on Claude. A check that runs dry scores nothing more, so this is set with room. The repair step keeps its own [repair] ceilings, and a week at [claude] total_ceiling skips the pass and turns the repair step off for the night
+latest_start = "05:00"         # a start at or after this (a computer that was off at the start time) skips the pass and the finals and runs the submission only
+pass_until = "06:00"           # a pass still going at this time has its whole process tree ended (its llama server too), and the night carries on
+
+[fixpass]
+# python -m engine.fixpass: few-word fixes on the loop's text, with code as the gate
+model = "sonnet"               # reads each paragraph next to its original and proposes fixes
+max_words_changed = 3          # tokens changed per sentence, at most (a word-level diff; a punctuation mark counts)
+noise = 0.05                   # a section keeps its fixes when its AI share as posted rises by no more than this (the noise floor)
+max_pangram_usd = 1.00         # the most one run may spend on Pangram
+batch = 6                      # paragraphs per Claude call
+
+[reflect]
+# the end-of-day reflection for you: one Claude call at the wrap-up; python -m engine.reflect runs it by hand
+model = "sonnet"               # reads the day, scores included, and writes to you
+max_usd = 0.60                 # the call's ceiling; a retry after a house-rule hit is a second call under the same ceiling
+
+[restore]
+# python -m engine.restore: puts back what a rewrite dropped. A director lists it, an editor applies it as line
+# edits, a stronger model edits on a retry, and code is the gate
+director_model = "opus"        # reads the regrown paragraph next to its original and lists what was dropped (facts, points, bite, flat lines)
+editor_model = "sonnet"        # applies the list on the careful prompt (the voice guide, two samples, your idiom list)
+retry_model = "opus"           # edits once more when every editor draw failed the gate or the checker found a broken sentence
+jokes = false                  # joke items stay off until you've checked that restored jokes read as yours
+max_words = 12                 # one insertion, at most
+max_change = 0.30              # share of a paragraph's words that may change
+min_words = 25                 # a paragraph shorter than this is skipped: at the change cap a restore would be a rewrite
+draws = 2                      # editor draws before the retry
+noise = 0.05                   # a section keeps its restores when its AI share as posted rises by no more than this
+max_pangram_usd = 1.00         # the most one run may spend on Pangram
+max_claude_usd = 3.00          # and on Claude (director, editor, checker and retry together); the pass stops starting paragraphs past it
+run_at_wrapup = false          # true: the loop runs the pass at its wrap-up, after the write-back; false: run it by hand
+
+[regrow]
+# python -m engine.regrow: the paragraph pass. Whole machine paragraphs written again from their notes by both
+# writer arms, code as the gate, Claude as the fact check only, each section scored as posted; its own bank
+model = "hip-notes-mistral24b"  # the server the pass draws on (a models.toml name): the adapter arm and the plain base
+draws = 8                      # draws per arm per paragraph in the census
+more_draws = 8                 # more per arm when a paragraph passes nothing, and for a span still flagged in a later round
+rounds = 4                     # scoring rounds after the two arm sets
+max_pangram_usd = 10.0         # the most one run may spend on Pangram
+max_claude_usd = 5.0           # and the fact check on Claude; past it a candidate nobody checked can't be picked unless the run says --no-facts
+fact_gate = "loose"            # loose: wrong facts only (small slips are the repair step's); strict: a stricter prompt. Either way an unchecked candidate can't be picked without --no-facts
+base2_model = "olmo3-32b-iq3"  # the second base model for --arms base2, on its own server with no adapter
+fact_check = true              # Claude reads each pick against the original and the notes before it goes in
+noise = 0.05                   # the noise floor for a section's score
+
+[repair]
+# python -m engine.repair: facts before the score. A strong model reads each span the paragraph pass serves against
+# its original and notes and proposes small moves, code is the gate, a second call checks; the outcomes go in
+# jobs/<job>/review.json. The morning submission runs it before the write-back
+mode = "apply"                 # apply: write the outcomes to review.json; propose: list them in the report and write nothing; off: don't run
+model = "opus"                 # reads each span and checks each repair
+max_words_changed = 3          # a swap changes at most this many tokens of its one sentence
+max_splices = 2                # sentences of the original put back word for word, per span
+max_original_share = 0.6       # a result whose words come more than this much from the original's own sentences is no repair (a span of twelve words or fewer may go back whole)
+stuck_after = 2                # an original span that failed on this many different picks goes to you in bold instead of getting another veto
+call_usd = 0.50                # the ceiling of each Claude call
+max_claude_usd = 3.0           # the most one run may spend on Claude; the spans left go unread and ship as the fact check left them
+max_pangram_usd = 3.0          # the most the step may spend scoring the sections whose served text changed

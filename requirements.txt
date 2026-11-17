@@ -1,0 +1,23 @@
+# Pinned to the versions the working venv runs (Python 3.12).
+
+# core: the engine, the night run and the tests
+requests==2.34.2
+wordfreq==3.1.1
+psutil==7.2.2
+
+# optional, the Anthropic API backend (CLAUDE_BACKEND=api in .env); the default CLI backend doesn't need it.
+# anthropic==2.0.0
+
+# optional, Open Pangram (engine/open_pangram.py, the local detector); only that module imports these.
+# torch is the CUDA 12.8 build here; pick the build that fits your machine from pytorch.org.
+# torch==2.11.0
+# transformers==5.22.2
+# peft==0.21.2
+# numpy==2.5.4
+# scipy==1.18.1
+# emoji==2.16.0
+
+# optional, the adapter training on Modal (training/); the training container installs its own packages.
+# tests/test_notes_retrain.py imports both, so the full suite needs them.
+# modal==1.6.3
+# PyYAML==6.0.3

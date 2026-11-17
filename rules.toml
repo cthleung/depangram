@@ -1,0 +1,70 @@
+# The house rules: the wording choices the engine's code gates make.
+#
+# Every value here is a default. To change one for every job, edit it here, or
+# copy this file somewhere else and set RULES_FILE to its path. A job can point
+# at its own rules file too. A file only needs the keys it changes: anything it
+# leaves out keeps the value below. An unknown section or key is an error, so a
+# typo never passes silently.
+#
+# Word lists use a small pattern syntax. A plain entry matches that whole word,
+# case ignored. A trailing * matches any ending ("walk*" also catches
+# "walking"), and a leading * matches any beginning ("*fuck*" also catches
+# "clusterfuck"). An "except" list names whole words that never count, even when
+# a pattern matches them.
+
+[house]
+# true: a candidate may never bring in an em dash, an en dash or a double
+# hyphen. false: dashes are left alone.
+dashes = true
+# Words a candidate may never bring in. The scanner tags them as hard hits.
+banned_words = ["structur*", "restructur*", "load-bearing", "scaffold*"]
+# More words a candidate may never bring in. The scanner tags these as checks,
+# since they have literal uses.
+banned_words_check = ["framework", "architecture", "foundation", "pillar", "cornerstone", "blueprint"]
+
+[locale]
+# "american": British spellings are turned American, and a candidate may not
+# bring one in. "any": spelling is left alone.
+spelling = "american"
+
+[swears]
+# What counts as a swear for the per-section swear budget.
+words = ["*fuck*", "shit*", "damn*", "ass", "asshole", "assholes", "arse*", "hell", "bloody", "crap*", "bastard*", "piss*", "bollocks"]
+except = ["damning"]
+# The strong ones, counted again on their own.
+strong = ["*fuck*"]
+# A candidate that swears more than the run it replaces is out when its section
+# would then swear more than your own rate times this number.
+multiplier = 1.5
+
+[filler]
+# Filler tags tacked onto a clause ("it works, honestly"). A candidate that
+# brings one in is out when its section would then hold more than the cap.
+# Your own text always stays. An empty list switches the budget off.
+words = ["honestly"]
+cap = 1
+
+[connectives]
+# Explainer glue at the front of a sentence, plus "e.g." in the middle of one.
+# A candidate that brings one in is out when its paragraph would then hold more
+# than the cap.
+openers = ["Of course", "In fact", "Fortunately", "In other words", "we can see", "Looking at", "Naturally"]
+cap = 1
+
+[reflection]
+# Extra rules for the end-of-day reflection the engine writes to you, on top of
+# the banned words above. Its prompt names them and the code checks its answer.
+# Words it may never use, in the pattern syntax above. Each one is its own rule,
+# named by the word.
+banned_words = []
+# Digits a number it makes up may not contain, as strings ("4", "7"). A number
+# that appears in the material it was given is quoted, so that one is fine.
+# Empty: no number rule.
+invented_digits = []
+
+[furniture]
+# Bits of forum markup a writer model trained on forum posts tends to leave
+# behind: a zero-width space, an "Edit:" line, TL;DR, a subreddit name, "OP",
+# votes. Each entry is a regular expression, matched with case kept and with ^
+# matching at the start of any line. A candidate holding one is out.
+patterns = ['&#x200B;', "\u200B", '^\s*(?:edit|EDIT|Edit)\s*[:\-]', '\bTL;?DR\b', '\br/\w+', '\bOP\b', '\bupvot', '\bdownvot']

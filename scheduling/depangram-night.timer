@@ -1,0 +1,15 @@
+# Starts depangram-night.service daily at 02:00. See the service file for how to install both.
+
+[Unit]
+Description=depangram night run, daily at 02:00
+
+[Timer]
+OnCalendar=*-*-* 02:00:00
+# a computer that was off at 02:00 runs it at the next boot; the night itself skips the pass when it starts after
+# [night] latest_start, and runs the morning submission only
+Persistent=true
+# wake a suspended computer to run (needs a system that supports wake alarms)
+WakeSystem=true
+
+[Install]
+WantedBy=timers.target

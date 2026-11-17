@@ -1,0 +1,16 @@
+# A small synthetic job for the tests (tests/test_fresh_job.py): a document whose sections are "###" headings
+# with no numbers, every path relative to this folder, and no chat-log scan.
+
+[job]
+name = "balcony"
+description = "a short practical how-to on growing herbs on a balcony"
+document = "document.md"
+original = "original.md"
+working = "working.md"
+section_level = 3
+sections = "all"
+samples = "samples.md"
+verdicts = "file"
+your_lines = "your lines.md"
+example_lines = "example lines.txt"
+protected_lines = "protected lines.txt"
