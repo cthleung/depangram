@@ -86,6 +86,21 @@ start = "02:00"                # the loop's run-day starts here
 last_attempt = "15:30"         # no new attempt starts after this
 stop = "16:00"                 # and the day stops here, with its digest
 
+[guard]
+# The daytime guard (engine/guard.py): the local models give the GPU back the moment you're at the PC. When you're
+# active, something fullscreen is running or another program holds the GPU, the guard lets the draw in flight
+# finish, stops the llama server so its VRAM is free, and waits. Once the PC has been clear for idle_minutes, the
+# server starts again and the work carries on where it stopped. Each pause and resume goes in the run's log.
+enabled = true                 # false: no guard at all, and nothing is ever looked at
+hours = "always"               # when the guard watches: "always", or a window like "09:00-02:00" (it may run past midnight). Outside it the guard stands down and a paused run carries on
+active_minutes = 3             # you count as active when your last keypress or mouse move was this recent
+idle_minutes = 10              # the PC has to be clear this long (no input, nothing fullscreen, no other GPU user) before the server comes back
+pause_on_fullscreen = true     # a fullscreen game, a fullscreen video or presentation mode pauses too, even with no input (a gamepad doesn't count as input)
+other_gpu_mb = 1500            # another program holding this much VRAM (in MB) pauses too
+ignore_processes = ["dwm.exe"] # programs never counted as another GPU user: Windows' desktop compositor always holds some
+poll_seconds = 15              # how often the guard looks
+low_priority = true            # the llama server and the engine's own processes run at below-normal CPU priority
+
 [notify]
 # notifier = "discord"         # "discord", "file" (posts and digests written to NOTIFY_DIR) or "none". NOTIFIER in .env wins over this
 

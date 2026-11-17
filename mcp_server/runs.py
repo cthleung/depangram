@@ -100,13 +100,17 @@ def spawn(cmd, out, env, cwd):
     """A child process with its output into `out`, the same way engine/night.py's spawn starts one (its own session on
     POSIX, so kill_tree can end its process group; no window on Windows), plus an environment of its own and a
     process group of its own on Windows, so a Ctrl+C sent to the server doesn't reach it."""
+    from engine.guard import after_start, priority_flags
     if POSIX:
         kw = {"start_new_session": True}
     else:
+        # below-normal priority with [guard] low_priority (the MCP server itself stays at normal)
         kw = {"creationflags": getattr(subprocess, "CREATE_NO_WINDOW", 0)
-              | getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)}
-    return subprocess.Popen(cmd, cwd=str(cwd), stdout=out, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL,
+              | getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0) | priority_flags()}
+    proc = subprocess.Popen(cmd, cwd=str(cwd), stdout=out, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL,
                             env=env, **kw)
+    after_start(proc)
+    return proc
 
 
 def child_cmd(exit_file, module, args, python=None):

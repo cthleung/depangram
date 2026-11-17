@@ -2011,6 +2011,10 @@ def main(argv=None):
         with log_path.open("a", encoding="utf-8") as f:
             f.write(f"{stamp} {line}\n")
     rp.log = log
+    from .guard import guard_model, guard_server, lower_self
+    if srv is not None:
+        # the daytime guard: every draw goes through its gate, and a pause stops the server until the PC is clear
+        srv = rp.srv = guard_server(srv, settings, log=log)
     if a.final:
         rp.load_units(sections)
         rp.load_bank()
@@ -2042,9 +2046,10 @@ def main(argv=None):
             f" arms {', '.join(rp.arms)}; ceiling ${rp.max_usd:.2f} for this run (${rp.spent_before:.2f} already on"
             f" Pangram today), purpose {rp.purpose}")
         print(f"starting {srv.name}...", flush=True)
+        lower_self(settings)                   # [guard] low_priority: below-normal CPU priority while it draws
         srv.start()
         try:
-            rp.op = OpenPangram("roberta")
+            rp.op = guard_model(srv, OpenPangram("roberta"))
             tallies = rp.run(sections, census_only=a.census, only_stuck=a.only_stuck)
         finally:
             srv.stop()

@@ -21,6 +21,7 @@ import json
 import re
 import shutil
 import sys
+import threading
 import traceback
 from pathlib import Path
 
@@ -35,6 +36,7 @@ from engine.checks import (carries_fact, connective_problem, extra_checks_for, i
 from engine import checks as _checks
 from engine.checks import measured_swear_rates, section_swear_problem, swear_counts
 from engine.claude_call import ClaudeCallError, run as claude_call_run
+from engine.guard import Halted, guard_model, guard_of, guard_server, lower_self
 from engine.job import (Bank, Job, NotesError, PoolQueue, align, best_seed, flat, merge_pools, protected_fallback,
                         job_name, split_author_runs, style_of, window_text_of, word_in)
 from engine.pangram import CapReached as PangramClientCap, PangramError, summarize
@@ -236,6 +238,7 @@ class Loop:
     # two-way Discord (plan 9.1, issue #8): the open questions file, the next read, a stop said on Discord, and the
     # run-day's start post. All of it stays None or off with no bot token, so the loop runs as it always has
     asked, next_poll, next_stop_poll, discord_stop, day_post_id = None, 0.0, 0.0, False, None
+    halt_lock = threading.Lock()    # guard_halt's Discord read, one draw thread at a time
 
     def __init__(self, *, settings, conn, clock, schedule, budget, notifier, job, pg, claude_raw, srv_factory,
                  op_factory, args, rehearsal=False, stop_file=None):
@@ -560,6 +563,25 @@ class Loop:
         now = self.clock.now()
         end = self.now_stop if self.args.now else self.schedule.bounds(now)["stop"]
         return now >= end - 300
+
+    def guard_halt(self):
+        """True when a draw the daytime guard is holding should give up (engine/guard.py's halt): the STOP file, a stop
+        said on Discord (heard_stop reads Discord at most once a poll_seconds), or the time the work in hand has to
+        end by. That's the last attempt (a --now run's wind-down), or, once the day is winding down and the
+        whole-text round runs, five minutes before the stop. The guard asks from the draw threads, so the Discord
+        read goes one thread at a time."""
+        if self.stop_file and self.stop_file.exists():
+            return True
+        with self.halt_lock:
+            if self.heard_stop():
+                return True
+        now = self.clock.now()
+        end = self.now_stop if self.args.now else self.schedule.bounds(now)["stop"]
+        if self.stop_reason:
+            return now >= end - 300
+        if self.args.now:
+            return now >= self.now_stop - getattr(self, "wind_down", 0.0)
+        return not self.schedule.may_start_attempt(now)
 
     def smoke_spent_out(self):
         lc = self.settings.config["loop"]
@@ -1311,14 +1333,20 @@ class Loop:
         the settle rule, which is how a Claude run whose adapter picks keep losing still gets regrown. `may_judge()`
         says whether a Claude call may happen now (do_round's cap and smoke checks); when it says no, the arm's pool
         is queued under its key and the run stops at "cap". Returns (new_text_or_None, [one change per arm tried],
-        "cap" or None). Each change carries its arm, so the bank and the analytics can tell the arms apart. `arms`
-        narrows the arms tried (a rewrite_cleared regrowth runs on the adapter alone)."""
+        "cap", "held" or None); "held" means the daytime guard held the GPU past the stop time (engine/guard.py).
+        Each change carries its arm, so the bank and the analytics can tell the arms apart. `arms` narrows the arms
+        tried (a rewrite_cleared regrowth runs on the adapter alone)."""
         changes, new, status = [], None, None
         for arm in (arms or self.arm_order(is_last)):
             ra = self.run_args(ws, pi, ri, forced, g, is_last, ctx=ctx, arm=arm)
             pool = self.queue.take(ra["key"])
             if pool is None:
-                pool = self.draw(ws, ra)
+                try:
+                    pool = self.draw(ws, ra)
+                except Halted:
+                    # the guard held the GPU until the stop time: the run ends like a stop, and what the round
+                    # already has (the earlier runs' judged picks) banks with it
+                    return None, changes, "held"
             else:
                 self.pools_used += 1
                 self.pool_draws_used += pool["stats"].get("draws", 0)
@@ -1379,6 +1407,11 @@ class Loop:
                                              may_judge=lambda: not (self.blocked() or (self.args.smoke and self.smoke_spent_out())),
                                              arms=["notes"] if (pi, ri) in getattr(ws, "rewrites", set()) else None)
             fallbacks += len(tried) > 1
+            if status == "held":                # the guard held the GPU until the stop time: a stop, banked below
+                ws.attempts[(pi, ri)] -= 1
+                changes += tried
+                interrupted = "stop"
+                break
             if status == "cap":
                 interrupted = interrupted or "cap"
                 ws.attempts[(pi, ri)] -= 1
@@ -1657,7 +1690,11 @@ class Loop:
                 if drawn >= self.pool_draws:
                     continue
                 from engine.draws import SHOW
-                self.queue.put(ra["key"], merge_pools(have, self.draw(ws, ra, k_offset=drawn), SHOW), ts=self.clock.now())
+                try:
+                    pool = self.draw(ws, ra, k_offset=drawn)
+                except Halted:
+                    return False                 # the guard held the GPU until the stop time: must_stop ends the day
+                self.queue.put(ra["key"], merge_pools(have, pool, SHOW), ts=self.clock.now())
                 return True
         return False
 
@@ -1701,6 +1738,9 @@ class Loop:
             except ClaudeCallError as e:
                 self.log(f"the start-up probe failed: {str(e)[:120]}")
         self.srv = self.srv_factory()
+        g = guard_of(self.srv)
+        if g is not None:                        # the daytime guard (engine/guard.py) logs here, on the loop's clock
+            g.log, g.halt, g.clock, g.sleep = self.log, self.guard_halt, self.clock.now, self.clock.sleep
         self.srv.start()
         self.digit_ban = self.srv.digit_tokens()
         from engine.local_models import arms_available
@@ -1708,7 +1748,7 @@ class Loop:
         if self.primary_arm not in self.arms:
             self.log(f"the server for {self.model} has no adapter, so the {self.primary_arm} arm is off and the few-shot"
                      " writer is the only arm today")
-        self.op = self.op_factory()
+        self.op = guard_model(self.srv, self.op_factory())     # a pause moves Open Pangram off the card too
         b = self.budget.snapshot()
         if first:
             self.day_post_id = self.notifier.send(f"**depangram** run-day {self.day} started: {len(self.windows)} windows, model {self.model},"
@@ -1958,6 +1998,10 @@ class Loop:
                 break
             self.tick()
             new, tried, status = self.regrow(ws, pi, ri, False, g, False, ctx=ctx)
+            if status == "held":                # the guard held the GPU until the stop time
+                changes += tried
+                why = "stop"
+                break
             if status != "cap":
                 self.tiny_note(ws, pi, ri, accepted=bool(new))
             if new:
@@ -2354,10 +2398,13 @@ class Notifier:
 
 # ---------------------------------------------------------------------- main
 def real_parts(settings):
+    """The real server (behind the daytime guard when [guard] enabled is on), Open Pangram and the Claude caller.
+    Loop.run_day points the guard's log, halt and clock at the loop's own."""
     from engine.local_models import LlamaServer
     from engine.open_pangram import OpenPangram
     model = settings.config["loop"]["model"]
-    return (lambda: LlamaServer(model, settings=settings)), (lambda: OpenPangram("roberta")), claude_call_run
+    return ((lambda: guard_server(LlamaServer(model, settings=settings), settings)), (lambda: OpenPangram("roberta")),
+            claude_call_run)
 
 
 def run_with_restarts(loop, job, schedule, clock, stop_file, a):
@@ -2370,7 +2417,15 @@ def run_with_restarts(loop, job, schedule, clock, stop_file, a):
     while True:
         try:
             job.setup()
-            loop.run_day()
+            try:
+                loop.run_day()
+            except Halted as e:
+                # the daytime guard held the GPU until the stop time (engine/guard.py): the day ends there, the way
+                # a stop does, and the wrap-up runs as usual. No error, and no restart
+                loop.stop_servers()
+                loop.must_stop()
+                loop.stop_reason = loop.stop_reason or "the guard held the GPU until the stop time"
+                loop.log(f"stopping: {loop.stop_reason} (the guard was paused: {e})")
             # the run in flight has finished; wait out the wind-down so the digest goes at the stop time
             if not a.now and not (loop.stop_reason or "").startswith("the STOP") \
                     and schedule.phase(clock.now()) == "wind-down":
@@ -2487,6 +2542,8 @@ def main(argv=None):
                 return 0
             clock.sleep(min(60.0, wake - clock.now()))
     crashed = None
+    if not a.rehearse:
+        lower_self(settings)                        # [guard] low_priority: below-normal CPU priority for the day
     try:
         crashed = run_with_restarts(loop, job, schedule, clock, stop_file, a)
     finally:

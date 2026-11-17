@@ -68,6 +68,12 @@ class LlamaServer:
         self.model_path = str(models_dir / self.spec["file"])
         self.log_path = s.runs_dir / f"llama-server-{name}.log"
         self.proc = None
+        self.started = False
+        from .guard import config as guard_config
+        try:
+            self.low_priority = bool(guard_config(getattr(s, "config", None) or {})["low_priority"])
+        except ValueError:
+            self.low_priority = True
 
     def missing(self):
         """What start() can't find before it launches anything, as plain sentences; [] when all is there."""
@@ -116,12 +122,18 @@ class LlamaServer:
         gone = self.missing()
         if gone:
             raise RuntimeError(f"{self.name} can't start: " + "; ".join(gone))
-        log = open(self.log_path, "w", encoding="utf-8")
+        # a start after a pause (engine/guard.py) adds to the log, so the server's lines from before the pause stay
+        log = open(self.log_path, "a" if self.started else "w", encoding="utf-8")
+        self.started = True
+        # [guard] low_priority: below-normal CPU priority from the start on Windows, nice 10 just after it elsewhere
+        from .guard import after_start, priority_flags
         # each parallel slot gets ctx/parallel tokens, so scale ctx up
         self.proc = subprocess.Popen(
             [self.exe, "-m", self.model_path, "--port", str(self.port), "-c", str(self.ctx * self.parallel),
              "-np", str(self.parallel), "--no-webui", *self.extra],
-            stdout=log, stderr=subprocess.STDOUT, creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+            stdout=log, stderr=subprocess.STDOUT,
+            creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0) | priority_flags(low=self.low_priority))
+        after_start(self.proc, low=self.low_priority)
         t0 = time.time()
         while time.time() - t0 < timeout:
             if self.proc.poll() is not None:

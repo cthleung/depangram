@@ -35,6 +35,9 @@ goes in the digest and never stops the steps after it, unless a guard says so:
      the arm-set round in it), --max-usd (what's left of the night's Pangram ceiling) and --max-claude-usd [night]
      max_claude_usd, in a child process. Still going at [night] pass_until, its whole process tree is ended (the
      llama server it started included) and the night carries on.
+     The pass's draws go through the daytime guard (engine/guard.py): while you're at the PC its llama server
+     stays stopped, until the PC has been clear for [guard] idle_minutes. A paused pass is still ended at
+     pass_until, with its server already down.
   4. The finals: python -m engine.regrow --final on the same sections, in a child process, under what's left of the
      night's Pangram ceiling. They run whenever the pass started, since a pass that was ended never wrote its picks.
      A finals run still going after FINAL_MINUTES is ended the same way.
@@ -131,8 +134,12 @@ def spawn(cmd, out):
     """A child process in the depangram folder, its output into `out` (a file, never a pipe nobody reads). On Windows
     it has no window of its own; elsewhere it starts its own session, so kill_tree can end its process group without
     touching the night's own."""
+    from .guard import priority_flags
     env = dict(os.environ, PYTHONIOENCODING="utf-8")
-    kw = {"start_new_session": True} if POSIX else {"creationflags": getattr(subprocess, "CREATE_NO_WINDOW", 0)}
+    # Windows: no window, and below-normal priority with [guard] low_priority. POSIX: the child inherits the night's
+    # nice value, which main() set
+    kw = {"start_new_session": True} if POSIX else {
+        "creationflags": getattr(subprocess, "CREATE_NO_WINDOW", 0) | priority_flags()}
     return subprocess.Popen(cmd, cwd=str(SANDBOX), stdout=out, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL,
                             env=env, **kw)
 
@@ -694,6 +701,9 @@ def main(argv=None):
               overrides={"max_pangram_usd": a.max_pangram_usd, "max_claude_usd": a.max_claude_usd,
                          "sections": sections, "rounds": a.rounds})
     n.job_dir = a.job_dir
+    if not a.dry:
+        from .guard import lower_self
+        lower_self(settings)                    # [guard] low_priority: the night and its children at below normal
     res = n.run()
     return 0 if a.dry and not res.get("halted") else exit_code(res)
 

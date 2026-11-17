@@ -392,7 +392,9 @@ class App:
         store = self.store()
         run_id = rs.new_id(kind, self.now())
         d = store.make(run_id)
-        env = dict(os.environ, PYTHONIOENCODING="utf-8")
+        from engine.guard import STATUS_ENV
+        # the daytime guard in the run's pass writes where it stands here, for run_status (a night's pass inherits it)
+        env = dict(os.environ, PYTHONIOENCODING="utf-8", **{STATUS_ENV: str(d / "guard.json")})
         notes = []
         if kind == "pass":
             module = "engine.regrow"
@@ -525,6 +527,19 @@ class App:
             conn.close()
         return tuple(out)
 
+    def guard_line(self, rec):
+        """Where the run's daytime guard stands (engine/guard.py), for a running run: "paused: <reason>", "waiting
+        to start: <reason>" or "running"; None when the run isn't running, or its pass has no guard (yet)."""
+        if rec.get("state") != "running":
+            return None
+        from engine.guard import read_status
+        try:
+            path = self.store().folder(rec["id"]) / "guard.json"
+        except KeyError:
+            return None
+        # the watcher writes the file every poll_seconds; one older than this belongs to a pass that has ended
+        return read_status(path, fresh_seconds=300)
+
     def when(self, ts):
         return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(ts)) if ts else None
 
@@ -538,6 +553,7 @@ class App:
                    "flagged": int(m.group(4)), "humanized": bool(m.group(5))} for m in SCORE_LINE.finditer(text)]
         pangram, claude = self.spend(rec)
         return {"run_id": rec["id"], "kind": rec["kind"], "job": rec["job"], "state": rec["state"],
+                "guard": self.guard_line(rec),
                 "exit_code": rec["exit_code"], "started": self.when(rec["started"]), "ended": self.when(rec["ended"]),
                 "spent": {"pangram_usd": pangram, "claude_usd": claude,
                           "ceilings": {"pangram_usd": rec["max_pangram_usd"], "claude_usd": rec["max_claude_usd"]},
