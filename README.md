@@ -6,18 +6,18 @@ Why bother? Well, machines that exemplify individuality are, for lack of a less 
 
 ## What it did
 
-All scores are Pangram 4.1's AI share, where 0.00 reads as human and 1.00 as AI. Pangram's own noise on this text runs about 0.07 between identical runs, so anything smaller than that is basically weather.
+All scores are Pangram 4.1's AI share, where 0.00 reads as human and 1.00 as AI. Pangram wobbles, too. Small edits that changed nothing about the meaning moved a passage's score by as much as 0.21, so the loop only keeps a change that beats its noise threshold (0.05), and anything under that is basically weather.
 
 | What went in | Before | After |
 | --- | --- | --- |
-| Windows of pure Claude text (240 to 340 words) | 1.00 | 0.00 |
+| Windows Pangram scored as fully AI, mostly Claude's sentences (213 to 340 words) | 1.00 | 0.00 |
 | A section mixing my writing and Claude's (594 words) | 0.77 | 0.0006 |
 | Another mixed section (502 words) | 0.48 | 0.00 |
 | A longer mixed section (1,022 words) | 0.72 | 0.016 |
 
 None of those came back with Pangram's humanizer flag, the separate head it uses to catch text that's been run through a paraphrasing tool. That being said, the flag's the next fight (more on that below).
 
-Over the run it made 480 metered Pangram calls ($129.65, under a $180 monthly cap I set myself), 4,812 headless Claude calls and roughly 74,000 local generations, and every one of those got budgeted and logged in a ledger the system can resume from if anything dies in the middle of the night. Oh, and there's 673 tests.
+Over the run it made 480 metered Pangram calls ($129.65, under a $180 monthly cap I set myself), 4,812 headless Claude calls and over 73,000 local generations, and every one of those got budgeted and logged in a ledger the system can resume from if anything dies in the middle of the night. Oh, and there's 673 tests.
 
 ## How it works
 
@@ -42,7 +42,7 @@ A few design choices matter more than the rest, I think.
 - **The model proposes, code decides.** Basically, every judgment that can be a rule is a rule. A draft that drops a quote, adds a name, swaps a number or picks up a stock AI phrase never reaches an LLM judge, let alone the detector. Of the paragraph drafts, 80% died at the gates - and that's the point.
 - **Regrow from notes, don't edit in place.** Early on, I just had Claude rewrite the sentences Pangram flagged, which seemed like the obvious move, but ten of twelve were still flagged afterwards, and worse, a human sentence sitting next to them got dragged up with them. So the system stopped editing and started regrowing full paragraphs from notes, with a base model that never went through the chat tuning in the first place.
 - **A voice adapter, kept or dropped on evidence.** I fine-tuned a LoRA on Mistral 24B base using only my pre-ChatGPT writing. It moved Burrows' Delta (a standard measure of authorial style) toward my own in 3 of 3 test windows, and in two draws it wrote a paragraph the loop had failed on 24 times, taking it from 0.48 to 0.00 with every citation intact. I did try a retrain later, but it lost the A/B, so it never shipped.
-- **Repair first, regrow second, flag a human last.** When a draft slips on a fact, the repair step tries the smallest fix: cut the sentence it invented, swap up to three words, or splice the original sentence back in. Opus proposes, code checks the edit is that small, and a second Opus read confirms the fact's right. Whatever can't be fixed goes in the document in bold, under a note telling me what to write, because sometimes the human really is the last line of defense.
+- **Repair first, regrow second, flag a human last.** When a draft slips on a fact, the repair step tries the smallest fix: cut the sentence it invented, swap up to three words, or splice the original sentence back in. The step is built so that Opus proposes, code checks the edit is that small, and a second Opus read confirms the fact's right (the sixteen repairs so far were made in review, and the first live reread proposed the same fix the review had). Whatever can't be fixed goes in the document in bold, under a note telling me what to write, because sometimes the human really is the last line of defense.
 - **Everything's reversible.** Every changed paragraph sits under a comment holding its original, so if you strip the comments you'll get the source back byte for byte.
 - **It runs unattended.** A night run (Task Scheduler, cron or systemd) takes in my edits, runs a round, rescores, repairs, writes back and posts a digest, under hard Pangram and Claude ceilings, a STOP file and a deadline that kills the process tree if a run won't finish.
 
@@ -54,7 +54,7 @@ The experiments were the fun part, so they get [their own doc](docs/findings.md)
 
 - **Pangram reads skeletons more than words.** I swapped sentence skeletons and word choice between my writing and Claude's. Claude's skeletons wearing my words scored 0.91, but my skeletons wearing Claude's words only scored 0.46.
 - **AI text is contagious.** Splitting one window by author, my sentences alone scored 0.00 and Claude's alone 0.35, but together they scored 1.00. The machine sentences drag the human ones down with them, which is why patching single sentences never worked.
-- **Humanizer tools are the wrong tool.** In the same bake-off, an instruct-tuned "humanizer" model scored 1.00 where the plain base model scored 0.08, which honestly surprised me less than it should've.
+- **Humanizer tools are the wrong tool.** Across the bake-offs, an instruct-tuned "humanizer" model scored 1.00 where the plain base model scored 0.08, which honestly surprised me less than it should've.
 - **A strict LLM fact gate fails most drafts.** It rejected 110 of 163 (yikes), so the system moved from "reject" to "repair", which keeps the detector-beating text and fixes the slip.
 
 ## What's in the box
