@@ -30,6 +30,12 @@ training = [
     "modal==1.6.3",
     "PyYAML==6.0.3",
 ]
+mcp = [
+    "mcp==2.3.0",
+]
+
+[project.scripts]
+depangram-mcp = "mcp_server.server:main"
 
 [tool.setuptools]
-packages = ["engine", "engine.tics", "training"]
+packages = ["engine", "engine.tics", "training", "mcp_server"]
